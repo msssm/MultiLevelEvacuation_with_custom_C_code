@@ -2,7 +2,7 @@
 (text between brackets to be removed)
 
 > * Group Name: (be creative!)
-> * Group participants names: (alphabetically sorted by last name)
+> * Group participants names: El Coco Loco, Beatbox, Thalabfahrt, Andreas Jemals 
 > * Project Title: (can be changed)
 
 ## General Introduction
