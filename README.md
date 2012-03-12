@@ -1,4 +1,4 @@
-# MATLAB FS12 – Research Plan (Template)
+# MATLAB FS12 – Research Plan
 (text between brackets to be removed)
 
 > * Group Name: Baby-chiefs
@@ -16,11 +16,31 @@ Since skyscraper/tower building are getting more common in large cities, enginee
 ## The Model
 
 We are planning to base our work on the social force model of Disaster spreading and pedestrian dynamics
-
-(Define dependent and independent variables you want to study. Say how you want to measure them.) (Why is your model a good abtraction of the problem you want to study?) (Are you capturing all the relevant aspects of the problem?)
+In an evacuation we depend on the floor structures ,connections between the different floors, obstacles to be avoided (known as the initial conditions) as well as on the amount of people being evacuated.
+An important aspect refers to the psichological pressure of each person being evacuated. The reaction of each individuum is unpredictable. We want to include all possible scenarios (from an ordered evacuation-model, to a total chaos model). By reaching this level of abstraction, we can calculate the worst scenario in a specific building and provide improvement proposals.
 
 
 ## Fundamental Questions
+
+Research object: Main Building ETH
+
+--- Can we improve the evacuation model from the ETH ? ---
+
+Which escapes are mostly used in case of evacuation?
+- Psicological pressure, knowledge of the building...
+
+Which would be the best strategy for an evacuation?
+- Which escapes would be over-used, which ones under-used?
+- Do we need more escapes`??
+
+What is the behaviour of the people as a group (not individuum)??
+- Best-/Worst-Cases
+- Different kind of reaction under pressure
+- Influence into other people (panic distribution?)
+
+
+
+
 
 (At the end of the project you want to find the answer to these questions)
 (Formulate a few, clear questions. Articulate them in sub-questions, from the more general to the more specific. )
