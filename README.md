@@ -1,17 +1,21 @@
 # MATLAB FS12 – Research Plan (Template)
 (text between brackets to be removed)
 
-> * Group Name: (be creative!)
-> * Group participants names: El Coco Loco, Beatbox, Thalabfahrt, Andreas Jemals 
-> * Project Title: (can be changed)
+> * Group Name: Baby-chiefs
+> * Group participants names: Felix Thaler, Hans Hardmeier, Beat Kueng, Andrin Jenal 
+> * Project Title: Modelling Situations of Evacuation in a Multi-level Building
 
 ## General Introduction
 
-(States your motivation clearly: why is it important / interesting to solve this problem?)
-(Add real-world examples, if any)
-(Put the problem into a historical context, from what does it originate? Are there already some proposed solutions?)
+Simulating the evacuation scenario of a 2D single-level building is well known but no general enough. Though we want to introduce a more sophisticated simulation within a multi-level building. 
+
+E.g.: What would happen, if the ETH building has to be evacuated? Which escape routes would be mostly used?
+
+Since skyscraper/tower building are getting more common in large cities, engineers have to care more about the behaviour in situations of emergency namenly evacuation. 
 
 ## The Model
+
+We are planning to base our work on the social force model of Disaster spreading and pedestrian dynamics
 
 (Define dependent and independent variables you want to study. Say how you want to measure them.) (Why is your model a good abtraction of the problem you want to study?) (Are you capturing all the relevant aspects of the problem?)
 
