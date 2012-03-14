@@ -60,6 +60,9 @@ What is the behaviour of the people as a group (not individuum)??
 
 ## Research Methods
 
+We will use the agent-based social force model to simulate the behaviour of invdividual persons. Shortest evacuation paths may probably be precalculated using a grid discretization and fast marching or fast sweeping methods.
+The parameters of the model will be based on empirical data from accordant literature.
+
 (Cellular Automata, Agent-Based Model, Continuous Modeling...) (If you are not sure here: 1. Consult your colleagues, 2. ask the teachers, 3. remember that you can change it afterwards)
 
 
