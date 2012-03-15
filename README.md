@@ -1,23 +1,22 @@
 # MATLAB FS12 – Research Plan
-(text between brackets to be removed)
 
 > * Group Name: Baby-chiefs
-> * Group participants names: Felix Thaler, Hans Hardmeier, Beat Kueng, Andrin Jenal 
+> * Group participants names: Hans Hardmeier, Andrin Jenal , Beat Kueng, Felix Thaler
 > * Project Title: Modelling Situations of Evacuation in a Multi-level Building
 
 ## General Introduction
 
-Simulating the evacuation scenario of a 2D single-level building is well known but no general enough. Though we want to introduce a more sophisticated simulation within a multi-level building. 
+Simulating the evacuation scenario of a 2D single-level building is well known but not general enough. Though we want to introduce a more sophisticated simulation within a multi-level building. 
 
 E.g.: What would happen, if the ETH building has to be evacuated? Which escape routes would be mostly used?
 
-Since skyscraper/tower building are getting more common in large cities, engineers have to care more about the behaviour in situations of emergency namenly evacuation. 
+Since skyscraper/tower building are getting more common in large cities, engineers have to care more about the behaviour in situations of emergency namely evacuation. 
 
 ## The Model
 
-We are planning to base our work on the social force model of Disaster spreading and pedestrian dynamics
-In an evacuation we depend on the floor structures ,connections between the different floors, obstacles to be avoided (known as the initial conditions) as well as on the amount of people being evacuated.
-An important aspect refers to the psichological pressure of each person being evacuated. The reaction of each individuum is unpredictable. We want to include all possible scenarios (from an ordered evacuation-model, to a total chaos model). By reaching this level of abstraction, we can calculate the worst scenario in a specific building and provide improvement proposals.
+We are planning to base our work on the social force model of Disaster spreading and pedestrian dynamics.
+In an evacuation we depend on the floor structures, connections between the different floors, obstacles to be avoided (known as the initial conditions) as well as on the amount of people being evacuated.
+An important aspect refers to the psychological pressure of each person being evacuated. The reaction of each individuum is unpredictable. We want to include all possible scenarios (from an ordered evacuation-model, to a total chaos model). By reaching this level of abstraction, we can calculate the worst case scenario in a specific building and provide improvement proposals.
 
 
 ## Fundamental Questions
@@ -27,18 +26,16 @@ Research object: Main Building ETH
 --- Can we improve the evacuation model from the ETH ? ---
 
 Which escapes are mostly used in case of evacuation?
-- Psicological pressure, knowledge of the building...
+- Psycological pressure, knowledge of the building...
 
 Which would be the best strategy for an evacuation?
 - Which escapes would be over-used, which ones under-used?
-- Do we need more escapes`??
+- Do we need more escapes or wider exit doors?
 
-What is the behaviour of the people as a group (not individuum)??
+What is the behaviour of the people as a group (not individuum)?
 - Best-/Worst-Cases
 - Different kind of reaction under pressure
-- Influence into other people (panic distribution?)
-
-
+- Influence to other people (panic distribution?)
 
 
 
