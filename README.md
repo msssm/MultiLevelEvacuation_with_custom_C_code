@@ -45,6 +45,9 @@ What is the behaviour of the people as a group (not individuum)?
 
 ## Expected Results
 
+We expect the stairs and the main building exit to be the bottlenecks. The amount of people in lower levels is increasing with time until a certain point, when most of the people have exited the building.
+Also we think that if the velocity of the people is higher (people are more in panic), jams at the exit will be increased and people will mainly try to take the main exit instead of emergency exits.
+
 (What are the answers to the above questions that you expect to find before starting your research?)
 
 
