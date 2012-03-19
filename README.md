@@ -32,12 +32,18 @@ Also we think that if the velocity of the people is higher (people are more in p
 ## References 
 
 Bibliographic References:
-> * Helbling, Dirk - Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics
-> * Helbling, Dirk, Johansson, Anders (2007): Dynamics of crowd disasters: An empirical Study
-> * Helbling, Dirk, Johansson, Anders (2006): Analytical Approach to Continuous and Intermittent Bottleneck Flows
-> * Schadschneider, Andreas et al. (2002): CA Approach to Collective Phenomena in Pedestrian Dynamics
-> * Helbling, Dirk et al. (2000): Simulating dynamical features of escape panic
-> * Helbling, Dirk et al. (2005): Self-Organized Pedestrian Crowd Dynamics: Experiments, Simulations, and Design Solutions
+
+Helbling, Dirk - Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics
+
+Helbling, Dirk, Johansson, Anders (2007): Dynamics of crowd disasters: An empirical Study
+
+Helbling, Dirk, Johansson, Anders (2006): Analytical Approach to Continuous and Intermittent Bottleneck Flows
+
+Schadschneider, Andreas et al. (2002): CA Approach to Collective Phenomena in Pedestrian Dynamics
+
+Helbling, Dirk et al. (2000): Simulating dynamical features of escape panic
+
+Helbling, Dirk et al. (2005): Self-Organized Pedestrian Crowd Dynamics: Experiments, Simulations, and Design Solutions
 
 Our idea of the simulation might go in a similar direction as the one of the "Airplane Evacuation 2011 FS".
 
