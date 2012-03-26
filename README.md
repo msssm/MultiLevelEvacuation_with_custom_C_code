@@ -9,6 +9,7 @@
 Simulating the evacuation scenario of a single-level building is well known but not general enough. Though we want to introduce a more sophisticated simulation within a multi-level building. 
 E.g.: What would happen, if a multi-level building has to be evacuated? Which escape routes would be mostly used?
 Since tower buildings are getting more common in large cities, engineers have to care more about the behaviour in situations of emergency, namely evacuation. 
+To investigate in some of these aspects we will create a relatively general framework for behavioral simulation in evacuation scenarios.
 
 ## The Model
 
@@ -45,11 +46,13 @@ Helbling, Dirk et al. (2000): Simulating dynamical features of escape panic
 
 Helbling, Dirk et al. (2005): Self-Organized Pedestrian Crowd Dynamics: Experiments, Simulations, and Design Solutions
 
-Our idea of the simulation might go in a similar direction as the one of the "Airplane Evacuation 2011 FS".
+Our idea of the simulation might go in a similar direction as the one of the "Airplane Evacuation 2011 FS" and the Project "Evacuation Bottleneck:
+Simulation and analysis of an evacuation of a high-school building with MATLAB" from HS 2011.
+But we won't base our work on these reports and we won't focus on a single evacuation object as they do, but we want to create a general framework which can easily be adapted to different scenarios. We will hopefully be able to implement more efficient algorithms to additionally support larger scale evacuations.  
 
 ## Research Methods
 
-We will use the agent-based social force model to simulate the behaviour of invdividual persons. Shortest evacuation paths may probably be precalculated using a grid discretization and fast marching or fast sweeping methods.
+We will use the agent-based social force model to simulate the behaviour of invdividual persons. Shortest evacuation paths may probably be precalculated using a grid discretization and efficient fast sweeping methods.
 The parameters of the model will be based on empirical data from accordant literature.
 
 ## Other
