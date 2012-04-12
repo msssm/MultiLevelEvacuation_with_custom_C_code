@@ -1,0 +1,59 @@
+## configuration file structure
+# this file describes how a configuration file must look like
+
+general
+-------
+<key> = <value>			Note that the spaces are needed!
+floors are numbered from 1 to floor_count, 1 is the ground floor
+
+
+config file
+-----------
+
+TODO: max speed, some randomness (panic factor ?), ...
+	 simulation speed?
+
+
+agents_per_floor = <agents>					number of agents per floor
+agents_radius_min = <min_radius>
+agents_radius_max = <max_radius>			radius of each agent in meters
+											values are uniformaly distributed between
+											min and max
+
+width = <width>
+height = <height>							simulation width & height (all
+											images must have this dimension)
+meter_per_pixel = <scale>					scaling to convert meters <--> pixels
+											value in meters = pixels * meter_per_pixel
+
+
+floor_count = <num of floors>
+floor_<i>_build = some_image.png			building image for floor i
+											i in [1,floor_count]
+floor_<i>_soc_forces = some_image.png		social forces image for floor i
+
+
+
+images
+------
+image format should be png, but can also be something else
+image must have 3 channels (RGB) and 8 bits/channel
+
+building image:
+ how the building looks like and where the agents are
+ - background (ignored)						white   #ffffff
+ - walls 									black   #000000
+ - agent spawning areas						pink    #ff00ff 
+ - exits									green   #00ff00
+ - stairs down								blue    #0000ff
+ - stairs up								red		#ff0000
+ stairs: for each down stairs spot (connected color) there must be an up stairs
+ at the same spot on the floor below. this allows multiple stairs per floor.
+
+social forces image:
+ attractive/repulsive forces that act on the agents
+ - gradient:
+   black #000000 = maximal repulsive force
+         #800000 = no force (neutral)
+   white #ffffff = maximal attractive force
+
