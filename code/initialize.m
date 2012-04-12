@@ -24,6 +24,7 @@ data.color.stairs_down = bitshift(uint32(0), 16) + bitshift(uint32(0), 8) + uint
 data.color.stairs_up = bitshift(uint32(255), 16) + bitshift(uint32(0), 8) + uint32(0);
 
 
+data = initAgents(data);
 
 
 % preprocessing: fast sweeping, exits, stairs ...
