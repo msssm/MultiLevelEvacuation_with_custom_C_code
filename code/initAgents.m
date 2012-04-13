@@ -1,6 +1,12 @@
 function data = initAgents(data_in)
 
 % place agents randomly in desired spots, without overlapping
+%
+%  return:
+%   data             agents are stored as:
+%                    data.floor(i).agents(k).pos: vector [y, x]
+%                    data.floor(i).agents(k).radius
+
 
 
 function radius = getAgentRadius(data)
@@ -28,8 +34,8 @@ for i=1:data_in.floor_count
             while tries > 0
                 %randomly pick a spot and check if it's free
                 idx = randi(length(x));
-                data_in.floor(i).agents(cur_agent).pos = [x(idx), y(idx)];
-                if checkForIntersection(data_in, i, cur_agent, [x(idx), y(idx)]) == 0
+                data_in.floor(i).agents(cur_agent).pos = [y(idx), x(idx)];
+                if checkForIntersection(data_in, i, cur_agent, [y(idx), x(idx)]) == 0
                     tries = -1; % leave the loop
                     cur_agent=cur_agent+1;
                 end

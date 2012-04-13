@@ -31,8 +31,8 @@ end
 
 
 % check for wall intersection
-pos_xi = cast(agent_new_pos(1), 'int32');
-pos_yi = cast(agent_new_pos(2), 'int32');
+pos_xi = cast(agent_new_pos(2), 'int32');
+pos_yi = cast(agent_new_pos(1), 'int32');
 radiusi = cast(agent_radius, 'int32');
 
 % horizontal check

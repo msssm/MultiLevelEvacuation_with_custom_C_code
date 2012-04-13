@@ -5,7 +5,7 @@ function circle(x,y,r)
     ang=0:0.1:2*pi; 
     xp=r*cos(ang);
     yp=r*sin(ang);
-    plot(x+xp,y+yp);
+    plot(x+xp,y+yp, 'w');
 end
 
 
@@ -18,7 +18,7 @@ hold on;
 
 for i=1:length(data.floor(floor_idx).agents)
      %plot(data.floor(floor_idx).agents(i).pos(1), data.floor(floor_idx).agents(i).pos(2), 'wx')
-     circle(data.floor(floor_idx).agents(i).pos(1), data.floor(floor_idx).agents(i).pos(2), ...
+     circle(data.floor(floor_idx).agents(i).pos(2), data.floor(floor_idx).agents(i).pos(1), ...
          data.floor(floor_idx).agents(i).radius); 
 end
 
