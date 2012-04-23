@@ -1,0 +1,37 @@
+TODO
+----------------
+
+* Deathline: 01.05.2012 23:59
+
+Code
+---------
+
+-Social Force model
+
+	- Einzelne Kräfte aufteilen * -> Andrin/Felix (+ Doku..)
+		- Repulsive effects Wall
+		- Agents repulsion
+		- Social Force (from image…)
+		- Exit Force ^^
+		- Treppe
+		- evtl. Panic
+
+	- Agents update
+		- Floor changes/Stairs problem + Exit (floor i: check all agents on floor i-1 on stairs (down) and include the repulsive social force. change floor when agent enters stairs area.)
+
+
+- Graph Darstellung 2D
+
+	- Statistik
+		- Dichte (zeitabhängig)
+		- Saved People 
+
+	- Floor plotte, während Simulation -> Pro Floor : Map (Agent Radius, usw…) + Dichte * -> Hans / Beat
+
+	- Flor zeichnen, Beispiel zeichnen 
+
+
+Dokumentation
+----------------
+	- Einführung/Motivation* -> Hans
+	- Doku - Kräfte* -> Andrin/Felix
