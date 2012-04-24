@@ -32,7 +32,24 @@ floor_<i>_build = some_image.png			building image for floor i
 											i in [1,floor_count]
 floor_<i>_soc_forces = some_image.png		social forces image for floor i
 
+dt = <timestep>                             simulation timestep in seconds
+duration = <duration>                       simulation duration in seconds
 
+
+taualpha = <see paper 'Social force model for pedestrian dynamics'>
+deltat = <see paper 'Social force model for pedestrian dynamics'>
+
+valphamaxmul = <see paper 'Social force model for pedestrian dynamics'>
+v0mean = <see paper 'Social force model for pedestrian dynamics'>
+v0stdev = <see paper 'Social force model for pedestrian dynamics'>
+
+Valphabeta0 = <see paper 'Social force model for pedestrian dynamics'>
+Valphabetasigma = <see paper 'Social force model for pedestrian dynamics'>
+UalphaB0 = <see paper 'Social force model for pedestrian dynamics'>
+UalphaBR = <see paper 'Social force model for pedestrian dynamics'>
+
+wphi = <see paper 'Social force model for pedestrian dynamics'>
+wc = <see paper 'Social force model for pedestrian dynamics'>
 
 images
 ------

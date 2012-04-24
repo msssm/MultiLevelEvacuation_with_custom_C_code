@@ -5,15 +5,16 @@ function circle(x,y,r)
     ang=0:0.1:2*pi; 
     xp=r*cos(ang);
     yp=r*sin(ang);
-    plot(x+xp,y+yp, 'w');
+    plot(x+xp,y+yp, 'r');
 end
 
 
 data=main();
-floor_idx = 2;
+floor_idx = 1;
 
 hold off;
-imagesc(data.img(floor_idx).img_build);
+imagesc(1-data.floor(floor_idx).img_wall);
+colormap gray; 
 hold on;
 
 for i=1:length(data.floor(floor_idx).agents)

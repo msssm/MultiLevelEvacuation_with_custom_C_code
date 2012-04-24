@@ -28,6 +28,8 @@ data = initAgents(data);
 
 
 % preprocessing: fast sweeping, exits, stairs ...
+data = initEscapeRoutes(data);
+data = initWallForces(data);
 
 
 % statistics, ...
