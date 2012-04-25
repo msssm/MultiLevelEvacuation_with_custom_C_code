@@ -8,7 +8,7 @@ for fi = 1:data.floor_count
         pos = data.floor(fi).agents(ai).pos;
         fx = interp2(data.floor(fi).img_wall_force_x, pos(2), pos(1), '*linear');
         fy = interp2(data.floor(fi).img_wall_force_y, pos(2), pos(1), '*linear');
-        f = [fy fx];
+        f = [fx fy];
         
         data.floor(fi).agents(ai).f = data.floor(fi).agents(ai).f + f;
     end

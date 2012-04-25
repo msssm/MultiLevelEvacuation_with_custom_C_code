@@ -33,7 +33,7 @@ for i=1:data.floor_count
             data.floor(i).agents(cur_agent).radius = agent_radius;
             data.floor(i).agents(cur_agent).v = [0, 0];
             data.floor(i).agents(cur_agent).f = [0, 0];
-            data.floor(i).agents(cur_agent).valpha0 = normrnd(data.v0mean, data.v0stdev);
+            data.floor(i).agents(cur_agent).valpha0 = randn*data.v0stdev+data.v0mean;
             
             tries=10*j; % make this smaller if initialization is too slow!
             while tries > 0

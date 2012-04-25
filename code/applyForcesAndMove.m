@@ -11,8 +11,20 @@ for fi = 1:data.floor_count
         end
         data.floor(fi).agents(ai).v = v;
         
-        data.floor(fi).agents(ai).pos = data.floor(fi).agents(ai).pos + ...
+        newpos = data.floor(fi).agents(ai).pos + ...
             data.floor(fi).agents(ai).v * data.dt / data.meter_per_pixel;
+        if data.floor(fi).img_wall(round(newpos(1)), round(newpos(2)))
+            pos = data.floor(fi).agents(ai).pos;
+            fx = interp2(data.floor(fi).img_wall_force_x, pos(2), pos(1), '*linear');
+            fy = interp2(data.floor(fi).img_wall_force_y, pos(2), pos(1), '*linear');
+            f = [fx fy];
+            v = v - dot(f,v)/dot(f,f)*f;
+            data.floor(fi).agents(ai).v = v;
+            newpos = data.floor(fi).agents(ai).pos + ...
+            data.floor(fi).agents(ai).v * data.dt / data.meter_per_pixel;
+        end
+            
+        data.floor(fi).agents(ai).pos = newpos;
         
         data.floor(fi).agents(ai).f = [0 0];
     end

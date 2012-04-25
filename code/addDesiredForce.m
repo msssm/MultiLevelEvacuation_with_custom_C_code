@@ -8,7 +8,7 @@ for fi = 1:data.floor_count
         pos = data.floor(fi).agents(ai).pos;
         ex = interp2(data.floor(fi).img_dir_x, pos(2), pos(1), '*linear');
         ey = interp2(data.floor(fi).img_dir_y, pos(2), pos(1), '*linear');
-        e = [ey ex];
+        e = [ex ey];
         
         f = (data.floor(fi).agents(ai).valpha0*e - data.floor(fi).agents(ai).v)/data.taualpha;
         data.floor(fi).agents(ai).f = data.floor(fi).agents(ai).f + f;
