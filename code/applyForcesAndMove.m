@@ -4,6 +4,9 @@ function data = applyForcesAndMove(data)
 
 for fi = 1:data.floor_count
 
+    floorchange = logical(zeros(length(data.floor(fi).agents),1));
+    exited = logical(zeros(length(data.floor(fi).agents),1));
+    
     for ai=1:length(data.floor(fi).agents)
         v = data.floor(fi).agents(ai).v + data.floor(fi).agents(ai).f * data.dt;
         if norm(v) > data.valphamaxmul*data.floor(fi).agents(ai).valpha0
@@ -25,8 +28,18 @@ for fi = 1:data.floor_count
         end
             
         data.floor(fi).agents(ai).pos = newpos;
-        
         data.floor(fi).agents(ai).f = [0 0];
+        if data.floor(fi).img_stairs_down(round(newpos(1)), round(newpos(2)))
+            floorchange(ai) = 1;
+        end
+        
+        if data.floor(fi).img_exit(round(newpos(1)), round(newpos(2)))
+            exited(ai) = 1;
+        end
     end
+    
+    if fi > 1
+        data.floor(fi-1).agents = [data.floor(fi-1).agents data.floor(fi).agents(floorchange)];
+    end
+    data.floor(fi).agents = data.floor(fi).agents(~(floorchange|exited));
 end
-
