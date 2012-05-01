@@ -9,9 +9,9 @@
 \usepackage{amssymb, amsmath}
 \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
 
-%\title{Title}
-%\author{Name 1, Name 2}
-%\date{date} 
+\title{Modelling Situations of Evacuation in a Multi-level Building}
+\author{Hans Hardmeier, Andrin Jenal, Beat Küng & Felix Thaler}
+\date{date} 
 
 \begin{document}
 
@@ -34,18 +34,19 @@
 \begin{center}
 
 \bigskip
-
-
+\bigskip
+\bigskip
 \bigskip
 
 
 \begin{tabular}{@{}p{3.3cm}@{}p{6cm}@{}@{}p{6cm}@{}}
+
 \begin{minipage}{3cm}
 
 \end{minipage}
 &
 \begin{minipage}{6cm}
-\vspace{2mm} \large Name 1
+\vspace{2mm} \large Hans Hardmeier
 
  \vspace{\baselineskip}
 
@@ -53,11 +54,37 @@
 &
 \begin{minipage}{6cm}
 
-\large Name 2
+\large Andrin Jenal
+
+\end{minipage}
+
+\end{tabular}
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+
+\begin{tabular}{@{}p{3.3cm}@{}p{6cm}@{}@{}p{6cm}@{}}
+
+\begin{minipage}{3cm}
+
+\end{minipage}
+&
+\begin{minipage}{6cm}
+\vspace{2mm} \large Beat Küng
+
+ \vspace{\baselineskip}
+
+\end{minipage}
+&
+\begin{minipage}{6cm}
+
+\large Felix Thaler
 
 \end{minipage}
 \end{tabular}
-
 
 \end{center}
 \newpage
@@ -69,6 +96,7 @@
 % IMPORTANT
 % you MUST include the ETH declaration of originality here; it is available for download on the course website or at http://www.ethz.ch/faculty/exams/plagiarism/index_EN; it can be printed as pdf and should be filled out in handwriting
 
+%TODO: The is no declaration of originality on the WEb...
 
 %%%%%%%%%% Table of content %%%%%%%%%%%%%%%%%
 
@@ -82,23 +110,75 @@
 
 \section{Abstract}
 
+%% TODO: No idea what to write
+
 \section{Individual contributions}
+
+In this section we would like to thank the MSSSM-Group from the ETH in Zurich, Switzerland directed by Karsten Donnay and Stefano Balietti for their engagement in the lecture "Modeling and Simulating Social Systems with MATLAB" during the Spring Semester 2012.
 
 \section{Introduction and Motivations}
 
+\subsection{Introduction}
+
+Simulating the evacuation scenario of a single-level building is well known but is not general enough. Though we want to introduce a more sophisticated simulation within a multi-level building. E.g.: What would happen, if a multi-level building has to be evacuated? Which escape routes would be mostly used? Which effects would have the pressure/panic of other persons into the situation? Since tower buildings are getting more common in large cities, engineers have to care more about the behaviour in situations of emergency, namely evacuations. 
+
+\subsection{Motivation}
+
+Intuitive expectations and mathematical model results can stay sometimes in contradictions. To prove the rational expected results of i.e. evacuation of the ETH, we want to provide a flexible tool that is able to calculate every scenario in every provided structure with certains requirements.
+
 \section{Description of the Model}
+
+To investigate it, we will create a relatively general framework for behavioral simulation in evacuation scenarios. That includes every non-trivial, relevant force affecting every agent i.e. repulsion within the agents (unconscious privacy area conservation), detection of environment (walls, exits, stairs - inclusive direction-, evtl. source of evacuation,etc ) rational thinking to calculate the way to exit (run-time calculation with fast-sweeping algorithm), etc.
+
+\subsection{General Model}
+
+We are planning to base our work on the social force model \cite{SFMPD}. The  behaviour of the agents will be mainly influenced by different model parameters like obstacles, stairs and other agents. In addition, psychological pressure in such evacuation scenarios are going to be investigated.
+
+\subsection{Research}
+
+As a core investigation we are going to simulate an everyday situation in a crowded (public) environment ending in an evacuation scenario.
+
+\subsection{Fundamental Questions}
+
+\begin{enumerate}
+\item Which places in a building do contribute the crucial part to panic behaviour?
+\item Do the results correspond to the literature? Why? - Why not?
+\item What are the similarities to single level evacuation bottleneck?
+\item What are the most influential forces, which decide the behavior of scenario?
+ 
+\end{enumerate}
+
+
+
+
 
 \section{Implementation}
 
 \section{Simulation Results and Discussion}
 
+\subsection{Expected Results}
+
+We expect the stairs and the main building exit to be the bottlenecks. The amount of people in lower levels is increasing with time until a certain point, when most of the people have exited the building. Also we think that if the speed (velocity) of the people is higher (people are more in panic), jams at the exit will increase and people will mainly try to take the main exit instead of emergency exits.
+
+\subsection{Simulation Results}
+
+\subsection{Discussion}
+
+
 \section{Summary and Outlook}
 
 \section{References}
 
+\begin{thebibliography} {9}
+	
+	\bibitem{SFMPD} Helbling, Dirk - Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics.
+	\bibitem{AACIBF} Helbling, Dirk, Johansson, Anders (2006): Analytical Approach to Continuous and Intermittent Bottleneck Flows.
+	\bibitem{ACPPD} Schadschneider, Andreas et al. (2002): CA Approach to Collective Phenomena in Pedestrian Dynamics.	
+	\bibitem{DCD} Helbling, Dirk, Johansson, Anders (2007): Dynamics of crowd disasters: An empirical Study.
+	\bibitem{SDFEP} Helbling, Dirk et al. (2000): Simulating dynamical features of escape panic.
+	\bibitem{SPCD} Helbling, Dirk et al. (2005): Self-Organized Pedestrian Crowd Dynamics: Experiments, Simulations, and Design Solutions
 
-
-
+\end{thebibliography}
 
 
 \end{document}  
