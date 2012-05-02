@@ -32,9 +32,10 @@ floor_<i>_build = some_image.png			building image for floor i
 											i in [1,floor_count]
 floor_<i>_soc_forces = some_image.png		social forces image for floor i
 
+TODO: Update variables and formulas based on papaer: Escape Panic Helbling 2000
+
 dt = <timestep>                             simulation timestep in seconds
 duration = <duration>                       simulation duration in seconds
-
 
 taualpha = <see paper 'Social force model for pedestrian dynamics'>
 deltat = <see paper 'Social force model for pedestrian dynamics'>
