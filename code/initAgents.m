@@ -29,8 +29,7 @@ for i=1:data.floor_count
         cur_agent=1;
         for j=1:agent_count
             %place an agent to floor i
-            agent_radius = getAgentRadius(data)*data.pixel_per_meter;
-            data.floor(i).agents(cur_agent).radius = agent_radius;
+            data.floor(i).agents(cur_agent).radius = getAgentRadius(data);
             data.floor(i).agents(cur_agent).v = [0, 0];
             data.floor(i).agents(cur_agent).f = [0, 0];
             data.floor(i).agents(cur_agent).valpha0 = randn*data.v0stdev+data.v0mean;

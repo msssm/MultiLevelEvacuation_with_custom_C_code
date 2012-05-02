@@ -4,8 +4,8 @@ function plotFloor(data, floor_idx)
 
 function plotAgent(agent, i)
     ang=0:0.1:2*pi; 
-    xp=agent.radius*cos(ang);
-    yp=agent.radius*sin(ang);
+    xp=agent.radius*cos(ang)*data.pixel_per_meter;
+    yp=agent.radius*sin(ang)*data.pixel_per_meter;
     plot(agent.pos(2)+xp,agent.pos(1)+yp, 'r');
     %text(agent.pos(2),agent.pos(1),int2str(i));
 end

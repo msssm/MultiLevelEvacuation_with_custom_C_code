@@ -21,7 +21,7 @@ agent_radius = floor.agents(agent_idx).radius;
 % check for agent intersection
 for i=1:length(floor.agents)
     if i~=agent_idx
-        if norm(floor.agents(i).pos-agent_new_pos) ...
+        if norm(floor.agents(i).pos-agent_new_pos)*data.meter_per_pixel ...
                 < agent_radius +  floor.agents(i).radius
             val=2;
             return;
@@ -37,7 +37,6 @@ radiusi = cast(agent_radius, 'int32');
 
 % horizontal check
 for i=max(1, pos_xi-radiusi) : min(data.width, pos_xi+radiusi)
-    %if data.img(floor_idx).img_build(pos_yi, i) == data.color.wall
     if data.floor(floor_idx).img_wall(pos_yi, i)
         val = 1;
         return;
@@ -45,7 +44,6 @@ for i=max(1, pos_xi-radiusi) : min(data.width, pos_xi+radiusi)
 end
 % vertical check
 for i=max(1, pos_yi-radiusi) : min(data.height, pos_yi+radiusi)
-    %if data.img(floor_idx).img_build(i, pos_xi) == data.color.wall
     if data.floor(floor_idx).img_wall(i, pos_xi)
         val = 1;
         return;
