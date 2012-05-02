@@ -2,6 +2,12 @@ function data = addAgentRepulsiveForce(data)
 %ADDAGENTREPULSIVEFORCE Summary of this function goes here
 %   Detailed explanation goes here
 
+% Obstruction effects in case of physical interaction
+k = 1.2; % WRONG UNIT
+kappa = 2.4; % WRONG UNIT
+A = 20;
+B = 0.08;
+
 for fi = 1:data.floor_count
 
     agents_on_floor = length(data.floor(fi).agents);
@@ -14,16 +20,34 @@ for fi = 1:data.floor_count
             vj = data.floor(fi).agents(aj).v;
             
             r = (posi - posj) * data.meter_per_pixel;
-            rn = norm(r);
+            rij = (data.floor(fi).agents(ai).radius + ...
+                data.floor(fi).agents(aj).radius);
+            d = norm(r);
+            % Normalized vector pointing from j to i
+            n = r/d;
+            % Tangential direction
+            tij = [-n(1),n(2)];
             
-            bi = sqrt((rn + norm( r-vj*data.deltat))^2-(norm(vj)*data.deltat)^2)/2;
-            bj = sqrt((rn + norm(-r-vi*data.deltat))^2-(norm(vi)*data.deltat)^2)/2;
+            bi = sqrt((d + norm( r-vj*data.deltat))^2-(norm(vj)*data.deltat)^2)/2;
+            bj = sqrt((d + norm(-r-vi*data.deltat))^2-(norm(vi)*data.deltat)^2)/2;
+            
+            if d < rij
+               T1 = k*(rij - d);
+               T2 = kappa*(rij - d)*dot((vj - vi),tij)*tij;
+            else
+               T1 = 0;
+               T2 = 0;
+            end
+            
+            % Repulsive interaction force
+            Fi = (A * exp((rij - d)/B) + T1)*n + T2;
+            Fj = -(A * exp((rij - d)/B) + T1)*n - T2;
             
             Vi = data.Valphabeta0*exp(-bi/data.Valphabetasigma);
             Vj = data.Valphabeta0*exp(-bj/data.Valphabetasigma);
             
-            Fi = r*Vi;
-            Fj = -r*Vj;
+%             Fi = r*Vi;
+%             Fj = -r*Vj;
             
             if dot(vi, Fi) > norm(vi)*norm(Fi)*cos(data.wphi*pi/180)
                 wi = 1;
