@@ -17,7 +17,7 @@ while (time < data.duration)
     plotFloor(data, 1);
     
     for fi = 1:data.floor_count
-        nanpos = arrayfun(@(agent) any(isnan(agent.pos)), data.floor(fi).agents);
+        nanpos = arrayfun(@(agent) any(isnan(agent.p)), data.floor(fi).agents);
         data.floor(fi).agents = data.floor(fi).agents(~nanpos);
     end
 

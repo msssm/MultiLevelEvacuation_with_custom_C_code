@@ -1,17 +1,28 @@
 function data = addDesiredForce(data)
-%ADDDESIREDFORCE Summary of this function goes here
-%   Detailed explanation goes here
+%ADDDESIREDFORCE add 'desired' force contribution (towards nearest exit or
+%staircase)
 
 for fi = 1:data.floor_count
 
     for ai=1:length(data.floor(fi).agents)
-        pos = data.floor(fi).agents(ai).pos;
-        ex = interp2(data.floor(fi).img_dir_x, pos(2), pos(1), '*linear');
-        ey = interp2(data.floor(fi).img_dir_y, pos(2), pos(1), '*linear');
+        
+        % get agent's data
+        p = data.floor(fi).agents(ai).p;
+        m = data.floor(fi).agents(ai).m;
+        v0 = data.floor(fi).agents(ai).v0;
+        v = data.floor(fi).agents(ai).v;
+        
+        
+        % get direction towards nearest exit
+        ex = interp2(data.floor(fi).img_dir_x, p(2), p(1), '*linear');
+        ey = interp2(data.floor(fi).img_dir_y, p(2), p(1), '*linear');
         e = [ex ey];
         
-        f = (data.floor(fi).agents(ai).valpha0*e - data.floor(fi).agents(ai).v)/data.taualpha;
-        data.floor(fi).agents(ai).f = data.floor(fi).agents(ai).f + f;
+        % get force
+        Fi = m * (v0*e - v)/data.tau;
+        
+        % add force
+        data.floor(fi).agents(ai).f = data.floor(fi).agents(ai).f + Fi;
     end
 end
 

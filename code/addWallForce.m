@@ -1,16 +1,38 @@
 function data = addWallForce(data)
-%ADDWALLFORCE Summary of this function goes here
-%   Detailed explanation goes here
+%ADDWALLFORCE adds wall's force contribution to each agent
 
 for fi = 1:data.floor_count
 
     for ai=1:length(data.floor(fi).agents)
-        pos = data.floor(fi).agents(ai).pos;
-        fx = interp2(data.floor(fi).img_wall_force_x, pos(2), pos(1), '*linear');
-        fy = interp2(data.floor(fi).img_wall_force_y, pos(2), pos(1), '*linear');
-        f = [fx fy];
+        % get agents data
+        p = data.floor(fi).agents(ai).p;
+        ri = data.floor(fi).agents(ai).r;
+        vi = data.floor(fi).agents(ai).v;
         
-        data.floor(fi).agents(ai).f = data.floor(fi).agents(ai).f + f;
+        % get direction from nearest wall to agent
+        nx = interp2(data.floor(fi).img_wall_dist_grad_x, p(2), p(1), '*linear');
+        ny = interp2(data.floor(fi).img_wall_dist_grad_y, p(2), p(1), '*linear');
+        
+        % get distance to nearest wall
+        diW = interp2(data.floor(fi).img_wall_dist, p(2), p(1), '*linear');
+        
+        % get perpendicular and tangential unit vectors
+        niW = [ nx ny];
+        tiW = [-ny nx];
+        
+        
+        % calculate force
+        if diW < ri
+            T1 = data.k * (ri - diW);
+            T2 = data.kappa * (ri - diW) * dot(vi, tiW) * tiW;
+        else
+            T1 = 0;
+            T2 = 0;
+        end
+        Fi = (data.A * exp((ri-diW)/data.B) + T1)*niW - T2;
+        
+        % add force to agent's current force
+        data.floor(fi).agents(ai).f = data.floor(fi).agents(ai).f + Fi;
     end
 end
 

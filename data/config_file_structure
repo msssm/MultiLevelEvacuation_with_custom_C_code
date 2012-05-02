@@ -37,20 +37,17 @@ TODO: Update variables and formulas based on papaer: Escape Panic Helbling 2000
 dt = <timestep>                             simulation timestep in seconds
 duration = <duration>                       simulation duration in seconds
 
-taualpha = <see paper 'Social force model for pedestrian dynamics'>
-deltat = <see paper 'Social force model for pedestrian dynamics'>
+tau = <see article 'Simulating dynamical features of escape panic'>
+A = <see article 'Simulating dynamical features of escape panic'>
+B = <see article 'Simulating dynamical features of escape panic'>
+k = <see article 'Simulating dynamical features of escape panic'>
+kappa = <see article 'Simulating dynamical features of escape panic'>
 
-valphamaxmul = <see paper 'Social force model for pedestrian dynamics'>
-v0mean = <see paper 'Social force model for pedestrian dynamics'>
-v0stdev = <see paper 'Social force model for pedestrian dynamics'>
-
-Valphabeta0 = <see paper 'Social force model for pedestrian dynamics'>
-Valphabetasigma = <see paper 'Social force model for pedestrian dynamics'>
-UalphaB0 = <see paper 'Social force model for pedestrian dynamics'>
-UalphaBR = <see paper 'Social force model for pedestrian dynamics'>
-
-wphi = <see paper 'Social force model for pedestrian dynamics'>
-wc = <see paper 'Social force model for pedestrian dynamics'>
+r_min = <minimum radius of an agent, see article 'Simulating dynamical features of escape panic' for details>
+r_max = <maximum radius of an agent, see article 'Simulating dynamical features of escape panic' for details>
+v0 = <desired speed, see article 'Simulating dynamical features of escape panic' for details>
+v_max = <maximum velocity of an agent, see article 'Simulating dynamical features of escape panic' for details>
+m = <mass of an agent, see article 'Simulating dynamical features of escape panic' for details>
 
 images
 ------

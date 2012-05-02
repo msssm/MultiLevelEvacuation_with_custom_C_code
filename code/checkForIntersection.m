@@ -15,14 +15,13 @@ function val = checkForIntersection(data, floor_idx, agent_idx, agent_new_pos)
 
 val = 0;
 
-floor = data.floor(floor_idx);
-agent_radius = floor.agents(agent_idx).radius;
+agent_radius = data.floor(floor_idx).agents(agent_idx).r;
 
 % check for agent intersection
-for i=1:length(floor.agents)
+for i=1:length(data.floor(floor_idx).agents)
     if i~=agent_idx
-        if norm(floor.agents(i).pos-agent_new_pos)*data.meter_per_pixel ...
-                < agent_radius +  floor.agents(i).radius
+        if norm(data.floor(floor_idx).agents(i).p-agent_new_pos)*data.meter_per_pixel ...
+                <= agent_radius +  data.floor(floor_idx).agents(i).r
             val=2;
             return;
         end
@@ -31,22 +30,14 @@ end
 
 
 % check for wall intersection
-pos_xi = cast(agent_new_pos(2), 'int32');
-pos_yi = cast(agent_new_pos(1), 'int32');
-radiusi = cast(agent_radius, 'int32');
+xmin = floor(agent_new_pos(1) - agent_radius*data.pixel_per_meter);
+xmax = ceil(agent_new_pos(1) + agent_radius*data.pixel_per_meter);
+ymin = floor(agent_new_pos(2) - agent_radius*data.pixel_per_meter);
+ymax = ceil(agent_new_pos(2) + agent_radius*data.pixel_per_meter);
 
-% horizontal check
-for i=max(1, pos_xi-radiusi) : min(data.width, pos_xi+radiusi)
-    if data.floor(floor_idx).img_wall(pos_yi, i)
-        val = 1;
-        return;
-    end
-end
-% vertical check
-for i=max(1, pos_yi-radiusi) : min(data.height, pos_yi+radiusi)
-    if data.floor(floor_idx).img_wall(i, pos_xi)
-        val = 1;
-        return;
-    end
+map = false(size(data.floor(floor_idx).img_wall));
+map(ymin:ymax, xmin:xmax) = true;
+if any(map & data.floor(floor_idx).img_wall)
+    val = 1;
 end
 
