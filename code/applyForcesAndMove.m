@@ -27,7 +27,7 @@ for fi = 1:data.floor_count
            
         % if the new position is inside a wall, remove perpendicular
         % component of the agent's velocity
-        while data.floor(fi).img_wall(round(newp(1)), round(newp(2)))
+        if interp2(data.floor(fi).img_wall_dist, newp(2), newp(1), '*linear') < data.floor(fi).agents(ai).r
             
             % get agent's position
             p = data.floor(fi).agents(ai).p;
@@ -48,8 +48,13 @@ for fi = 1:data.floor_count
                    v * data.dt / data.meter_per_pixel;
         end
         
+        if data.floor(fi).img_wall(round(newp(1)), round(newp(2)))
+            newp = data.floor(fi).agents(ai).p;
+            v = [0 0];
+        end
+        
         % update agent's velocity and position
-        data.floor(fi).agents(ai).v;
+        data.floor(fi).agents(ai).v = v;
         data.floor(fi).agents(ai).p = newp;
         
         % reset forces for next timestep

@@ -17,12 +17,11 @@ data = config;
 data.pixel_per_meter = 1/data.meter_per_pixel;
 
 
-data = initAgents(data);
-
-
 % preprocessing: fast sweeping, exits, stairs ...
 data = initEscapeRoutes(data);
 data = initWallForces(data);
+
+data = initAgents(data);
 
 
 % statistics, ...

@@ -17,6 +17,7 @@ imagesc(1-data.floor(floor_idx).img_wall);
 colormap gray;
 hold on;
 axis equal;
+set(gca, 'Visible', 'off')
 
 for i=1:length(data.floor(floor_idx).agents)
     plotAgent(data.floor(floor_idx).agents(i), i);

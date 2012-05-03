@@ -1,11 +1,6 @@
 function data = initAgents(data)
 
 % place agents randomly in desired spots, without overlapping
-%
-%  return:
-%   data             agents are stored as:
-%                    data.floor(i).agents(k).pos: vector [y, x]
-%                    data.floor(i).agents(k).radius
 
 
 
@@ -24,8 +19,9 @@ for i=1:data.floor_count
     
     if ~isempty(x)
         floors_with_agents = floors_with_agents + 1;
-        cur_agent = 1;
         for j=1:agent_count
+            cur_agent = length(data.floor(i).agents) + 1;
+            
             % init agent
             data.floor(i).agents(cur_agent).r = getAgentRadius();
             data.floor(i).agents(cur_agent).v = [0, 0];
@@ -33,26 +29,27 @@ for i=1:data.floor_count
             data.floor(i).agents(cur_agent).m = data.m;
             data.floor(i).agents(cur_agent).v0 = data.v0;
             
-            tries = 10*j; % make this smaller if initialization is too slow!
+            %tries = 10*j; % make this smaller if initialization is too slow!
+            tries = 10;
             while tries > 0
                 % randomly pick a spot and check if it's free
                 idx = randi(length(x));
                 data.floor(i).agents(cur_agent).p = [y(idx), x(idx)];
-                if checkForIntersection(data, i, cur_agent, [y(idx), x(idx)]) == 0
+                if checkForIntersection(data, i, cur_agent) == 0
                     tries = -1; % leave the loop
-                    cur_agent = cur_agent + 1;
                 end
                 tries = tries - 1;
             end
-            if tries == 0
+            if tries > -1
                 %remove the last agent
                 data.floor(i).agents = data.floor(i).agents(1:end-1);
             end
         end
-        if cur_agent-1 ~= agent_count
-            warning('could only place %d agents on floor %d ...instead of %d agents' ...
-                , cur_agent-1, i, agent_count)
-        end
+    end
+    
+    if length(data.floor(i).agents) ~= agent_count
+        warning('could only place %d agents on floor %d ...instead of %d agents' ...
+            , length(data.floor(i).agents), i, agent_count)
     end
 end
 if floors_with_agents==0
