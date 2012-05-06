@@ -49,6 +49,14 @@ while (data.time < data.duration)
     else
         data.time = data.time + data.dt;
     end
+    
+    if data.agents_exited == data.total_agent_count
+        fprintf('All agents are now saved (or are they?). Time: %.2f sec\n', data.time);
+        fprintf('Total Agents: %i\n', data.total_agent_count);
+        break;
+    end
+    
+    
     telapsed = toc(tstart);
     pause(max(data.dt - telapsed, 0.01));
     fprintf('Frame %i done (took %.3fs).\n', frame, telapsed);
