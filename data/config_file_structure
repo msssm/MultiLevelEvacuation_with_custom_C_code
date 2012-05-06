@@ -26,6 +26,8 @@ height = <height>							simulation width & height (all
 meter_per_pixel = <scale>					scaling to convert meters <--> pixels
 											value in meters = pixels * meter_per_pixel
 
+save_frames = <0/1>							whether to save each frame into
+											folder frames
 
 floor_count = <num of floors>
 floor_<i>_build = some_image.png			building image for floor i

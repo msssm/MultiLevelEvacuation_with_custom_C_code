@@ -7,7 +7,8 @@ data = main();
 time = 0;
 figure;
 frame = 0;
-plotFloor(data, 1);
+timestamp = datestr(datevec(now), 'yyyy.mm.dd-HH.MM.SS');
+
 while (time < data.duration)
     tic;
     data = addDesiredForce(data);
@@ -15,16 +16,16 @@ while (time < data.duration)
     data = addAgentRepulsiveForce(data);
     data = applyForcesAndMove(data);
     
-    clf;
-    plotFloor(data, 1);
-    % save floor 1 plot
-    set(gcf, 'PaperPosition',[0 0 5 4])
-    print('-depsc2',sprintf('frames/floor1_%04i.eps', frame), '-r400');
-    clf;
-    plotFloor(data, 2);
-    % save floor 2 plot
-    set(gcf, 'PaperPosition',[0 0 5 4])
-    print('-depsc2',sprintf('frames/floor2_%04i.eps', frame), '-r400');
+    for floor=1:data.floor_count
+        clf;
+        plotFloor(data, floor);
+        % save floor 1 plot
+        if data.save_frames==1
+            set(gcf, 'PaperPosition',[0 0 5 4])
+            print('-depsc2',sprintf('frames/%s_f%04i_floor%02i.eps', ...
+                timestamp,frame, floor), '-r400');
+        end
+    end
     
     % print mean/median velocity of agents on each floor
 %     for fi = 1:data.floor_count
@@ -40,7 +41,7 @@ while (time < data.duration)
         time = time + data.dt;
     end
     
-    %pause(max(data.dt - toc, 0.01));
+    pause(max(data.dt - toc, 0.01));
     fprintf('Frame %i done.\n', frame);
     frame = frame + 1;
 end
