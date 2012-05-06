@@ -8,7 +8,6 @@ function data = initialize(config)
 %   data        data structure: all internal data used for the main loop
 %
 %               all internal data is stored in pixels NOT in meters
-%                   (is that a good decision ?)
 
 
 data = config;

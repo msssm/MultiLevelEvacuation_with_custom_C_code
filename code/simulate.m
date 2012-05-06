@@ -1,7 +1,14 @@
-function simulate()
+function simulate(config_file)
 % run this to start the simulation
 
-data = main();
+if nargin==0
+    config_file='../data/config1.conf';
+end
+
+config = loadConfig(config_file);
+
+data = initialize(config);
+
 
 time = 0;
 data.figure=figure;

@@ -13,12 +13,13 @@ function plotAgent(agent, i)
 end
 
 hold off;
-subplot(1, data.floor_count,floor_idx)
+subplot(1, data.floor_count,data.floor_count - floor_idx+1);
 
-% background image
-imagesc(1-data.floor(floor_idx).img_wall);
-colormap gray;
+% the building image
+imagesc(data.floor(floor_idx).img_plot);
 hold on;
+colormap(data.color_map);
+
 axis equal;
 axis manual; %do not change axis on window resize
 %set(gca, 'Visible', 'off')

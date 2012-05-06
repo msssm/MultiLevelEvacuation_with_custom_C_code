@@ -4,10 +4,6 @@ function config = loadConfig(config_file)
 %  arguments:
 %   config_file     string, which configuration file to load
 %
-%  return:
-%   config.img(i).img_build
-%                   building structure images for floor i
-%                   2d matrix, values: R<<16 + G<<8 + B
 
 
 % get the path from the config file -> to read the images
@@ -59,5 +55,13 @@ for i=1:config.floor_count
     config.floor(i).img_stairs_down = (img_build(:, :, 1) ==   0 ...
                                      & img_build(:, :, 2) ==   0 ...
                                      & img_build(:, :, 3) == 255);
+                                 
+    %init the plot image here, because this won't change
+    config.floor(i).img_plot = 5*config.floor(i).img_wall ...
+        + 4*config.floor(i).img_stairs_up ...
+        + 3*config.floor(i).img_stairs_down ...
+        + 2*config.floor(i).img_exit ...
+        + 1*config.floor(i).img_spawn;
+    config.color_map = [1 1 1; 0.9 0.9 0.9; 0 1 0; 0.4 0.4 1; 1 0.4 0.4; 0 0 0];
 end
 
