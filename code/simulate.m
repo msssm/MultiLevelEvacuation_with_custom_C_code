@@ -17,9 +17,7 @@ while (time < data.duration)
     data = applyForcesAndMove(data);
     
     for floor=1:data.floor_count
-        clf;
         plotFloor(data, floor);
-        % save floor 1 plot
         if data.save_frames==1
             set(gcf, 'PaperPosition',[0 0 5 4])
             print('-depsc2',sprintf('frames/%s_f%04i_floor%02i.eps', ...
