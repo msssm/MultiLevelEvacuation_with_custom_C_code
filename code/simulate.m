@@ -16,7 +16,7 @@ frame = 0;
 timestamp = datestr(datevec(now), 'yyyy.mm.dd-HH.MM.SS');
 
 while (time < data.duration)
-    tic;
+    tstart=tic;
     data = addDesiredForce(data);
     data = addWallForce(data);
     data = addAgentRepulsiveForce(data);
@@ -44,9 +44,9 @@ while (time < data.duration)
     else
         time = time + data.dt;
     end
-    
-    pause(max(data.dt - toc, 0.01));
-    fprintf('Frame %i done.\n', frame);
+    telapsed = toc(tstart);
+    pause(max(data.dt - telapsed, 0.01));
+    fprintf('Frame %i done (took %.3fs).\n', frame, telapsed);
     frame = frame + 1;
 end
 
