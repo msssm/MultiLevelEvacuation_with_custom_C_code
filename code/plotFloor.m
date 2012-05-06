@@ -20,6 +20,7 @@ imagesc(1-data.floor(floor_idx).img_wall);
 colormap gray;
 hold on;
 axis equal;
+axis manual; %do not change axis on window resize
 %set(gca, 'Visible', 'off')
 
 title(sprintf('floor %i', floor_idx));
