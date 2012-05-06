@@ -28,8 +28,8 @@ while (data.time < data.duration)
     end
     if data.save_frames==1
         set(data.figure_floors, 'PaperPosition',[0 0 5 4])
-        print('-depsc2',sprintf('frames/%s_frame%04i.eps', ...
-            timestamp,frame), '-r400', data.figure_floors);
+        print('-dpng',sprintf('frames/%s_frame%04i.png', ...
+            timestamp,frame), data.figure_floors);
     end
     
     set(0,'CurrentFigure',data.figure_exit);
