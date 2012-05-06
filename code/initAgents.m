@@ -9,7 +9,8 @@ function radius = getAgentRadius()
     radius = data.r_min + (data.r_max-data.r_min)*rand();
 end
 
-
+data.agents_exited = 0; %how many agents have reached the exit
+data.total_agent_count = 0;
 
 floors_with_agents = 0;
 agent_count = data.agents_per_floor;
@@ -46,6 +47,7 @@ for i=1:data.floor_count
             end
         end
     end
+    data.total_agent_count = data.total_agent_count + length(data.floor(i).agents);
     
     if length(data.floor(i).agents) ~= agent_count
         warning('could only place %d agents on floor %d ...instead of %d agents' ...

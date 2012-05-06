@@ -16,14 +16,23 @@ data = config;
 data.pixel_per_meter = 1/data.meter_per_pixel;
 
 
-% preprocessing: fast sweeping, exits, stairs ...
 data = initEscapeRoutes(data);
 data = initWallForces(data);
 
 data = initAgents(data);
 
 
-% statistics, ...
+%init the plots
+%exit plot
+data.figure_exit=figure;
+hold on;
+axis([0 data.duration 0 data.total_agent_count]);
+title(sprintf('agents that reached the exit (total agents: %i)', data.total_agent_count));
+
+%floors plot
+data.figure_floors=figure;
+data.figure_floors_subplots_w = data.floor_count;
+data.figure_floors_subplots_h = 1;
 
 
 

@@ -12,18 +12,19 @@ function plotAgent(agent, i)
     %text(agent.pos(2),agent.pos(1),int2str(i));
 end
 
-hold off;
-subplot(1, data.floor_count,data.floor_count - floor_idx+1);
+subplot(data.figure_floors_subplots_h, data.figure_floors_subplots_w ...
+    , data.floor_count - floor_idx+1);
 
+hold off;
 % the building image
 imagesc(data.floor(floor_idx).img_plot);
 hold on;
-colormap(data.color_map);
 
+%plot options
+colormap(data.color_map);
 axis equal;
 axis manual; %do not change axis on window resize
 %set(gca, 'Visible', 'off')
-
 title(sprintf('floor %i', floor_idx));
 
 for i=1:length(data.floor(floor_idx).agents)

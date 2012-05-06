@@ -10,26 +10,31 @@ config = loadConfig(config_file);
 data = initialize(config);
 
 
-time = 0;
-data.figure=figure;
+data.time = 0;
 frame = 0;
 timestamp = datestr(datevec(now), 'yyyy.mm.dd-HH.MM.SS');
 
-while (time < data.duration)
+while (data.time < data.duration)
     tstart=tic;
     data = addDesiredForce(data);
     data = addWallForce(data);
     data = addAgentRepulsiveForce(data);
     data = applyForcesAndMove(data);
     
+    % do the plotting
+    set(0,'CurrentFigure',data.figure_floors);
     for floor=1:data.floor_count
         plotFloor(data, floor);
     end
     if data.save_frames==1
-        set(data.figure, 'PaperPosition',[0 0 5 4])
+        set(data.figure_floors, 'PaperPosition',[0 0 5 4])
         print('-depsc2',sprintf('frames/%s_frame%04i.eps', ...
-            timestamp,frame), '-r400', data.figure);
+            timestamp,frame), '-r400', data.figure_floors);
     end
+    
+    set(0,'CurrentFigure',data.figure_exit);
+    plotExitedAgents(data);
+    
     
     % print mean/median velocity of agents on each floor
 %     for fi = 1:data.floor_count
@@ -38,11 +43,11 @@ while (time < data.duration)
 %     end
     
 
-    if (time + data.dt > data.duration)
-        data.dt = data.duration - time;
-        time = data.duration;
+    if (data.time + data.dt > data.duration)
+        data.dt = data.duration - data.time;
+        data.time = data.duration;
     else
-        time = time + data.dt;
+        data.time = data.time + data.dt;
     end
     telapsed = toc(tstart);
     pause(max(data.dt - telapsed, 0.01));
