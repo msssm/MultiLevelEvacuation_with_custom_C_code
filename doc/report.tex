@@ -2,6 +2,7 @@
 \usepackage{geometry}                
 \geometry{letterpaper}                   
 
+\usepackage{listings}
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{epstopdf}
@@ -130,9 +131,31 @@ Intuitive expectations and mathematical model results can stay sometimes in cont
 
 To investigate it, we will create a relatively general framework for behavioral simulation in evacuation scenarios. That includes every non-trivial, relevant force affecting every agent i.e. repulsion within the agents (unconscious privacy area conservation), detection of environment (walls, exits, stairs - inclusive direction-, evtl. source of evacuation,etc ) rational thinking to calculate the way to exit (run-time calculation with fast-sweeping algorithm), etc.
 
+
 \subsection{General Model}
 
-We are planning to base our work on the social force model \cite{SFMPD}. The  behaviour of the agents will be mainly influenced by different model parameters like obstacles, stairs and other agents. In addition, psychological pressure in such evacuation scenarios are going to be investigated.
+We are planning to base our work on the social force model \cite{SFMPD}. The  behaviour of the agents will be mainly influenced by different model parameters like obstacles, stairs and other agents. In addition, psychological pressure in such evacuation scenarios are going to be investigated. The following points are the chosen parameters for the model in this work. For more precisely mathematical explanations, see \cite{SFMPD}
+
+\subsection*{Agents Repultion Force}
+
+Within a evacuation scenario, the psychological tendency of two pedestrians i and j to stay away from each other, depends on the level of repultion between this two specific agents (margin of unconscious privacy area conservation between them). In addition, we assume two other more physical forces: a `body force' counteracting body compression (important factor in a panic evacuation model) and a `sliding friction force' avoiding the unnatural regulation of the speed when the agent nears another. 
+
+\subsection*{Physical Objects}
+
+Using the nearest point in a wall to an agent, the repulsive forces created by the whole wall is treaten analog as the created Agents-Repultion-Forces. At the same time, the preprocessing of the map, together with the exits and stairs, allows us to create a gradient field all over the map, that shows the agent, the shortest way to exit the floor. 
+
+%%Evtl.  example of field force?? from /images
+
+
+\subsection*{Force of Agents}
+
+Quote from 'Helbling, Dirk - Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics' \cite{SFMPD} :
+
+\textit{"The desired velocity $v^0_i$ can reach more than $5 ms^{-1}$ (up to $10 m s^{-1}$), but the observed free velocities	for	leaving	a	room	correspond	to	$v^0_i=6 ms^{-1}$ under relaxed, $1ms^{-1}$ under normal, and $1.5ms^{-1}$ under nervous conditions. A reasonable estimate for the acceleration time is 􏰄$0.5ms^{-1}$."}
+
+In our model, although the mass is not visible, it is from enorm importance for the calculation of the force of each agent. It's well known that the inertia of each agent is directly dependent from his mass and velocity..
+
+
 
 \subsection{Research}
 
@@ -153,6 +176,17 @@ As a core investigation we are going to simulate an everyday situation in a crow
 
 
 \section{Implementation}
+
+
+\subsection{Analysis of the Efficiency}
+
+Using the \textit{Profiler}-function of Matlab, we were able to discuss the efficiency of our implementation. The following image show the time comsumption for the calculation of the evacuation of 200000 floors within 15000000 secounds: %%TODO:Only example
+
+\medskip
+
+\begin{center}
+	\includegraphics[width=100mm]{./images/profiler.png}
+\end{center}
 
 \section{Simulation Results and Discussion}
 
@@ -183,6 +217,29 @@ We expect the stairs and the main building exit to be the bottlenecks. The amoun
 
 % use \cite{SFMPD} for citation
 
+\section{Appendix}
+
+\subsection{Code}
+
+\lstset{language=Matlab,breaklines=true}
+
+\lstinputlisting[caption=simulate.m]{../code/simulate.m}
+\lstinputlisting[caption=plotFloor.m]{../code/plotFloor.m}
+\lstinputlisting[caption=plotExitedAgents.m]{../code/plotExitedAgents.m}
+\lstinputlisting[caption=plotAgents.m]{../code/plotAgents.m}
+\lstinputlisting[caption=loadConfig.m]{../code/loadConfig.m}
+\lstinputlisting[caption=initWallForces.m]{../code/initWallForces.m}
+\lstinputlisting[caption=initialize.m]{../code/initialize.m}
+\lstinputlisting[caption=initEscapeRoutes.m]{../code/initEscapeRoutes.m}
+\lstinputlisting[caption=initAgents.m]{../code/initAgents.m}
+\lstinputlisting[caption=imageToMat.m]{../code/imageToMat.m}
+\lstinputlisting[language=C,caption=getNormalizedGradient.c]{../code/getNormalizedGradient.c}
+\lstinputlisting[language=C,caption=fastSweeping.c]{../code/fastSweeping.c}
+\lstinputlisting[caption=checkForIntersection.m]{../code/checkForIntersection.m}
+\lstinputlisting[caption=applyForcesAndMove.m]{../code/applyForcesAndMove.m}
+\lstinputlisting[caption=addWallForce.m]{../code/addWallForce.m}
+\lstinputlisting[caption=addDesiredForce.m]{../code/addDesiredForce.m}
+\lstinputlisting[caption=addAgentRepulsiveForce.m]{../code/addAgentRepulsiveForce.m}
 
 \end{document}  
 
