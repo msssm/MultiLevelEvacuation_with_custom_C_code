@@ -128,7 +128,9 @@ Simulating the evacuation scenario of a single-level building is well known but 
 Intuitive expectations and mathematical model results can stay sometimes in contradictions. To prove the rational expected results of i.e. evacuation of the ETH, we want to provide a flexible tool that is able to calculate every scenario in every provided structure with certains requirements.
 
 \section{Description of the Model}
-%TODO: finalize (write out every etc.)
+
+%TODO: finalize (write out every etc.) Hans compare with RESEARCH!
+% TODO MERGE WITH RESEARCH!!! Andrin Jenal
 
 To investigate it, we will create a relatively general framework for behavioral simulation in evacuation scenarios. That includes every non-trivial, relevant force affecting every agent i.e. repulsion within the agents (unconscious privacy area conservation), detection of environment (walls, exits, stairs - inclusive direction-, evtl. source of evacuation,etc ) rational thinking to calculate the way to exit (run-time calculation with fast-sweeping algorithm), etc.
 
@@ -163,6 +165,10 @@ In our model, although the mass is not visible, it is from enorm importance for 
 
 
 \subsection{Research}
+
+The core investigation is a szenario which describes the panic behaviour of individuals in a crowded building. Whereas at the beginning of each simulation the setting is a general everyday situation and at the end we should be able to make strong statements anwsering our fundamental questions.
+Relying on a fairly recent paper [Halbling2000] we tried to get our simulation as accurate to reality as possible. Since this model is based on above mentioned forces and interactions we tried to figure out how agents overcome major obstacles like tiny passages and stairs. Here the shape of rooms and building is a key factor contributing to the behaviour of agents.
+Therefore we defined a special setting concerning agents on stairs, which includes reduces velocity.
 
 % TODO: ausführlicher
 As a core investigation we are going to simulate an everyday situation in a crowded (public) environment ending in an evacuation scenario.
