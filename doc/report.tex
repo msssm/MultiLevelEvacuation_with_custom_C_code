@@ -128,6 +128,7 @@ Simulating the evacuation scenario of a single-level building is well known but 
 Intuitive expectations and mathematical model results can stay sometimes in contradictions. To prove the rational expected results of i.e. evacuation of the ETH, we want to provide a flexible tool that is able to calculate every scenario in every provided structure with certains requirements.
 
 \section{Description of the Model}
+%TODO: finalize (write out every etc.)
 
 To investigate it, we will create a relatively general framework for behavioral simulation in evacuation scenarios. That includes every non-trivial, relevant force affecting every agent i.e. repulsion within the agents (unconscious privacy area conservation), detection of environment (walls, exits, stairs - inclusive direction-, evtl. source of evacuation,etc ) rational thinking to calculate the way to exit (run-time calculation with fast-sweeping algorithm), etc.
 
@@ -135,6 +136,10 @@ To investigate it, we will create a relatively general framework for behavioral 
 \subsection{General Model}
 
 We are planning to base our work on the social force model \cite{SFMPD}. The  behaviour of the agents will be mainly influenced by different model parameters like obstacles, stairs and other agents. In addition, psychological pressure in such evacuation scenarios are going to be investigated. The following points are the chosen parameters for the model in this work. For more precisely mathematical explanations, see \cite{SFMPD}
+
+
+\subsection*{Fast Sweeping Algorithm}
+%todo (felix)
 
 \subsection*{Agents Repultion Force}
 
@@ -159,6 +164,7 @@ In our model, although the mass is not visible, it is from enorm importance for 
 
 \subsection{Research}
 
+% TODO: ausführlicher
 As a core investigation we are going to simulate an everyday situation in a crowded (public) environment ending in an evacuation scenario.
 
 \subsection{Fundamental Questions}
@@ -168,6 +174,8 @@ As a core investigation we are going to simulate an everyday situation in a crow
 \item Do the results correspond to the literature? Why? - Why not?
 \item What are the similarities to single level evacuation bottleneck?
 \item What are the most influential forces, which decide the behavior of scenario?
+
+%TODO: make a text out of this
  
 \end{enumerate}
 
@@ -177,8 +185,19 @@ As a core investigation we are going to simulate an everyday situation in a crow
 
 \section{Implementation}
 
+% TODO: description of the matlab code model: including config (+bitmaps: building
+% image), flexibility of our model
 
 \subsection{Analysis of the Efficiency}
+
+
+%TODO: 
+% profiler resultat diskutieren
+%  addAgentRepulsiveForce langsam, da N^2
+%  interp2: konstante funk., nicht schneller mit '*nearest', viel langsamer mit
+%  'linear'
+% optimierungsversuch mit parfor (in den einzelnen kräften): nicht schneller, da
+% viel daten ausgetauscht werden müssen
 
 Using the \textit{Profiler}-function of Matlab, we were able to discuss the efficiency of our implementation. The following image show the time comsumption for the calculation of the evacuation of 200000 floors within 15000000 secounds: %%TODO:Only example
 
@@ -195,6 +214,8 @@ Using the \textit{Profiler}-function of Matlab, we were able to discuss the effi
 We expect the stairs and the main building exit to be the bottlenecks. The amount of people in lower levels is increasing with time until a certain point, when most of the people have exited the building. Also we think that if the speed (velocity) of the people is higher (people are more in panic), jams at the exit will increase and people will mainly try to take the main exit instead of emergency exits.
 
 \subsection{Simulation Results}
+
+%TODO: add some plots, ...
 
 \subsection{Discussion}
 
