@@ -27,17 +27,15 @@ for fi = 1:data.floor_count
            
         % if the new position is inside a wall, remove perpendicular
         % component of the agent's velocity
-        if interp2(data.floor(fi).img_wall_dist, newp(2), newp(1), '*linear') < data.floor(fi).agents(ai).r
+        if lerp2(data.floor(fi).img_wall_dist, newp(1), newp(2)) < data.floor(fi).agents(ai).r
             
             % get agent's position
             p = data.floor(fi).agents(ai).p;
             
             % get wall distance gradient (which is off course perpendicular
             % to the nearest wall)
-            nx = interp2(data.floor(fi).img_wall_dist_grad_x, ...
-                 p(2), p(1), '*linear');
-            ny = interp2(data.floor(fi).img_wall_dist_grad_y, ...
-                 p(2), p(1), '*linear');
+            nx = lerp2(data.floor(fi).img_wall_dist_grad_x, p(1), p(2));
+            ny = lerp2(data.floor(fi).img_wall_dist_grad_y, p(1), p(2));
             n = [nx ny];
             
             % project out perpendicular component of velocity vector

@@ -14,8 +14,10 @@ for fi = 1:data.floor_count
         
         
         % get direction towards nearest exit
-        ex = interp2(data.floor(fi).img_dir_x, p(2), p(1), '*linear');
-        ey = interp2(data.floor(fi).img_dir_y, p(2), p(1), '*linear');
+        %ex = interp2(data.floor(fi).img_dir_x, p(2), p(1), '*linear');
+        %ey = interp2(data.floor(fi).img_dir_y, p(2), p(1), '*linear');
+        ex = lerp2(data.floor(fi).img_dir_x, p(1), p(2));
+        ey = lerp2(data.floor(fi).img_dir_y, p(1), p(2));
         e = [ex ey];
         
         % get force
