@@ -194,7 +194,7 @@ As a core investigation we are going to simulate an everyday situation in a crow
 % TODO: description of the matlab code model: including config (+bitmaps: building
 % image), flexibility of our model
 
-\subsection{Analysis of the Efficiency}
+\subsection{Profiling \& optimization}
 
 
 %TODO: 
@@ -202,16 +202,26 @@ As a core investigation we are going to simulate an everyday situation in a crow
 %  addAgentRepulsiveForce langsam, da N^2
 %  interp2: konstante funk., nicht schneller mit '*nearest', viel langsamer mit
 %  'linear'
-% optimierungsversuch mit parfor (in den einzelnen kräften): nicht schneller, da
-% viel daten ausgetauscht werden müssen
 
 Using the \textit{Profiler}-function of Matlab, we were able to discuss the efficiency of our implementation. The following image show the time comsumption for the calculation of the evacuation of 200000 floors within 15000000 secounds: %%TODO:Only example
 
 \medskip
 
 \begin{center}
-	\includegraphics[width=100mm]{./images/profiler.png}
+	\includegraphics[width=0.9\textwidth]{./images/profiler.png}
 \end{center}
+
+We tried to optimize the code using the parallel for-loop parfor in matlab. In
+the function applyForcesAndMove we replaced the for-loop over the agents with
+parfor. We measured the time using an input with 200 agents on a 4 core machine
+using 5 matlab workers. The result was that the parfor version was even slightly
+slower than the serial version. The reason for this is how matlab implements
+parfor: all the memory that is used by a worker must be sent to this worker.
+Each agent must access the building floor image randomly and this creates a
+large amount of memory that must be transferred to each worker, which leads to a
+decreasing performance.
+This is why we decided not to use parfor or any other parallelization in our
+implementation.
 
 \section{Simulation Results and Discussion}
 
