@@ -24,4 +24,4 @@ do
     echo "$FILENAME -> ${FILENAME%eps}jpg"
 done
 
-avconv -i ./frames/"$BASENAME"_%04d.jpg -r 25 -b 100M ../videos/"$BASENAME".avi
+avconv -i ./frames/"$BASENAME"_%04d.jpg -r 25 -b 100M -threads 6 ../videos/"$BASENAME".avi
