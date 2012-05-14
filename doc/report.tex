@@ -97,7 +97,7 @@
 % IMPORTANT
 % you MUST include the ETH declaration of originality here; it is available for download on the course website or at http://www.ethz.ch/faculty/exams/plagiarism/index_EN; it can be printed as pdf and should be filled out in handwriting
 
-%TODO: The is no declaration of originality on the WEb...
+%TODO: The is declaration of originality on the WEb for Windows (Andrin Jenal)...
 
 %%%%%%%%%% Table of content %%%%%%%%%%%%%%%%%
 
@@ -111,11 +111,13 @@
 
 \section{Abstract}
 
-%% TODO: No idea what to write
+%% TODO: No idea what to write - Summary (Hans Hardmeier End)
 
 \section{Individual contributions}
 
-In this section we would like to thank the MSSSM-Group from the ETH in Zurich, Switzerland directed by Karsten Donnay and Stefano Balietti for their engagement in the lecture "Modeling and Simulating Social Systems with MATLAB" during the Spring Semester 2012.
+
+
+%TODO: Wer het was gmacht... (Jede : Beat, Hans, Andrin, Felix)
 
 \section{Introduction and Motivations}
 
@@ -129,7 +131,7 @@ Intuitive expectations and mathematical model results can stay sometimes in cont
 
 \section{Description of the Model}
 
-%TODO: finalize (write out every etc.) Hans compare with RESEARCH!
+%TODO: finalize (write out every etc.) Hans compare with RESEARCH! -> Froge zerscht (Beim Introduction)und ausschreiben
 % TODO MERGE WITH RESEARCH!!! Andrin Jenal
 
 To investigate it, we will create a relatively general framework for behavioral simulation in evacuation scenarios. That includes every non-trivial, relevant force affecting every agent i.e. repulsion within the agents (unconscious privacy area conservation), detection of environment (walls, exits, stairs - inclusive direction-, evtl. source of evacuation,etc ) rational thinking to calculate the way to exit (run-time calculation with fast-sweeping algorithm), etc.
@@ -140,8 +142,7 @@ To investigate it, we will create a relatively general framework for behavioral 
 We are planning to base our work on the social force model \cite{SFMPD}. The  behaviour of the agents will be mainly influenced by different model parameters like obstacles, stairs and other agents. In addition, psychological pressure in such evacuation scenarios are going to be investigated. The following points are the chosen parameters for the model in this work. For more precisely mathematical explanations, see \cite{SFMPD}
 
 
-\subsection*{Fast Sweeping Algorithm}
-%todo (felix)
+
 
 \subsection*{Agents Repultion Force}
 
@@ -191,8 +192,15 @@ As a core investigation we are going to simulate an everyday situation in a crow
 
 \section{Implementation}
 
-% TODO: description of the matlab code model: including config (+bitmaps: building
-% image), flexibility of our model
+% TODO: description of the matlab code model: including config  (+bitmaps: building
+% image), flexibility of our model (Beat)
+
+\subsection{Fast Sweeping Algorithm}
+%todo (felix)
+
+\subsection{Range Tree}
+%TODO (felix) :D
+
 
 \subsection{Profiling \& optimization}
 
@@ -200,10 +208,10 @@ As a core investigation we are going to simulate an everyday situation in a crow
 %TODO: 
 % profiler resultat diskutieren
 %  addAgentRepulsiveForce langsam, da N^2
-%  interp2: konstante funk., nicht schneller mit '*nearest', viel langsamer mit
-%  'linear'
+%  interp2: konstante funk., nicht schneller mit '*nearest', viel langsamer mit (lerp2 schneller...) (Hans)
+%  'linear'  
 
-Using the \textit{Profiler}-function of Matlab, we were able to discuss the efficiency of our implementation. The following image show the time comsumption for the calculation of the evacuation of 200000 floors within 15000000 secounds: %%TODO:Only example
+Using the \textit{Profiler}-function of Matlab, we were able to discuss the efficiency of our implementation. The following image show the time comsumption for the calculation of the evacuation of 200000 floors within 15000000 secounds: %%TODO:Only example und ausführlicher, neu runne
 
 \medskip
 
@@ -238,6 +246,10 @@ We expect the stairs and the main building exit to be the bottlenecks. The amoun
 
 \section{Summary and Outlook}
 
+In this section we would like to thank the MSSSM-Group from the ETH in Zurich, Switzerland directed by Karsten Donnay and Stefano Balietti for their engagement in the lecture "Modeling and Simulating Social Systems with MATLAB" during the Spring Semester 2012.
+
+
+%TODO: Rückblick aufs projekt & Danksagung
 
 \section{References}
 
@@ -258,6 +270,7 @@ We expect the stairs and the main building exit to be the bottlenecks. The amoun
 
 \subsection{Code}
 
+%TODO: (Felix) Format of Code
 \lstset{language=Matlab,breaklines=true}
 
 \lstinputlisting[caption=simulate.m]{../code/simulate.m}
@@ -277,6 +290,8 @@ We expect the stairs and the main building exit to be the bottlenecks. The amoun
 \lstinputlisting[caption=addWallForce.m]{../code/addWallForce.m}
 \lstinputlisting[caption=addDesiredForce.m]{../code/addDesiredForce.m}
 \lstinputlisting[caption=addAgentRepulsiveForce.m]{../code/addAgentRepulsiveForce.m}
+
+%TODO: Add all code-files
 
 \end{document}  
 
