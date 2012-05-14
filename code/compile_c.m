@@ -1,2 +1,5 @@
-mex -v 'fastSweeping.c'
-mex -v 'getNormalizedGradient.c'
+mex 'fastSweeping.c'
+mex 'getNormalizedGradient.c'
+mex 'lerp2.c'
+mex 'tree_create.c'
+mex 'tree_rangequery.c'
