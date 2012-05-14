@@ -29,6 +29,9 @@ meter_per_pixel = <scale>					scaling to convert meters <--> pixels
 save_frames = <0/1>							whether to save each frame into
 											folder frames
 
+frame_basename = <basename of saved frames> name of the saved frames (if save_frames = 1)
+                                            frame number is appended at the end
+
 floor_count = <num of floors>
 floor_<i>_build = some_image.png			building image for floor i
 											i in [1,floor_count]
