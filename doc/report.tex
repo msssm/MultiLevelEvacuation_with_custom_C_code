@@ -194,15 +194,17 @@ As a core investigation we are going to simulate an everyday situation in a crow
 \section{Implementation}
 Our goal was a fast implementation of the model. So we decided to use the Fast
 Sweeping algorithm instead of the Fast Marching alorithm to calculate the
-fastest way out of a building. We knew that matlab code is not very fast and
-matlab provides an interface for other programming languages. So we used C to
+fastest way out of a building. We knew that \textit{MATLAB} code is not very fast and
+\textit{MATLAB} provides an interface for other programming languages. So we
+used \textit{C} to
 implement the Fast Sweeping method.
 
 Later in the development process we discovered another bottleneck in our code:
 The social force between the agents which runs in $ O(N^2) $. Felix then
-introduced a Range Tree for this problem, which he also implemented in C.
+introduced a Range Tree for this problem, which he also implemented in
+\textit{C}.
 
-\subsection{Matlab Code}
+\subsection{\textit{MATLAB} Code}
 We wanted to create a flexibel model which can be used to simulate every
 possible building structure. 
 
@@ -222,7 +224,7 @@ simulation is running}
 \label{building floor image}
 \end{figure}
 
-Since matlab is not really object-oriented, we used a big data structure (called
+Since \textit{MATLAB} is not really object-oriented, we used a big data structure (called
 data) that includes all internal data that we use (eg. the floors and agents).
 It is passed as an argument for every function that needs it.
 
