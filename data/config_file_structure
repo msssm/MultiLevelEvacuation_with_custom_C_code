@@ -10,9 +10,6 @@ floors are numbered from 1 to floor_count, 1 is the ground floor
 config file
 -----------
 
-TODO: max speed, some randomness (panic factor ?), ...
-	 simulation speed?
-
 
 agents_per_floor = <agents>					number of agents per floor
 agents_radius_min = <min_radius>
