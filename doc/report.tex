@@ -4,10 +4,10 @@
 
 \usepackage{listings}
 \usepackage{graphicx}
-\usepackage{amssymb}
 \usepackage{epstopdf}
 \usepackage{varioref}
 \usepackage[numbers]{natbib}
+\usepackage[squaren]{SIunits}
 \usepackage{amssymb, amsmath}
 \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
 
@@ -160,7 +160,7 @@ Using the nearest point in a wall to an agent, the repulsive forces created by t
 
 Quote from 'Helbling, Dirk - Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics' \cite{SFMPD} :
 
-\textit{"The desired velocity $v^0_i$ can reach more than $5 ms^{-1}$ (up to $10 m s^{-1}$), but the observed free velocities	for	leaving	a	room	correspond	to	$v^0_i=6 ms^{-1}$ under relaxed, $1ms^{-1}$ under normal, and $1.5ms^{-1}$ under nervous conditions. A reasonable estimate for the acceleration time is 􏰄$0.5ms^{-1}$."}
+\textit{"The desired velocity $v^0_i$ can reach more than $5 \meter\second^{-1}$ (up to $10 \meter\second^{-1}$), but the observed free velocities	for	leaving	a	room	correspond	to	$v^0_i=6 \meter\second^{-1}$ under relaxed, $1\meter\second^{-1}$ under normal, and $1.5\meter\second^{-1}$ under nervous conditions. A reasonable estimate for the acceleration time is $0.5\meter\second^{-1}$."}
 
 In our model, although the mass is not visible, it is from enorm importance for the calculation of the force of each agent. It's well known that the inertia of each agent is directly dependent from his mass and velocity..
 
@@ -226,11 +226,19 @@ Since matlab is not really object-oriented, we used a big data structure (called
 data) that includes all internal data that we use (eg. the floors and agents).
 It is passed as an argument for every function that needs it.
 
-\subsection{Fast Sweeping Algorithm}
-%todo (felix)
+\subsection{Pathfinding}
+As described in \cite{SFMPD}, the agents always try to reach their desired destination using the shortest possible path. As we use raster graphics to encode simulation data, we decided to use the same discrete grid to compute the nearest path to an exit for every point approximately.
+Mathematically, this can be expressed as an partial differential equation, the 2D Eikonal equation (equation \ref{eq:eikonal}).
+
+\begin{equation} \label{eq:eikonal}
+\|\mathbf{\nabla} d(\mathbf{x})\|=1 \quad d:\!\mathbb{R}^{2}\to\mathbb{R},\mathbf{x}\in\mathbb{R}^{2}
+\end{equation}
+
+The solution $d(\mathbf{x})$ now gives the distance to the nearest exit point, its negative gradient $-\mathbf{\nabla}d(\mathbf{x})$ therefor always points in the direction of the shortest path towards the desired exit. There are mainly two competitive agorithms for solving this equation efficiently. First there is the \textit{Fast Marching} method, a specialized version of Dijkstra's well known algorithm \cite{dijkstra59a}. The alternative is \textit{Fast Sweeping}, which leads to a much simpler implementation, faster calculation and better algorithmic complexity of $O(n)$ instead of $O(n\log n)$ with respect to the discretization size. We therefor implemented an efficient \textit{Fast Sweeping} method, closly following \cite{Zhao04afast} as a basis of our pathfinding and repulsive wall forces. The algorithm uses an upwind finite difference scheme where our mesh is defined by the input images. The implementation was done \textit{C} and not directly in \textit{MATLAB}, using optimized boundary condition handling for our pruposes. Our benchmarks showed a high speed increase compared to other Eikonal solvers, e.g. the "Accurate Fast Marching" implementation as found at \textit{MATLAB CENTRAL} \cite{fastmarching}.
 
 \subsection{Range Tree}
-%TODO (felix) :D
+The most time consuming part in our program is the calculation of the interaction forces between the agents, at least if their count is high enough. To reducue the natural complexity of $O(n^{2})$ of this inter-agent interaction, we can clamp forces with little effect, e.g. in our implementation all forces smaller than $ 10^{4}\newton$. As their exponentially decreasing, the distance in which the forces need to be adressed is only several meters, so a big part of them can just be ignored without introducing a significant error.
+To get all agents influenced by another agent, we need to be able to search neighbours of any agent within a given distance. To efficiently query these agents, we implemented a 2D range tree in \textit{C}, which allows query times of $O(\log n+k)$, where $n$ is the total number of agents and $k$ is the number of queried agents \cite{algdat}. In larger simulations this reduces simulation times by a significant factor.
 
 
 \subsection{Profiling \& optimization}
@@ -242,7 +250,7 @@ It is passed as an argument for every function that needs it.
 %  interp2: konstante funk., nicht schneller mit '*nearest', viel langsamer mit (lerp2 schneller...) (Hans)
 %  'linear'  
 
-Using the \textit{Profiler}-function of Matlab, we were able to discuss the efficiency of our implementation. The following image show the time comsumption for the calculation of the evacuation of 200000 floors within 15000000 secounds: %%TODO:Only example und ausführlicher, neu runne
+Using the \textit{Profiler}-function of \textit{MATLAB}, we were able to discuss the efficiency of our implementation. The following image show the time comsumption for the calculation of the evacuation of 200000 floors within 15000000 secounds: %%TODO:Only example und ausführlicher, neu runne
 
 \medskip
 
@@ -250,11 +258,11 @@ Using the \textit{Profiler}-function of Matlab, we were able to discuss the effi
 	\includegraphics[width=0.9\textwidth]{./images/profiler.png}
 \end{center}
 
-We tried to optimize the code using the parallel for-loop parfor in matlab. In
+We tried to optimize the code using the parallel for-loop parfor in \textit{MATLAB}. In
 the function applyForcesAndMove we replaced the for-loop over the agents with
 parfor. We measured the time using an input with 200 agents on a 4 core machine
-using 5 matlab workers. The result was that the parfor version was even slightly
-slower than the serial version. The reason for this is how matlab implements
+using 5 \textit{MATLAB} workers. The result was that the parfor version was even slightly
+slower than the serial version. The reason for this is how \textit{MATLAB} implements
 parfor: all the memory that is used by a worker must be sent to this worker.
 Each agent must access the building floor image randomly and this creates a
 large amount of memory that must be transferred to each worker, which leads to a
@@ -277,7 +285,7 @@ We expect the stairs and the main building exit to be the bottlenecks. The amoun
 
 \section{Summary and Outlook}
 
-In this section we would like to thank the MSSSM-Group from the ETH in Zurich, Switzerland directed by Karsten Donnay and Stefano Balietti for their engagement in the lecture "Modeling and Simulating Social Systems with MATLAB" during the Spring Semester 2012.
+In this section we would like to thank the MSSSM-Group from the ETH in Zurich, Switzerland directed by Karsten Donnay and Stefano Balietti for their engagement in the lecture "Modeling and Simulating Social Systems with \textit{MATLAB}" during the Spring Semester 2012.
 
 
 %TODO: Rückblick aufs projekt & Danksagung
@@ -291,7 +299,11 @@ In this section we would like to thank the MSSSM-Group from the ETH in Zurich, S
 	\bibitem{ACPPD} Schadschneider, Andreas et al. (2002): CA Approach to Collective Phenomena in Pedestrian Dynamics.	
 	\bibitem{DCD} Helbling, Dirk, Johansson, Anders (2007): Dynamics of crowd disasters: An empirical Study.
 	\bibitem{SDFEP} Helbling, Dirk et al. (2000): Simulating dynamical features of escape panic.
-	\bibitem{SPCD} Helbling, Dirk et al. (2005): Self-Organized Pedestrian Crowd Dynamics: Experiments, Simulations, and Design Solutions
+	\bibitem{SPCD} Helbling, Dirk et al. (2005): Self-Organized Pedestrian Crowd Dynamics: Experiments, Simulations, and Design Solutions.
+	\bibitem{Zhao04afast} Zhao, Hongkai (2004): A Fast Sweeping Method for Eikonal Equations.
+	\bibitem{dijkstra59a} Dijkstra, Edsger W. (1959): A Note on Two Problems in Connexion with Graphs.
+	\bibitem{fastmarching} Kroon, Dirk-Jan (2011): http://www.mathworks.com/matlabcentral/fileexchange/24531-accurate-fast-marching
+	\bibitem{algdat} Ottmann, Thomas, Widmayer, Peter (2002): Algorithmen und Datenstrukturen, 4. Auflage.
 
 \end{thebibliography}
 
