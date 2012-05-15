@@ -12,7 +12,6 @@ data = initialize(config);
 
 data.time = 0;
 frame = 0;
-timestamp = datestr(datevec(now), 'yyyy.mm.dd-HH.MM.SS');
 
 while (data.time < data.duration)
     tstart=tic;
@@ -24,10 +23,10 @@ while (data.time < data.duration)
     % do the plotting
     set(0,'CurrentFigure',data.figure_floors);
     for floor=1:data.floor_count
+        plotAgentsPerFloor(data, floor);
         plotFloor(data, floor);
     end
     if data.save_frames==1
-        %set(data.figure_floors, 'PaperPosition',[0 0 5 4])
         print('-depsc2',sprintf('frames/%s_%04i.eps', ...
             data.frame_basename,frame), data.figure_floors);
     end
@@ -53,6 +52,9 @@ while (data.time < data.duration)
     if data.agents_exited == data.total_agent_count
         fprintf('All agents are now saved (or are they?). Time: %.2f sec\n', data.time);
         fprintf('Total Agents: %i\n', data.total_agent_count);
+        
+        print('-depsc2',sprintf('frames/exited_agents_%s.eps', ...
+            data.frame_basename), data.figure_floors);
         break;
     end
     

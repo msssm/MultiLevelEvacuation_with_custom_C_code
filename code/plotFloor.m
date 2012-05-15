@@ -1,8 +1,10 @@
 function plotFloor(data, floor_idx)
 %PLOTFLOOR plot floor
 
-subplot(data.figure_floors_subplots_h, data.figure_floors_subplots_w ...
-    , data.floor_count - floor_idx+1);
+h=subplot(data.floor(floor_idx).building_plot);
+
+set(h, 'position',[(data.floor_count - floor_idx)/data.figure_floors_subplots_w, ...
+    0.4, 1/(data.figure_floors_subplots_w+0.1), 0.6 ]);
 
 hold off;
 % the building image
@@ -14,8 +16,8 @@ colormap(data.color_map);
 axis equal;
 axis manual; %do not change axis on window resize
 
-set(gca, 'Visible', 'off')
-title(sprintf('floor %i', floor_idx));
+set(h, 'Visible', 'off')
+%title(sprintf('floor %i', floor_idx));
 
 % plot agents
 ang = 0:0.1:2*pi;
