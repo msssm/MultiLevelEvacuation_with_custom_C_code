@@ -10,14 +10,11 @@ for fi = 1:data.floor_count
         vi = data.floor(fi).agents(ai).v;
         
         % get direction from nearest wall to agent
-        %nx = interp2(data.floor(fi).img_wall_dist_grad_x, p(2), p(1), '*linear');
-        %ny = interp2(data.floor(fi).img_wall_dist_grad_y, p(2), p(1), '*linear');
         nx = lerp2(data.floor(fi).img_wall_dist_grad_x, p(1), p(2));
         ny = lerp2(data.floor(fi).img_wall_dist_grad_y, p(1), p(2));
         
         % get distance to nearest wall
         diW = lerp2(data.floor(fi).img_wall_dist, p(1), p(2));
-        %diW = interp2(data.floor(fi).img_wall_dist, p(2), p(1), '*linear');
         
         % get perpendicular and tangential unit vectors
         niW = [ nx ny];

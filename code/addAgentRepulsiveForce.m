@@ -4,14 +4,18 @@ function data = addAgentRepulsiveForce(data)
 
 % Obstruction effects in case of physical interaction
 
-r_max = fzero(@(r) data.A * exp(-r/data.B) - 1e-6, data.r_max);
+% get maximum agent distance for which we calculate force
+r_max = data.pixel_per_meter * ...
+    fzero(@(r) data.A * exp((2*data.r_max-r)/data.B) - 1e-4, data.r_max);
 tree = 0;
 
 for fi = 1:data.floor_count
     pos = [arrayfun(@(a) a.p(1), data.floor(fi).agents);
            arrayfun(@(a) a.p(2), data.floor(fi).agents)];
     
+    % update range tree of lower floor
     tree_lower = tree;
+    % init range tree of current floor
     tree = tree_create(pos);
     
     agents_on_floor = length(data.floor(fi).agents);
@@ -20,91 +24,97 @@ for fi = 1:data.floor_count
         vi = data.floor(fi).agents(ai).v;
         ri = data.floor(fi).agents(ai).r;
         
-        n = tree_rangequery(tree, pi(1)-r_max, pi(1)+r_max, pi(2)-r_max, pi(2)+r_max);
+        % use range tree to get the indices of all agents near agent ai
+        idx = tree_rangequery(tree, pi(1) - r_max, pi(1) + r_max, ...
+                                    pi(2) - r_max, pi(2) + r_max)';
         
-        for aj = n
-        %for aj = ai+1:agents_on_floor
+        % loop over agents near agent ai
+        for aj = idx
+            
+            % if force has not been calculated yet...
             if aj > ai
-            pj = data.floor(fi).agents(aj).p;
-            vj = data.floor(fi).agents(aj).v;
-            rj = data.floor(fi).agents(aj).r;
-            
-            % vector pointing from j to i
-            nij = (pi - pj) * data.meter_per_pixel;
-            
-            % distance of agents
-            d = norm(nij);
-            
-            % normalized vector pointing from j to i
-            nij = nij / d;
-            % tangential direction
-            tij = [-nij(2), nij(1)];
-            
-            % sum of radii
-            rij = (ri + rj);
-            
-            % repulsive interaction forces
-            if d < rij
-               T1 = data.k*(rij - d);
-               T2 = data.kappa*(rij - d)*dot((vj - vi),tij)*tij;
-            else
-               T1 = 0;
-               T2 = 0;
-            end
+                pj = data.floor(fi).agents(aj).p;
+                vj = data.floor(fi).agents(aj).v;
+                rj = data.floor(fi).agents(aj).r;
 
-            Fi =  (data.A * exp((rij - d)/data.B) + T1)*nij + T2;
-            Fj = -(data.A * exp((rij - d)/data.B) + T1)*nij - T2;
-            
-            data.floor(fi).agents(ai).f = data.floor(fi).agents(ai).f + Fi;
-            data.floor(fi).agents(aj).f = data.floor(fi).agents(aj).f + Fj;
+                % vector pointing from j to i
+                nij = (pi - pj) * data.meter_per_pixel;
+
+                % distance of agents
+                d = norm(nij);
+
+                % normalized vector pointing from j to i
+                nij = nij / d;
+                % tangential direction
+                tij = [-nij(2), nij(1)];
+
+                % sum of radii
+                rij = (ri + rj);
+
+                % repulsive interaction forces
+                if d < rij
+                   T1 = data.k*(rij - d);
+                   T2 = data.kappa*(rij - d)*dot((vj - vi),tij)*tij;
+                else
+                   T1 = 0;
+                   T2 = 0;
+                end
+
+                F =  (data.A * exp((rij - d)/data.B) + T1)*nij + T2;
+
+                data.floor(fi).agents(ai).f = ...
+                    data.floor(fi).agents(ai).f + F;
+                data.floor(fi).agents(aj).f = ...
+                    data.floor(fi).agents(aj).f - F;
             end
         end
         
         % include agents on stairs!
         if fi > 1
-            %agents_on_floor_below = length(data.floor(fi-1).agents);
+            % use range tree to get the indices of all agents near agent ai
+            idx = tree_rangequery(tree_lower, pi(1) - r_max, ...
+                    pi(1) + r_max, pi(2) - r_max, pi(2) + r_max)';
             
-            n = tree_rangequery(tree_lower, pi(1)-r_max, pi(1)+r_max, pi(2)-r_max, pi(2)+r_max);
-            
-            if ~isempty(n)
-            for aj = n
-            %for aj = 1:agents_on_floor_below
-                pj = data.floor(fi-1).agents(aj).p;
-                if data.floor(fi-1).img_stairs_up(round(pj(1)), round(pj(2)))
-                    
-                    vj = data.floor(fi-1).agents(aj).v;
-                    rj = data.floor(fi-1).agents(aj).r;
+            % if there are any agents...
+            if ~isempty(idx)
+                for aj = idx
+                    pj = data.floor(fi-1).agents(aj).p;
+                    if data.floor(fi-1).img_stairs_up(round(pj(1)), round(pj(2)))
 
-                    % vector pointing from j to i
-                    nij = (pi - pj) * data.meter_per_pixel;
+                        vj = data.floor(fi-1).agents(aj).v;
+                        rj = data.floor(fi-1).agents(aj).r;
 
-                    % distance of agents
-                    d = norm(nij);
+                        % vector pointing from j to i
+                        nij = (pi - pj) * data.meter_per_pixel;
 
-                    % normalized vector pointing from j to i
-                    nij = nij / d;
-                    % tangential direction
-                    tij = [-nij(2), nij(1)];
+                        % distance of agents
+                        d = norm(nij);
 
-                    % sum of radii
-                    rij = (ri + rj);
+                        % normalized vector pointing from j to i
+                        nij = nij / d;
+                        % tangential direction
+                        tij = [-nij(2), nij(1)];
 
-                    % repulsive interaction forces
-                    if d < rij
-                       T1 = data.k*(rij - d);
-                       T2 = data.kappa*(rij - d)*dot((vj - vi),tij)*tij;
-                    else
-                       T1 = 0;
-                       T2 = 0;
+                        % sum of radii
+                        rij = (ri + rj);
+
+                        % repulsive interaction forces
+                        if d < rij
+                           T1 = data.k*(rij - d);
+                           T2 = data.kappa*(rij - d)*dot((vj - vi),tij)*tij;
+                        else
+                           T1 = 0;
+                           T2 = 0;
+                        end
+
+                        F = (data.A * exp((rij - d)/data.B) + T1)*nij + T2;
+
+                        data.floor(fi).agents(ai).f = ...
+                            data.floor(fi).agents(ai).f + F;
+                        data.floor(fi-1).agents(aj).f = ...
+                            data.floor(fi-1).agents(aj).f - F;
                     end
-
-                    Fi =  (data.A * exp((rij - d)/data.B) + T1)*nij + T2;
-                    Fj = -(data.A * exp((rij - d)/data.B) + T1)*nij - T2;
-
-                    data.floor(fi).agents(ai).f = data.floor(fi).agents(ai).f + Fi;
-                    data.floor(fi-1).agents(aj).f = data.floor(fi-1).agents(aj).f + Fj;
                 end
-            end
             end
         end
     end

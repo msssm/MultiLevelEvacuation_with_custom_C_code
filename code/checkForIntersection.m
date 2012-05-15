@@ -31,7 +31,7 @@ end
 
 
 % check for wall intersection
-if interp2(data.floor(floor_idx).img_wall_dist, p(2), p(1), '*linear') < r
+if lerp2(data.floor(floor_idx).img_wall_dist, p(1), p(2)) < r
     val = 1;
 end
 

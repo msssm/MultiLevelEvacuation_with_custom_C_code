@@ -27,9 +27,9 @@ while (data.time < data.duration)
         plotFloor(data, floor);
     end
     if data.save_frames==1
-        set(data.figure_floors, 'PaperPosition',[0 0 5 4])
-        print('-dpng',sprintf('frames/%s_frame%04i.png', ...
-            timestamp,frame), data.figure_floors);
+        %set(data.figure_floors, 'PaperPosition',[0 0 5 4])
+        print('-depsc2',sprintf('frames/%s_%04i.eps', ...
+            data.frame_basename,frame), data.figure_floors);
     end
     
     set(0,'CurrentFigure',data.figure_exit);
