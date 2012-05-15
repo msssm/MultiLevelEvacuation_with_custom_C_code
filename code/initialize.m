@@ -32,7 +32,12 @@ title(sprintf('agents that reached the exit (total agents: %i)', data.total_agen
 %floors plot
 data.figure_floors=figure;
 data.figure_floors_subplots_w = data.floor_count;
-data.figure_floors_subplots_h = 1;
-
+data.figure_floors_subplots_h = 2;
+for i=1:config.floor_count
+    data.floor(i).agents_on_floor_plot = subplot(data.figure_floors_subplots_h, data.figure_floors_subplots_w ...
+    , data.floor_count - i+1 + data.figure_floors_subplots_w);
+    data.floor(i).building_plot = subplot(data.figure_floors_subplots_h, data.figure_floors_subplots_w ...
+    , data.floor_count - i+1);
+end
 
 
