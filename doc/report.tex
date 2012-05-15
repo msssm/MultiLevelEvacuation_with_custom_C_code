@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{epstopdf}
+\usepackage{varioref}
 \usepackage[numbers]{natbib}
 \usepackage{amssymb, amsmath}
 \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
@@ -191,9 +192,39 @@ As a core investigation we are going to simulate an everyday situation in a crow
 
 
 \section{Implementation}
+Our goal was a fast implementation of the model. So we decided to use the Fast
+Sweeping algorithm instead of the Fast Marching alorithm to calculate the
+fastest way out of a building. We knew that matlab code is not very fast and
+matlab provides an interface for other programming languages. So we used C to
+implement the Fast Sweeping method.
 
-% TODO: description of the matlab code model: including config  (+bitmaps: building
-% image), flexibility of our model (Beat)
+Later in the development process we discovered another bottleneck in our code:
+The social force between the agents which runs in $ O(N^2) $. Felix then
+introduced a Range Tree for this problem, which he also implemented in C.
+
+\subsection{Matlab Code}
+We wanted to create a flexibel model which can be used to simulate every
+possible building structure. 
+
+Each scenario is described in a config file. This includes for example how many
+agents are placed on each floor or the timestep of the simulation (the exact
+definition can be found in the file data/config\_file\_structure). Each config
+file also references one or more building floor images.
+Figure \vref{building floor image} describes how a building floor
+image must look like. The agents are placed randomly within the agents spawning
+area(s).
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{config_floor_description.png}
+\caption{Left the building floor image and right how it looks when the
+simulation is running} 
+\label{building floor image}
+\end{figure}
+
+Since matlab is not really object-oriented, we used a big data structure (called
+data) that includes all internal data that we use (eg. the floors and agents).
+It is passed as an argument for every function that needs it.
 
 \subsection{Fast Sweeping Algorithm}
 %todo (felix)
