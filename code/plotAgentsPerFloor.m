@@ -9,7 +9,7 @@ set(h, 'position',[0.05+(data.floor_count - floor_idx)/(data.figure_floors_subpl
 hold on;
 axis([0 data.duration 0 data.total_agent_count]);
 
-plot(data.time, length(data.floor(floor_idx).agents), 'bx');
+plot(data.time, length(data.floor(floor_idx).agents), 'b-');
 
 title(sprintf('agents on floor %i', floor_idx));
 
