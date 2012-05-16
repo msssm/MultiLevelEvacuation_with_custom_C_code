@@ -137,66 +137,40 @@ Simulating the evacuation scenario of a single-level building is well known but 
 
 \subsection{Motivation}
 
-Intuitive expectations and mathematical model results can stay sometimes in contradiction. As ETH-Students is for us the safety of the people inside the ETH Mainbuilding very important. But on the one hand, we are know sure, if the evacuation potential of the building is enough for the amount of students during a normal week day and on the other hand, we want to help the people around the world, that have a similar question, to find an answer. This two points gave us the ideas and motivation to create a flexible tool that simulates a real-world scenario for any given building or even structures (i.e. planes or boats).
+Intuitive expectations and mathematical model results can stay sometimes in contradiction. As ETH-Students is for us the safety of the people inside the ETH Mainbuilding very important. But on the one hand, we are not sure, if the evacuation potential of the building is enough for the amount of students during a normal week day and on the other hand, we want to help the people around the world, that have a similar question, to find an answer. This two points gave us the ideas and motivation to create a flexible tool that simulates a real-world scenario for any given building or even structures (i.e. planes or boats).
 
 \subsection{Fundamental Questions}
 
-\begin{enumerate}
-\item Which places in a building do contribute the crucial part to panic behaviour?
-\item Do the results correspond to the literature? Why? - Why not?
-\item What are the similarities to single level evacuation bottleneck?
-\item What are the most influential forces, which decide the behavior of scenario?
-
-
-\end{enumerate}
+In the first place, we want to learn about how the humans behave under pressure through already existing papers \cite{AACIBF} \cite{ACPPD}  \cite{SDFEP} \cite{DCD} and find \textit{ what are the most influential forces, which decide this kind of behavior.} Important is also the evaluation of the evacuation potential of the given building and \textit{find places in the building that do contribute on a crucial part to a panic behaviour}.  After the evaluation, we want to \textit{compare our results with the corresponding results in the literature} and find every single coherence and explain all differences. Beside the socio-phychological aspects of this problem, we want also to take a look closer to the technical part and \textit{find the similarities to a single level evacuation bottleneck problem}
 
 
 \section{Description of the Model}
 
-%TODO: finalize (write out every etc.) Hans compare with RESEARCH! -> Froge zerscht (Beim Introduction)und ausschreiben
-% TODO MERGE WITH RESEARCH!!! Andrin Jenal
+For our Model, we will create a relatively general framework for behavioral simulation in evacuation scenarios. As a core investigation we are going to simulate an everyday situation in a crowded (public) environment ending in an evacuation scenario. Whereas at the beginning of each simulation the setting is a general everyday situation and at the end we should be able to make strong statements anwsering our fundamental questions. Relying on a fairly recent paper \cite{SDFEP} we tried to get our simulation as accurate to reality as possible. Since this model is based on the in shortly mentioned forces and interactions we tried to figure out how agents overcome major obstacles like tiny passages and stairs. Here the shape of rooms and building is a key factor contributing to the behaviour of agents. Therefore we defined a special setting concerning agents on stairs, which includes reduces velocity.
 
-To investigate it, we will create a relatively general framework for behavioral simulation in evacuation scenarios. That includes every non-trivial, relevant force affecting every agent i.e. repulsion within the agents (unconscious privacy area conservation), detection of environment (walls, exits, stairs - inclusive direction-, evtl. source of evacuation,etc ) rational thinking to calculate the way to exit (run-time calculation with fast-sweeping algorithm), etc.
+% TODO: ausführlicher, Andrin
 
 
 \subsection{General Model}
 
-We are planning to base our work on the social force model \cite{SFMPD}. The  behaviour of the agents will be mainly influenced by different model parameters like obstacles, stairs and other agents. In addition, psychological pressure in such evacuation scenarios are going to be investigated. The following points are the chosen parameters for the model in this work. For more precisely mathematical explanations, see \cite{SFMPD}
-
-
-
+The behaviour of the agents will be mainly influenced by different model parameters. To the repulsing forces belong \textbf{walls, up-stairs, evacuation sources and other agents} and to the point of attraction belog \textbf{doors, down-stairs and exits} (in that order). In addition, psychological reaction to the approach to a wall or another agent, the feeling of enclosure in a corner of the room and the accelation because of a free path are also properties of our model. The following points are the chosen parameters for the model in this work. For more precisely mathematical explanations, see \cite{SFMPD}.
 
 \subsection*{Agents Repultion Force}
 
-Within a evacuation scenario, the psychological tendency of two pedestrians i and j to stay away from each other, depends on the level of repultion between this two specific agents (margin of unconscious privacy area conservation between them). In addition, we assume two other more physical forces: a `body force' counteracting body compression (important factor in a panic evacuation model) and a `sliding friction force' avoiding the unnatural regulation of the speed when the agent nears another. 
-
-\subsection*{Physical Objects}
-
-Using the nearest point in a wall to an agent, the repulsive forces created by the whole wall is treaten analog as the created Agents-Repultion-Forces. At the same time, the preprocessing of the map, together with the exits and stairs, allows us to create a gradient field all over the map, that shows the agent, the shortest way to exit the floor. 
-
-%%Evtl.  example of field force?? from /images
-
-
-\subsection*{Force of Agents}
+Within a evacuation scenario, the psychological tendency of two pedestrians i and j to stay away from each other, depends on the level of repultion between this two specific agents (margin of unconscious privacy area conservation between them). In addition, we assume two other more physical forces: a `body force' that counteracts the body compression between the agents (important factor in a panic evacuation model) and a `sliding friction force' avoiding the unnatural regulation of the speed when the agent nears another. \cite{SFMPD} 
 
 Quote from 'Helbling, Dirk - Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics' \cite{SFMPD} :
-
+\begin{center}
 \textit{"The desired velocity $v^0_i$ can reach more than $5 \meter\second^{-1}$ (up to $10 \meter\second^{-1}$), but the observed free velocities	for	leaving	a	room	correspond	to	$v^0_i=6 \meter\second^{-1}$ under relaxed, $1\meter\second^{-1}$ under normal, and $1.5\meter\second^{-1}$ under nervous conditions. A reasonable estimate for the acceleration time is $0.5\meter\second^{-1}$."}
-
+\end{center}
 In our model, although the mass is not visible, it is from enorm importance for the calculation of the force of each agent. It's well known that the inertia of each agent is directly dependent from his mass and velocity..
 
 
+\subsection*{Physical Objects}
 
-\subsection{Research}
+Using the nearest point in a wall to an agent, the repulsive forces created by the whole wall is treaten analog as the created Agents-Repultion-Forces (using a fix force for each point in every wall, assuming that a wooden wall creates the same repulsion as a paper wall or concrete wall). In the preprocesing, the walls also represent as points in the graph that cannot be reached, creating a 'natural' gradient field all over the map showing the direction to the nearest exit. If in the current floor there exists no exit, then stairs are interpretend as the local exits, hence the highest local point of attraction. \cite{SFMPD} 
 
-The core investigation is a szenario which describes the panic behaviour of individuals in a crowded building. Whereas at the beginning of each simulation the setting is a general everyday situation and at the end we should be able to make strong statements anwsering our fundamental questions.
-Relying on a fairly recent paper [Halbling2000] we tried to get our simulation as accurate to reality as possible. Since this model is based on above mentioned forces and interactions we tried to figure out how agents overcome major obstacles like tiny passages and stairs. Here the shape of rooms and building is a key factor contributing to the behaviour of agents.
-Therefore we defined a special setting concerning agents on stairs, which includes reduces velocity.
-
-% TODO: ausführlicher
-As a core investigation we are going to simulate an everyday situation in a crowded (public) environment ending in an evacuation scenario.
-
-
+%%Evtl.  example of field force?? from /images Beat? Andrin? Felix?
 
 
 
@@ -227,7 +201,7 @@ area(s).
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{config_floor_description.png}
+\includegraphics[width=\textwidth]{./images/config_floor_description.png}
 \caption{Left the building floor image and right how it looks when the
 simulation is running} 
 \label{building floor image}
@@ -247,27 +221,28 @@ Mathematically, this can be expressed as an partial differential equation, the 2
 
 The solution $d(\mathbf{x})$ now gives the distance to the nearest exit point, its negative gradient $-\mathbf{\nabla}d(\mathbf{x})$ therefor always points in the direction of the shortest path towards the desired exit. There are mainly two competitive agorithms for solving this equation efficiently. First there is the \textit{Fast Marching} method, a specialized version of Dijkstra's well known algorithm \cite{dijkstra59a}. The alternative is \textit{Fast Sweeping}, which leads to a much simpler implementation, faster calculation and better algorithmic complexity of $O(n)$ instead of $O(n\log n)$ with respect to the discretization size. We therefor implemented an efficient \textit{Fast Sweeping} method, closly following \cite{Zhao04afast} as a basis of our pathfinding and repulsive wall forces. The algorithm uses an upwind finite difference scheme where our mesh is defined by the input images. The implementation was done \textit{C} and not directly in \textit{MATLAB}, using optimized boundary condition handling for our pruposes. Our benchmarks showed a high speed increase compared to other Eikonal solvers, e.g. the "Accurate Fast Marching" implementation as found at \textit{MATLAB CENTRAL} \cite{fastmarching}.
 
-\subsection{Range Tree}
-The most time consuming part in our program is the calculation of the interaction forces between the agents, at least if their count is high enough. To reducue the natural complexity of $O(n^{2})$ of this inter-agent interaction, we can clamp forces with little effect, e.g. in our implementation all forces smaller than $ 10^{4}\newton$. As their exponentially decreasing, the distance in which the forces need to be adressed is only several meters, so a big part of them can just be ignored without introducing a significant error.
-To get all agents influenced by another agent, we need to be able to search neighbours of any agent within a given distance. To efficiently query these agents, we implemented a 2D range tree in \textit{C}, which allows query times of $O(\log n+k)$, where $n$ is the total number of agents and $k$ is the number of queried agents \cite{algdat}. In larger simulations this reduces simulation times by a significant factor.
 
 
-\subsection{Profiling \& optimization}
 
+\subsection{Profiling \& Optimization}
 
 %TODO: 
 % profiler resultat diskutieren
 %  addAgentRepulsiveForce langsam, da N^2
-%  interp2: konstante funk., nicht schneller mit '*nearest', viel langsamer mit (lerp2 schneller...) (Hans)
-%  'linear'  
 
-Using the \textit{Profiler}-function of \textit{MATLAB}, we were able to discuss the efficiency of our implementation. The following image show the time comsumption for the calculation of the evacuation of 200000 floors within 15000000 secounds: %%TODO:Only example und ausführlicher, neu runne
 
-\medskip
+Using the \textit{Profiler}-function of \textit{MATLAB}, we were able to discuss the efficiency of our implementation. The following image show the time comsumption for the calculation of the evacuation of 2 floors (ETH CAB-Building Floors E and F) within x seconds:
+%Running write seconds...
 
-\begin{center}
-	\includegraphics[width=0.9\textwidth]{./images/profiler.png}
-\end{center}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{./images/profiler.png}
+\caption{Profile of the calculation for the CAB-Building with 300 agents over 3 different floors} 
+\label{cab profile}
+\end{figure}
+
+
+\subsubsection{Parallelization}
 
 We tried to optimize the code using the parallel for-loop parfor in \textit{MATLAB}. In
 the function applyForcesAndMove we replaced the for-loop over the agents with
@@ -281,6 +256,25 @@ decreasing performance.
 This is why we decided not to use parfor or any other parallelization in our
 implementation.
 
+\subsubsection{Improving default commands}
+
+Through our first messures, we realised that the function \verb+interp2+ consumed a lot of resources and time. We decided to create our own operator called \verb+lerp2+ that interpolates between data points. It finds values of a two-dimensional function  underlying the data at intermediate points linearly. Here the different given data points are the current values of the frame $i-1$ for the frame $i$. 
+%TODO: More Details lerp2
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{./images/lerp2.png}
+\caption{Visualisation of lerp2.c} 
+\label{lerp2 image}
+\end{figure}
+
+\subsubsection{Range Tree}
+The most time consuming part in our program is the calculation of the interaction forces between the agents, at least if their count is high enough. To reduce the natural complexity of $O(n^{2})$ of this inter-agent interaction, we can clamp forces with little effect, e.g. in our implementation all forces smaller than $ 10^{4}\newton$. As their exponentially decreasing, the distance in which the forces need to be adressed is only several meters, so a big part of them can just be ignored without introducing a significant error.
+To get all agents influenced by another agent, we need to be able to search neighbours of any agent within a given distance. To efficiently query these agents, we implemented a 2D range tree in \textit{C}, which allows query times of $O(\log n+k)$, where $n$ is the total number of agents and $k$ is the number of queried agents \cite{algdat}. In larger simulations this reduces simulation times by a significant factor.
+
+
+
+
 \section{Simulation Results and Discussion}
 
 \subsection{Expected Results}
@@ -289,6 +283,18 @@ We expect the stairs and the main building exit to be the bottlenecks. The amoun
 
 \subsection{Simulation Results}
 
+As expected the main exit becomes a bottleneck...
+%TODO: Discussion
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{./images/cab1.png}
+\caption{Visualisation of evacuation in the CAB Building E Floor} 
+\label{cab1}
+\end{figure}
+
+
+
 %TODO: add some plots, ...
 
 \subsection{Discussion}
@@ -296,7 +302,7 @@ We expect the stairs and the main building exit to be the bottlenecks. The amoun
 
 \section{Summary and Outlook}
 
-In this section we would like to thank the MSSSM-Group from the ETH in Zurich, Switzerland directed by Karsten Donnay and Stefano Balietti for their engagement in the lecture "Modeling and Simulating Social Systems with \textit{MATLAB}" during the Spring Semester 2012.
+In this section we would like to thank the MSSSM-Group from the ETH in Zurich, Switzerland directed by Karsten Donnay and Stefano Balietti for their engagement in the lecture "Modeling and Simulating Social Systems with \textit{MATLAB}" during the Spring Semester 2012. This project helped us to understand that the human behavior is a difficult subject to formalize. Non expected reactions (i.e. paranoia, desesperation or creativity) have not been consider by making this model and we are sure that in the reality this factors have also a big importance. This is a point where this work could be improved. Nevertheless, we believe that this project gives a good prespective in matters of evacuation potential and security.
 
 
 %TODO: Rückblick aufs projekt & Danksagung
