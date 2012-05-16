@@ -20,18 +20,25 @@ set(h, 'Visible', 'off')
 %title(sprintf('floor %i', floor_idx));
 
 % plot agents
-ang = 0:0.1:2*pi;
-cosang = cos(ang);
-sinang = sin(ang);
-for i=1:length(data.floor(floor_idx).agents)
-    p = data.floor(floor_idx).agents(i).p;
-    r = data.floor(floor_idx).agents(i).r * data.pixel_per_meter;
-    %r = norm(agent.v);
-    xp = r * cosang;
-    yp = r * sinang;
-    plot(p(2) + xp, p(1) + yp, 'r');
-    %text(agent.pos(2),agent.pos(1),int2str(i));
-end
+ang = [linspace(0,2*pi, 10) nan]';
+rmul = [cos(ang) sin(ang)] * data.pixel_per_meter;
+draw = cell2mat(arrayfun(@(a) repmat(a.p,length(ang),1) + a.r*rmul, ...
+       data.floor(1).agents, 'UniformOutput', false)');
+line(draw(:,2), draw(:,1), 'Color', 'r');
+
+% old drawing code...
+% ang = linspace(0,2*pi, 10);
+% cosang = cos(ang);
+% sinang = sin(ang);
+% for i=1:length(data.floor(floor_idx).agents)
+%     p = data.floor(floor_idx).agents(i).p;
+%     r = data.floor(floor_idx).agents(i).r * data.pixel_per_meter;
+%     %r = norm(agent.v);
+%     xp = r * cosang;
+%     yp = r * sinang;
+%     plot(p(2) + yp, p(1) + xp, 'Color', 'r');
+%     %text(agent.pos(2),agent.pos(1),int2str(i));
+% end
 
 hold off;
 end

@@ -18,9 +18,12 @@ data.pixel_per_meter = 1/data.meter_per_pixel;
 
 data = initEscapeRoutes(data);
 data = initWallForces(data);
-
 data = initAgents(data);
 
+% maximum influence of agents on each other
+
+data.r_influence = data.pixel_per_meter * ...
+    fzero(@(r) data.A * exp((2*data.r_max-r)/data.B) - 1e-4, data.r_max);
 
 %init the plots
 %exit plot
