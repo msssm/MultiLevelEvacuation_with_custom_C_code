@@ -20,11 +20,13 @@ set(h, 'Visible', 'off')
 %title(sprintf('floor %i', floor_idx));
 
 % plot agents
-ang = [linspace(0,2*pi, 10) nan]';
-rmul = [cos(ang) sin(ang)] * data.pixel_per_meter;
-draw = cell2mat(arrayfun(@(a) repmat(a.p,length(ang),1) + a.r*rmul, ...
-       data.floor(floor_idx).agents, 'UniformOutput', false)');
-line(draw(:,2), draw(:,1), 'Color', 'r');
+if ~isempty(data.floor(floor_idx).agents)
+    ang = [linspace(0,2*pi, 10) nan]';
+    rmul = [cos(ang) sin(ang)] * data.pixel_per_meter;
+    draw = cell2mat(arrayfun(@(a) repmat(a.p,length(ang),1) + a.r*rmul, ...
+           data.floor(floor_idx).agents, 'UniformOutput', false)');
+    line(draw(:,2), draw(:,1), 'Color', 'r');
+end
 
 % old drawing code...
 % ang = linspace(0,2*pi, 10);
