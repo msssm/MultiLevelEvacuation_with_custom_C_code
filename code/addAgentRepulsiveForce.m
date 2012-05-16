@@ -5,8 +5,7 @@ function data = addAgentRepulsiveForce(data)
 % Obstruction effects in case of physical interaction
 
 % get maximum agent distance for which we calculate force
-r_max = data.pixel_per_meter * ...
-    fzero(@(r) data.A * exp((2*data.r_max-r)/data.B) - 1e-4, data.r_max);
+r_max = data.r_influence;
 tree = 0;
 
 for fi = 1:data.floor_count

@@ -112,10 +112,19 @@
 
 \section{Abstract}
 
-%% TODO: No idea what to write - Summary (Hans Hardmeier End)
+If you are an ETH-Student, you know that at lunch time it is almost impossible to go out of the building through the main entrance to the polyterasse, because of the number of students trying to leave at the same time. What would happen, if in addition to that, a panic factor was involved? Have you ever imagined, how an evacuation at the ETH Main building, ETH CAB-Building or even at your own home would look like? How many people would be able to leave simultaneously? What is the best strategy for people to leave? How would the perfect evacuation plan for your school or enterprise building look like?
+
+In this work, we decided to elaborate a program that is flexible enough to calculate the best evacuation-scenario for every given structure. Using the "Fast Sweeping Algorithm Method", introduced by James A. Sethian\cite{Zhao04afast} to solve this complex problem involving physical forces and psychological reactions, MATLAB is capable of computing the most efficient way for every agent (person) to leave a given multi-floor map.
+
+Different from all other similar projects, we also focused on an efficient and realistic implementation of the program. Coding our own data structures to handle with the numerous amount of agents, implementing the "Fast Weeping Algorithm Method" in such way that MATLAB takes advantage of it and also counting with all details of the human behavior while moving/running, this work introduces a tool to verify the potential of evacuation in any given structure.
+
 
 \section{Individual contributions}
 
+
+.....
+
+On the other hand Carl Hans Peter Hardmeier Samame, alias Hans Hardmeier, was responsible for some parts of the documentation, verification of the MATLAB-code and calculating efficienty using different operating systems (i.e. Mac OS 10.6).
 
 
 %TODO: Wer het was gmacht... (Jede : Beat, Hans, Andrin, Felix)
@@ -124,11 +133,23 @@
 
 \subsection{Introduction}
 
-Simulating the evacuation scenario of a single-level building is well known but is not general enough. Though we want to introduce a more sophisticated simulation within a multi-level building. E.g.: What would happen, if a multi-level building has to be evacuated? Which escape routes would be mostly used? Which effects would have the pressure/panic of other persons into the situation? Since tower buildings are getting more common in large cities, engineers have to care more about the behaviour in situations of emergency, namely evacuations. 
+Simulating the evacuation scenario of a single-level building is well known but is not general enough. Though we want to introduce a more sophisticated simulation within a multi-level building. E.g.: What would happen, if a multi-level building has to be evacuated? Which escape routes would be mostly used? Which effects would have the pressure/panic of other persons into the situation? Since tower buildings are getting more common in large cities, engineers have to care more about the behaviour in situations of emergency, namely evacuations. Apart of the mathematical model and implementation for solving this problem, we also wanted to increase the utility of this program for all readers by giving the possibility of calculate different scenarios in different buildings given by the user. In this work, we will work with the map of the ETH building, however, it is to notice that you can replace any map with others that meet the properties of the Figure \ref{building floor image} in the section \ref{matlab code}.
 
 \subsection{Motivation}
 
-Intuitive expectations and mathematical model results can stay sometimes in contradictions. To prove the rational expected results of i.e. evacuation of the ETH, we want to provide a flexible tool that is able to calculate every scenario in every provided structure with certains requirements.
+Intuitive expectations and mathematical model results can stay sometimes in contradiction. As ETH-Students is for us the safety of the people inside the ETH Mainbuilding very important. But on the one hand, we are know sure, if the evacuation potential of the building is enough for the amount of students during a normal week day and on the other hand, we want to help the people around the world, that have a similar question, to find an answer. This two points gave us the ideas and motivation to create a flexible tool that simulates a real-world scenario for any given building or even structures (i.e. planes or boats).
+
+\subsection{Fundamental Questions}
+
+\begin{enumerate}
+\item Which places in a building do contribute the crucial part to panic behaviour?
+\item Do the results correspond to the literature? Why? - Why not?
+\item What are the similarities to single level evacuation bottleneck?
+\item What are the most influential forces, which decide the behavior of scenario?
+
+
+\end{enumerate}
+
 
 \section{Description of the Model}
 
@@ -175,18 +196,6 @@ Therefore we defined a special setting concerning agents on stairs, which includ
 % TODO: ausführlicher
 As a core investigation we are going to simulate an everyday situation in a crowded (public) environment ending in an evacuation scenario.
 
-\subsection{Fundamental Questions}
-
-\begin{enumerate}
-\item Which places in a building do contribute the crucial part to panic behaviour?
-\item Do the results correspond to the literature? Why? - Why not?
-\item What are the similarities to single level evacuation bottleneck?
-\item What are the most influential forces, which decide the behavior of scenario?
-
-%TODO: make a text out of this
- 
-\end{enumerate}
-
 
 
 
@@ -204,7 +213,7 @@ The social force between the agents which runs in $ O(N^2) $. Felix then
 introduced a Range Tree for this problem, which he also implemented in
 \textit{C}.
 
-\subsection{\textit{MATLAB} Code}
+\subsection{\textit{MATLAB} Code} \label{matlab code}
 We wanted to create a flexibel model which can be used to simulate every
 possible building structure. 
 
@@ -296,13 +305,13 @@ In this section we would like to thank the MSSSM-Group from the ETH in Zurich, S
 
 \begin{thebibliography} {9}
 	
+	\bibitem{Zhao04afast} Zhao, Hongkai (2004): A Fast Sweeping Method for Eikonal Equations.
 	\bibitem{SFMPD} Helbling, Dirk - Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics.
 	\bibitem{AACIBF} Helbling, Dirk, Johansson, Anders (2006): Analytical Approach to Continuous and Intermittent Bottleneck Flows.
 	\bibitem{ACPPD} Schadschneider, Andreas et al. (2002): CA Approach to Collective Phenomena in Pedestrian Dynamics.	
 	\bibitem{DCD} Helbling, Dirk, Johansson, Anders (2007): Dynamics of crowd disasters: An empirical Study.
 	\bibitem{SDFEP} Helbling, Dirk et al. (2000): Simulating dynamical features of escape panic.
 	\bibitem{SPCD} Helbling, Dirk et al. (2005): Self-Organized Pedestrian Crowd Dynamics: Experiments, Simulations, and Design Solutions.
-	\bibitem{Zhao04afast} Zhao, Hongkai (2004): A Fast Sweeping Method for Eikonal Equations.
 	\bibitem{dijkstra59a} Dijkstra, Edsger W. (1959): A Note on Two Problems in Connexion with Graphs.
 	\bibitem{fastmarching} Kroon, Dirk-Jan (2011): http://www.mathworks.com/matlabcentral/fileexchange/24531-accurate-fast-marching
 	\bibitem{algdat} Ottmann, Thomas, Widmayer, Peter (2002): Algorithmen und Datenstrukturen, 4. Auflage.
