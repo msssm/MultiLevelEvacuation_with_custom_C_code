@@ -23,7 +23,7 @@ set(h, 'Visible', 'off')
 ang = [linspace(0,2*pi, 10) nan]';
 rmul = [cos(ang) sin(ang)] * data.pixel_per_meter;
 draw = cell2mat(arrayfun(@(a) repmat(a.p,length(ang),1) + a.r*rmul, ...
-       data.floor(1).agents, 'UniformOutput', false)');
+       data.floor(floor_idx).agents, 'UniformOutput', false)');
 line(draw(:,2), draw(:,1), 'Color', 'r');
 
 % old drawing code...
