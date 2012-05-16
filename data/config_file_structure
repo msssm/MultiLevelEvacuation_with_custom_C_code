@@ -17,9 +17,6 @@ agents_radius_max = <max_radius>			radius of each agent in meters
 											values are uniformaly distributed between
 											min and max
 
-width = <width>
-height = <height>							simulation width & height (all
-											images must have this dimension)
 meter_per_pixel = <scale>					scaling to convert meters <--> pixels
 											value in meters = pixels * meter_per_pixel
 
@@ -53,7 +50,8 @@ m = <mass of an agent, see article 'Simulating dynamical features of escape pani
 images
 ------
 image format should be png, but can also be something else
-image must have 3 channels (RGB) and 8 bits/channel
+image must have 3 channels (RGB) and 8 bits/channel, all images must have the
+same dimensions
 
 building image:
  how the building looks like and where the agents are
