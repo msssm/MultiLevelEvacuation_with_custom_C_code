@@ -30,7 +30,6 @@ for i=1:data.floor_count
             data.floor(i).agents(cur_agent).m = data.m;
             data.floor(i).agents(cur_agent).v0 = data.v0;
             
-            %tries = 10*j; % make this smaller if initialization is too slow!
             tries = 10;
             while tries > 0
                 % randomly pick a spot and check if it's free
@@ -46,12 +45,12 @@ for i=1:data.floor_count
                 data.floor(i).agents = data.floor(i).agents(1:end-1);
             end
         end
-    end
-    data.total_agent_count = data.total_agent_count + length(data.floor(i).agents);
+        data.total_agent_count = data.total_agent_count + length(data.floor(i).agents);
     
-    if length(data.floor(i).agents) ~= agent_count
-        warning('could only place %d agents on floor %d ...instead of %d agents' ...
-            , length(data.floor(i).agents), i, agent_count)
+        if length(data.floor(i).agents) ~= agent_count
+            warning('could only place %d agents on floor %d ...instead of %d agents' ...
+                , length(data.floor(i).agents), i, agent_count)
+        end
     end
 end
 if floors_with_agents==0
