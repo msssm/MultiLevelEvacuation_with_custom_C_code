@@ -5,6 +5,7 @@ if nargin==0
     config_file='../data/config1.conf';
 end
 
+fprintf('Load config file...\n');
 config = loadConfig(config_file);
 
 data = initialize(config);
@@ -12,6 +13,7 @@ data = initialize(config);
 
 data.time = 0;
 frame = 0;
+fprintf('Start simulation...\n');
 
 while (data.time < data.duration)
     tstart=tic;
@@ -60,8 +62,10 @@ while (data.time < data.duration)
     
     
     telapsed = toc(tstart);
-    pause(max(data.dt - telapsed, 0.01));
-    fprintf('Frame %i done (took %.3fs).\n', frame, telapsed);
+    pause(max(data.dt - telapsed, 0.001));
+    fprintf('Frame %i done (took %.3fs; %.3fs out of %.3gs simulated).\n', frame, telapsed, data.time, data.duration);
     frame = frame + 1;
 end
+
+fprintf('Simulation done.\n');
 

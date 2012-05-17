@@ -15,9 +15,11 @@ data = config;
 %for convenience
 data.pixel_per_meter = 1/data.meter_per_pixel;
 
-
+fprintf('Init escape routes...\n');
 data = initEscapeRoutes(data);
+fprintf('Init wall forces...\n');
 data = initWallForces(data);
+fprintf('Init agents...\n');
 data = initAgents(data);
 
 % maximum influence of agents on each other
@@ -25,6 +27,7 @@ data = initAgents(data);
 data.r_influence = data.pixel_per_meter * ...
     fzero(@(r) data.A * exp((2*data.r_max-r)/data.B) - 1e-4, data.r_max);
 
+fprintf('Init plots...\n');
 %init the plots
 %exit plot
 data.figure_exit=figure;

@@ -50,8 +50,9 @@ for i=1:data.floor_count
     data.total_agent_count = data.total_agent_count + length(data.floor(i).agents);
     
     if length(data.floor(i).agents) ~= agent_count
-        warning('could only place %d agents on floor %d ...instead of %d agents' ...
-            , length(data.floor(i).agents), i, agent_count)
+        fprintf(['WARNING: could only place %d agents on floor %d ' ...
+            'instead of the desired %d.\n'], ...
+            length(data.floor(i).agents), i, agent_count);
     end
 end
 if floors_with_agents==0
