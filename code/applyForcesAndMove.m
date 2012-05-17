@@ -2,6 +2,8 @@ function data = applyForcesAndMove(data)
 %APPLYFORCESANDMOVE apply current forces to agents and move them using
 %the timestep and current velocity
 
+n_velocity_clamps = 0;
+
 % loop over all floors
 for fi = 1:data.floor_count
 
@@ -19,6 +21,7 @@ for fi = 1:data.floor_count
         % clamp velocity
         if norm(v) > data.v_max
             v = v / norm(v) * data.v_max;
+            n_velocity_clamps = n_velocity_clamps + 1;
         end
         
         % get agent's new position
@@ -27,7 +30,8 @@ for fi = 1:data.floor_count
            
         % if the new position is inside a wall, remove perpendicular
         % component of the agent's velocity
-        if lerp2(data.floor(fi).img_wall_dist, newp(1), newp(2)) < data.floor(fi).agents(ai).r
+        if lerp2(data.floor(fi).img_wall_dist, newp(1), newp(2)) < ...
+                 data.floor(fi).agents(ai).r
             
             % get agent's position
             p = data.floor(fi).agents(ai).p;
@@ -72,9 +76,15 @@ for fi = 1:data.floor_count
     
     % add appropriate agents to next lower floor
     if fi > 1
-        data.floor(fi-1).agents = [data.floor(fi-1).agents data.floor(fi).agents(floorchange)];
+        data.floor(fi-1).agents = [data.floor(fi-1).agents ...
+                                   data.floor(fi).agents(floorchange)];
     end
     
     % delete these and exited agents
     data.floor(fi).agents = data.floor(fi).agents(~(floorchange|exited));
+end
+
+if n_velocity_clamps > 0
+    fprintf(['WARNING: clamped velocity of %d agents, ' ...
+            'possible simulation instability.\n'], n_velocity_clamps);
 end
