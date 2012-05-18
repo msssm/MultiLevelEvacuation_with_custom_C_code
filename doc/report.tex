@@ -12,7 +12,7 @@
 \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
 
 \title{Modelling Situations of Evacuation in a Multi-level Building}
-\author{Hans Hardmeier, Andrin Jenal, Beat Küng & Felix Thaler}
+\author{Hans Hardmeier, Andrin Jenal, Beat K\"ung & Felix Thaler}
 \date{date} 
 
 \begin{document}
@@ -75,7 +75,7 @@
 \end{minipage}
 &
 \begin{minipage}{6cm}
-\vspace{2mm} \large Beat Küng
+\vspace{2mm} \large Beat K\"ung
 
  \vspace{\baselineskip}
 
@@ -114,61 +114,142 @@
 
 If you are an ETH-Student, you know that at lunch time it is almost impossible to go out of the building through the main entrance to the polyterasse, because of the number of students trying to leave at the same time. What would happen, if in addition to that, a panic factor was involved? Have you ever imagined, how an evacuation at the ETH Main building, ETH CAB-Building or even at your own home would look like? How many people would be able to leave simultaneously? What is the best strategy for people to leave? How would the perfect evacuation plan for your school or enterprise building look like?
 
-In this work, we decided to elaborate a program that is flexible enough to calculate the best evacuation-scenario for every given structure. Using the "Fast Sweeping Algorithm Method", introduced by James A. Sethian\cite{Zhao04afast} to solve this complex problem involving physical forces and psychological reactions, MATLAB is capable of computing the most efficient way for every agent (person) to leave a given multi-floor map.
+In this work, we decided to elaborate a program that is flexible enough to
+calculate the fastest exit for every given building structure. Using the "Fast
+Sweeping Algorithm Method", introduced by James A. Sethian\cite{Zhao04afast} to
+solve this complex problem, the program is capable of computing the fastest way
+very efficiently.
 
-Different from all other similar projects, we also focused on an efficient and realistic implementation of the program. Coding our own data structures to handle with the numerous amount of agents, implementing the "Fast Weeping Algorithm Method" in such way that MATLAB takes advantage of it and also counting with all details of the human behavior while moving/running, this work introduces a tool to verify the potential of evacuation in any given structure.
+Different from all other similar projects, we also focused on an efficient and
+realistic implementation of the program. Using our own data structures to
+handle the numerous amount of agents and implementing the "Fast Sweeping
+Algorithm Method" enables us to simulate large buildings with many agents and
+with a realistic force model.
 
 
 \section{Individual contributions}
 
+We all worked together in this project and used the individual strengths of each
+of us to achieve the best possible result. Detailed information about the
+contribution of each of us can be obtained from the git history.
 
-.....
-
+%@hans: du chonsch an erschter stell
 On the other hand Carl Hans Peter Hardmeier Samame, alias Hans Hardmeier, was responsible for some parts of the documentation, verification of the MATLAB-code and calculating efficienty using different operating systems (i.e. Mac OS 10.6).
 
+%todo: andrin
 
-%TODO: Wer het was gmacht... (Jede : Beat, Hans, Andrin, Felix)
+
+Beat K\"ung did most of the plotting functionality and the definition \&
+implementation of the configuration and building image file. He also did several
+sections of the documentation.
+
+%todo: felix
+
+
 
 \section{Introduction and Motivations}
 
 \subsection{Introduction}
 
-Simulating the evacuation scenario of a single-level building is well known but is not general enough. Though we want to introduce a more sophisticated simulation within a multi-level building. E.g.: What would happen, if a multi-level building has to be evacuated? Which escape routes would be mostly used? Which effects would have the pressure/panic of other persons into the situation? Since tower buildings are getting more common in large cities, engineers have to care more about the behaviour in situations of emergency, namely evacuations. Apart of the mathematical model and implementation for solving this problem, we also wanted to increase the utility of this program for all readers by giving the possibility of calculate different scenarios in different buildings given by the user. In this work, we will work with the map of the ETH building, however, it is to notice that you can replace any map with others that meet the properties of the Figure \ref{building floor image} in the section \ref{matlab code}.
+Simulating the evacuation scenario of a single-level building is well known but
+is not general enough. Though we want to introduce a more sophisticated
+simulation within a multi-level building. E.g.: What would happen, if a
+multi-level building has to be evacuated? Which escape routes would be mostly
+used? Which effects would have the pressure/panic of other persons to the
+situation? Since tower buildings are getting more common in large cities,
+engineers have to care more about the behaviour in situations of emergency,
+namely evacuations. Apart of the mathematical model and implementation for
+solving this problem, we also wanted to increase the utility of this program for
+all readers by giving the possibility of calculate different scenarios in
+different buildings given by the user. In this work, we will mostly work with
+the map of the ETH building, however, there are more configurations in the data
+folder and one can replace any map with others that meet the properties of the
+Figure \ref{building floor image} in the section \ref{matlab code}.
 
 \subsection{Motivation}
 
-Intuitive expectations and mathematical model results can stay sometimes in contradiction. As ETH-Students is for us the safety of the people inside the ETH Mainbuilding very important. But on the one hand, we are not sure, if the evacuation potential of the building is enough for the amount of students during a normal week day and on the other hand, we want to help the people around the world, that have a similar question, to find an answer. This two points gave us the ideas and motivation to create a flexible tool that simulates a real-world scenario for any given building or even structures (i.e. planes or boats).
+Intuitive expectations and mathematical model results can stay sometimes in
+contradiction. As ETH-Students the safety of the people inside the ETH building
+is very important. But on the one hand, we are not sure, if the evacuation
+potential of the building is enough for the amount of students during a normal
+week day and on the other hand, we want to help the people around the world,
+that have a similar question, to find an answer. This two points gave us the
+ideas and motivation to create a flexible tool that simulates a real-world
+scenario for any given building or even structures (i.e. planes or boats).
 
 \subsection{Fundamental Questions}
 
-In the first place, we want to learn about how the humans behave under pressure through already existing papers \cite{AACIBF} \cite{ACPPD}  \cite{SDFEP} \cite{DCD} and find \textit{ what are the most influential forces, which decide this kind of behavior.} Important is also the evaluation of the evacuation potential of the given building and \textit{find places in the building that do contribute on a crucial part to a panic behaviour}.  After the evaluation, we want to \textit{compare our results with the corresponding results in the literature} and find every single coherence and explain all differences. Beside the socio-phychological aspects of this problem, we want also to take a look closer to the technical part and \textit{find the similarities to a single level evacuation bottleneck problem}
+In the first place, we want to learn about how the humans behave under pressure
+through already existing papers \cite{AACIBF} \cite{ACPPD}  \cite{SDFEP}
+\cite{DCD} and find \textit{ what are the most influential forces, which decide
+this kind of behavior.} Important is also the evaluation of the evacuation
+potential of the given building and \textit{find places in the building that do
+contribute on a crucial part to a panic behaviour}.  After the evaluation, we
+want to \textit{compare our results with the corresponding results in the
+literature} and find every single coherence and explain differences. Beside the
+socio-phychological aspects of this problem, we also want to take a closer look
+to the technical part and \textit{find the similarities to a single level
+evacuation bottleneck problem}.
 
 
 \section{Description of the Model}
 
-For our Model, we will create a relatively general framework for behavioral simulation in evacuation scenarios. As a core investigation we are going to simulate an everyday situation in a crowded (public) environment ending in an evacuation scenario. Whereas at the beginning of each simulation the setting is a general everyday situation and at the end we should be able to make strong statements anwsering our fundamental questions. Relying on a fairly recent paper \cite{SDFEP} we tried to get our simulation as accurate to reality as possible. Since this model is based on the in shortly mentioned forces and interactions we tried to figure out how agents overcome major obstacles like tiny passages and stairs. Here the shape of rooms and building is a key factor contributing to the behaviour of agents. Therefore we defined a special setting concerning agents on stairs, which includes reduces velocity.
+For our Model, we will create a relatively general framework for behavioral
+simulation in evacuation scenarios. As a core investigation we are going to
+simulate an everyday situation in a crowded (public) environment ending in an
+evacuation scenario. Whereas at the beginning of each simulation the setting is
+a general everyday situation and at the end we should be able to make strong
+statements anwsering our fundamental questions. Relying on a fairly recent paper
+\cite{SDFEP} we tried to get our simulation as accurate to reality as possible.
+Based on the forces mentioned in the following paragraphs, we tried to figure
+out how agents overcome major obstacles like tiny passages and stairs. Here, the
+shape of rooms and building is a key factor contributing to the behaviour of
+agents. Therefore we defined a special setting concerning agents on stairs,
+which includes reduced velocity.
 
 % TODO: ausführlicher, Andrin
 
 
 \subsection{General Model}
 
-The behaviour of the agents will be mainly influenced by different model parameters. To the repulsing forces belong \textbf{walls, up-stairs, evacuation sources and other agents} and to the point of attraction belog \textbf{doors, down-stairs and exits} (in that order). In addition, psychological reaction to the approach to a wall or another agent, the feeling of enclosure in a corner of the room and the accelation because of a free path are also properties of our model. The following points are the chosen parameters for the model in this work. For more precisely mathematical explanations, see \cite{SFMPD}.
+The behaviour of the agents will mainly be influenced by different model
+parameters and the building structure itself. To the repulsive forces belong
+\textbf{walls, up-stairs, evacuation sources and other agents} and to the point
+of attraction belog \textbf{doors, down-stairs and exits}. In
+addition, psychological reaction to the approach to a wall or another agent, the
+feeling of enclosure in a corner of the room and the accelation because of a
+free path are also properties of our model. For more precise mathematical
+explanations, see \cite{SFMPD}.
 
 \subsection*{Agents Repultion Force}
 
-Within a evacuation scenario, the psychological tendency of two pedestrians i and j to stay away from each other, depends on the level of repultion between this two specific agents (margin of unconscious privacy area conservation between them). In addition, we assume two other more physical forces: a `body force' that counteracts the body compression between the agents (important factor in a panic evacuation model) and a `sliding friction force' avoiding the unnatural regulation of the speed when the agent nears another. \cite{SFMPD} 
+Within an evacuation scenario, the psychological tendency of two pedestrians i
+and j to stay away from each other, depends on the level of repulsion between
+this two specific agents (margin of unconscious privacy area conservation
+between them). In addition, we assume two other more physical forces: a `body
+force' that counteracts the body compression between the agents (important
+factor in a panic evacuation model) and a `sliding friction force' avoiding the
+unnatural regulation of the speed when the agent nears another. \cite{SFMPD} 
 
 Quote from 'Helbling, Dirk - Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics' \cite{SFMPD} :
 \begin{center}
 \textit{"The desired velocity $v^0_i$ can reach more than $5 \meter\second^{-1}$ (up to $10 \meter\second^{-1}$), but the observed free velocities	for	leaving	a	room	correspond	to	$v^0_i=6 \meter\second^{-1}$ under relaxed, $1\meter\second^{-1}$ under normal, and $1.5\meter\second^{-1}$ under nervous conditions. A reasonable estimate for the acceleration time is $0.5\meter\second^{-1}$."}
 \end{center}
-In our model, although the mass is not visible, it is from enorm importance for the calculation of the force of each agent. It's well known that the inertia of each agent is directly dependent from his mass and velocity..
+In our model, although the mass is not visible, it is important for
+the calculation of the force of each agent. It's well known that the inertia of
+each agent is directly dependent from his mass and velocity..
 
 
 \subsection*{Physical Objects}
 
-Using the nearest point in a wall to an agent, the repulsive forces created by the whole wall is treaten analog as the created Agents-Repultion-Forces (using a fix force for each point in every wall, assuming that a wooden wall creates the same repulsion as a paper wall or concrete wall). In the preprocesing, the walls also represent as points in the graph that cannot be reached, creating a 'natural' gradient field all over the map showing the direction to the nearest exit. If in the current floor there exists no exit, then stairs are interpretend as the local exits, hence the highest local point of attraction. \cite{SFMPD} 
+Using the nearest point on a wall to an agent, the repulsive forces created by
+the whole wall is treaten analog as the created Agents-Repulsion-Forces (using a
+fix force for each point in every wall, assuming that a wooden wall creates the
+same repulsion as a paper wall or concrete wall). In the preprocesing, the walls
+also represent points in the graph that cannot be reached, creating a 'natural'
+gradient field all over the map showing the direction to the nearest exit. If in
+the current floor there exists no exit, then stairs down are interpretend as the
+local exits, hence the highest local point of attraction. \cite{SFMPD} 
 
 %%Evtl.  example of field force?? from /images Beat? Andrin? Felix?
 
@@ -258,7 +339,12 @@ implementation.
 
 \subsubsection{Improving default commands}
 
-Through our first messures, we realised that the function \verb+interp2+ consumed a lot of resources and time. We decided to create our own operator called \verb+lerp2+ that interpolates between data points. It finds values of a two-dimensional function  underlying the data at intermediate points linearly. Here the different given data points are the current values of the frame $i-1$ for the frame $i$. 
+Through our first messures, we realised that the function \verb+interp2+
+consumed a lot of resources and time. We decided to create our own operator
+called \verb+lerp2+ (written in \textit{C}) that interpolates between data points. It finds values of a
+two-dimensional function  underlying the data at intermediate points linearly.
+Here the different given data points are the current values of the frame $i-1$
+for the frame $i$. 
 %TODO: More Details lerp2
 
 \begin{figure}[h]
@@ -279,7 +365,12 @@ To get all agents influenced by another agent, we need to be able to search neig
 
 \subsection{Expected Results}
 
-We expect the stairs and the main building exit to be the bottlenecks. The amount of people in lower levels is increasing with time until a certain point, when most of the people have exited the building. Also we think that if the speed (velocity) of the people is higher (people are more in panic), jams at the exit will increase and people will mainly try to take the main exit instead of emergency exits.
+We expect the stairs and the main building exit to be the bottlenecks. The
+amount of people in lower levels is increasing with time until a certain point,
+when most of the people have exited the building. Also we think that if the 
+velocity of the people is higher (people are more in panic), jams at the
+exit will increase and people will mainly try to take the main exit instead of
+emergency exits.
 
 \subsection{Simulation Results}
 
@@ -288,7 +379,7 @@ As expected the main exit becomes a bottleneck...
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.5\textwidth]{./images/cab1.png}
+\includegraphics[width=0.8\textwidth]{./images/cab1.png}
 \caption{Visualisation of evacuation in the CAB Building E Floor} 
 \label{cab1}
 \end{figure}
