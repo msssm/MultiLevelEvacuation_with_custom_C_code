@@ -1,5 +1,5 @@
 mex 'fastSweeping.c'
 mex 'getNormalizedGradient.c'
 mex 'lerp2.c'
-mex 'tree_create.c'
-mex 'tree_rangequery.c'
+mex 'createRangeTree.c'
+mex 'rangeQuery.c'

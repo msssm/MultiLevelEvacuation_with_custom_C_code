@@ -3,6 +3,7 @@
 \geometry{letterpaper}                   
 
 \usepackage{listings}
+\usepackage{color}
 \usepackage{graphicx}
 \usepackage{epstopdf}
 \usepackage{varioref}
@@ -112,7 +113,14 @@
 
 \section{Abstract}
 
-If you are an ETH-Student, you know that at lunch time it is almost impossible to go out of the building through the main entrance to the polyterasse, because of the number of students trying to leave at the same time. What would happen, if in addition to that, a panic factor was involved? Have you ever imagined, how an evacuation at the ETH Main building, ETH CAB-Building or even at your own home would look like? How many people would be able to leave simultaneously? What is the best strategy for people to leave? How would the perfect evacuation plan for your school or enterprise building look like?
+If you are an ETH-Student, you know that at lunch time it is almost impossible 
+to go out of the building through the main entrance to the polyterasse, because
+of the number of students trying to leave at the same time. What would happen,
+if in addition to that, a panic factor was involved? Have you ever imagined, how
+an evacuation at the ETH Main building, ETH CAB-Building or even at your own home
+would look like? How many people would be able to leave simultaneously? What is the
+best strategy for people to leave? How would the perfect evacuation plan for your
+school or enterprise building look like?
 
 In this work, we decided to elaborate a program that is flexible enough to
 calculate the fastest exit for every given building structure. Using the "Fast
@@ -134,7 +142,9 @@ of us to achieve the best possible result. Detailed information about the
 contribution of each of us can be obtained from the git history.
 
 %@hans: du chonsch an erschter stell
-On the other hand Carl Hans Peter Hardmeier Samame, alias Hans Hardmeier, was responsible for some parts of the documentation, verification of the MATLAB-code and calculating efficienty using different operating systems (i.e. Mac OS 10.6).
+On the other hand Carl Hans Peter Hardmeier Samame, alias Hans Hardmeier, was 
+responsible for some parts of the documentation, verification of the MATLAB-code
+and calculating efficienty using different operating systems (i.e. Mac OS 10.6).
 
 %todo: andrin
 
@@ -233,7 +243,11 @@ unnatural regulation of the speed when the agent nears another. \cite{SFMPD}
 
 Quote from 'Helbling, Dirk - Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics' \cite{SFMPD} :
 \begin{center}
-\textit{"The desired velocity $v^0_i$ can reach more than $5 \meter\second^{-1}$ (up to $10 \meter\second^{-1}$), but the observed free velocities	for	leaving	a	room	correspond	to	$v^0_i=6 \meter\second^{-1}$ under relaxed, $1\meter\second^{-1}$ under normal, and $1.5\meter\second^{-1}$ under nervous conditions. A reasonable estimate for the acceleration time is $0.5\meter\second^{-1}$."}
+\textit{"The desired velocity $v^0_i$ can reach more than $5 \meter\second^{-1}$
+(up to $10 \meter\second^{-1}$), but the observed free velocities for leaving a 
+room correspond to $v^0_i=6 \meter\second^{-1}$ under relaxed, $1\meter\second^{-1}$
+under normal, and $1.5\meter\second^{-1}$ under nervous conditions. A reasonable
+estimate for the acceleration time is $0.5\meter\second^{-1}$."}
 \end{center}
 In our model, although the mass is not visible, it is important for
 the calculation of the force of each agent. It's well known that the inertia of
@@ -293,14 +307,31 @@ data) that includes all internal data that we use (eg. the floors and agents).
 It is passed as an argument for every function that needs it.
 
 \subsection{Pathfinding}
-As described in \cite{SFMPD}, the agents always try to reach their desired destination using the shortest possible path. As we use raster graphics to encode simulation data, we decided to use the same discrete grid to compute the nearest path to an exit for every point approximately.
+As described in \cite{SFMPD}, the agents always try to reach their desired destination
+using the shortest possible path. As we use raster graphics to encode simulation data,
+we decided to use the same discrete grid to compute the nearest path to an exit for every point approximately.
 Mathematically, this can be expressed as an partial differential equation, the 2D Eikonal equation (equation \ref{eq:eikonal}).
 
 \begin{equation} \label{eq:eikonal}
 \|\mathbf{\nabla} d(\mathbf{x})\|=1 \quad d:\!\mathbb{R}^{2}\to\mathbb{R},\mathbf{x}\in\mathbb{R}^{2}
 \end{equation}
 
-The solution $d(\mathbf{x})$ now gives the distance to the nearest exit point, its negative gradient $-\mathbf{\nabla}d(\mathbf{x})$ therefor always points in the direction of the shortest path towards the desired exit. There are mainly two competitive agorithms for solving this equation efficiently. First there is the \textit{Fast Marching} method, a specialized version of Dijkstra's well known algorithm \cite{dijkstra59a}. The alternative is \textit{Fast Sweeping}, which leads to a much simpler implementation, faster calculation and better algorithmic complexity of $O(n)$ instead of $O(n\log n)$ with respect to the discretization size. We therefor implemented an efficient \textit{Fast Sweeping} method, closly following \cite{Zhao04afast} as a basis of our pathfinding and repulsive wall forces. The algorithm uses an upwind finite difference scheme where our mesh is defined by the input images. The implementation was done \textit{C} and not directly in \textit{MATLAB}, using optimized boundary condition handling for our pruposes. Our benchmarks showed a high speed increase compared to other Eikonal solvers, e.g. the "Accurate Fast Marching" implementation as found at \textit{MATLAB CENTRAL} \cite{fastmarching}.
+The solution $d(\mathbf{x})$ now gives the distance to the nearest exit point, its
+negative gradient $-\mathbf{\nabla}d(\mathbf{x})$ therefor always points in the 
+direction of the shortest path towards the desired exit. There are mainly two
+competitive agorithms for solving this equation efficiently. First there is the
+\textit{Fast Marching} method, a specialized version of Dijkstra's well known 
+algorithm \cite{dijkstra59a}. The alternative is \textit{Fast Sweeping}, which 
+leads to a much simpler implementation, faster calculation and better algorithmic
+complexity of $O(n)$ instead of $O(n\log n)$ with respect to the discretization size.
+We therefor implemented an efficient \textit{Fast Sweeping} method, closly following
+\cite{Zhao04afast} as a basis of our pathfinding and repulsive wall forces. The 
+algorithm uses an upwind finite difference scheme where our mesh is defined by 
+the input images. The implementation was done \textit{C} and not directly in
+\textit{MATLAB}, using optimized boundary condition handling for our pruposes.
+Our benchmarks showed a high speed increase compared to other Eikonal solvers,
+e.g. the "Accurate Fast Marching" implementation as found at \textit{MATLAB CENTRAL}
+\cite{fastmarching}.
 
 
 
@@ -312,7 +343,9 @@ The solution $d(\mathbf{x})$ now gives the distance to the nearest exit point, i
 %  addAgentRepulsiveForce langsam, da N^2
 
 
-Using the \textit{Profiler}-function of \textit{MATLAB}, we were able to discuss the efficiency of our implementation. The following image show the time comsumption for the calculation of the evacuation of 2 floors (ETH CAB-Building Floors E and F) within x seconds:
+Using the \textit{Profiler}-function of \textit{MATLAB}, we were able to discuss
+the efficiency of our implementation. The following image show the time comsumption
+for the calculation of the evacuation of 2 floors (ETH CAB-Building Floors E and F) within x seconds:
 %Running write seconds...
 
 \begin{figure}[h]
@@ -355,11 +388,19 @@ for the frame $i$.
 \end{figure}
 
 \subsubsection{Range Tree}
-The most time consuming part in our program is the calculation of the interaction forces between the agents, at least if their count is high enough. To reduce the natural complexity of $O(n^{2})$ of this inter-agent interaction, we can clamp forces with little effect, e.g. in our implementation all forces smaller than $ 10^{4}\newton$. As their exponentially decreasing, the distance in which the forces need to be adressed is only several meters, so a big part of them can just be ignored without introducing a significant error.
-To get all agents influenced by another agent, we need to be able to search neighbours of any agent within a given distance. To efficiently query these agents, we implemented a 2D range tree in \textit{C}, which allows query times of $O(\log n+k)$, where $n$ is the total number of agents and $k$ is the number of queried agents \cite{algdat}. In larger simulations this reduces simulation times by a significant factor.
+The most time consuming part in our program is the calculation of the interaction
+forces between the agents, at least if their count is high enough. To reduce the
+natural complexity of $O(n^{2})$ of this inter-agent interaction, we can clamp forces
+with little effect, e.g. in our implementation all forces smaller than $ 10^{4}\newton$.
+As their exponentially decreasing, the distance in which the forces need to be adressed
+is only several meters, so a big part of them can just be ignored without introducing 
+a significant error.
 
-
-
+To get all agents influenced by another agent, we need to be able
+to search neighbours of any agent within a given distance. To efficiently query 
+these agents, we implemented a 2D range tree in \textit{C}, which allows query times
+of $O(\log n+k)$, where $n$ is the total number of agents and $k$ is the number of
+queried agents \cite{algdat}. In larger simulations this reduces simulation times by a significant factor.
 
 \section{Simulation Results and Discussion}
 
@@ -393,7 +434,14 @@ As expected the main exit becomes a bottleneck...
 
 \section{Summary and Outlook}
 
-In this section we would like to thank the MSSSM-Group from the ETH in Zurich, Switzerland directed by Karsten Donnay and Stefano Balietti for their engagement in the lecture "Modeling and Simulating Social Systems with \textit{MATLAB}" during the Spring Semester 2012. This project helped us to understand that the human behavior is a difficult subject to formalize. Non expected reactions (i.e. paranoia, desesperation or creativity) have not been consider by making this model and we are sure that in the reality this factors have also a big importance. This is a point where this work could be improved. Nevertheless, we believe that this project gives a good prespective in matters of evacuation potential and security.
+In this section we would like to thank the MSSSM-Group from the ETH in Zurich, Switzerland
+directed by Karsten Donnay and Stefano Balietti for their engagement in the lecture
+"Modeling and Simulating Social Systems with \textit{MATLAB}" during the Spring Semester 2012.
+This project helped us to understand that the human behavior is a difficult subject to formalize.
+Non expected reactions (i.e. paranoia, desesperation or creativity) have not been consider by
+making this model and we are sure that in the reality this factors have also a big importance.
+This is a point where this work could be improved. Nevertheless, we believe that this project
+gives a good prespective in matters of evacuation potential and security.
 
 
 %TODO: Rückblick aufs projekt & Danksagung
@@ -421,26 +469,71 @@ In this section we would like to thank the MSSSM-Group from the ETH in Zurich, S
 
 \subsection{Code}
 
-%TODO: (Felix) Format of Code
-\lstset{language=Matlab,breaklines=true}
+% define colors
+\definecolor{commentcolor}{RGB}{89, 168, 89}
+\definecolor{keywordcolor}{RGB}{68, 68, 255}
+\definecolor{stringcolor}{RGB}{205, 139, 247}
+\definecolor{numbercolor}{RGB}{128, 128, 128}
+\definecolor{bgcolor}{RGB}{245, 248, 253}
 
-\lstinputlisting[caption=simulate.m]{../code/simulate.m}
-\lstinputlisting[caption=plotFloor.m]{../code/plotFloor.m}
-\lstinputlisting[caption=plotExitedAgents.m]{../code/plotExitedAgents.m}
-\lstinputlisting[caption=loadConfig.m]{../code/loadConfig.m}
-\lstinputlisting[caption=initWallForces.m]{../code/initWallForces.m}
-\lstinputlisting[caption=initialize.m]{../code/initialize.m}
-\lstinputlisting[caption=initEscapeRoutes.m]{../code/initEscapeRoutes.m}
-\lstinputlisting[caption=initAgents.m]{../code/initAgents.m}
-\lstinputlisting[language=C,caption=getNormalizedGradient.c]{../code/getNormalizedGradient.c}
-\lstinputlisting[language=C,caption=fastSweeping.c]{../code/fastSweeping.c}
-\lstinputlisting[caption=checkForIntersection.m]{../code/checkForIntersection.m}
-\lstinputlisting[caption=applyForcesAndMove.m]{../code/applyForcesAndMove.m}
-\lstinputlisting[caption=addWallForce.m]{../code/addWallForce.m}
-\lstinputlisting[caption=addDesiredForce.m]{../code/addDesiredForce.m}
+% define listings style
+\lstset{
+  language=Matlab,
+  basicstyle=\footnotesize\ttfamily,
+  numbers=left,
+  numberstyle=\tiny\color{numbercolor},
+  stepnumber=2,
+  numbersep=5pt,
+  backgroundcolor=\color{bgcolor},
+  showspaces=false, 
+  showstringspaces=false,
+  showtabs=false,
+  frame=lines,
+  rulecolor=\color{black},
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=true,
+  title=\lstname,
+  commentstyle=\color{commentcolor},
+  keywordstyle=\color{keywordcolor},
+  stringstyle=\color{stringcolor}
+}
+
+\subsubsection{\textit{MATLAB} code}
+
 \lstinputlisting[caption=addAgentRepulsiveForce.m]{../code/addAgentRepulsiveForce.m}
+\lstinputlisting[caption=addDesiredForce.m]{../code/addDesiredForce.m}
+\lstinputlisting[caption=addWallForce.m]{../code/addWallForce.m}
+\lstinputlisting[caption=applyForcesAndMove.m]{../code/applyForcesAndMove.m}
+\lstinputlisting[caption=checkForIntersection.m]{../code/checkForIntersection.m}
+\lstinputlisting[caption=compileC.m]{../code/compileC.m}
+\lstinputlisting[caption=initAgents.m]{../code/initAgents.m}
+\lstinputlisting[caption=initEscapeRoutes.m]{../code/initEscapeRoutes.m}
+\lstinputlisting[caption=initialize.m]{../code/initialize.m}
+\lstinputlisting[caption=initWallForces.m]{../code/initWallForces.m}
+\lstinputlisting[caption=loadConfig.m]{../code/loadConfig.m}
+\lstinputlisting[caption=plotAgentsPerFloor.m]{../code/plotAgentsPerFloor.m}
+\lstinputlisting[caption=plotExitedAgents.m]{../code/plotExitedAgents.m}
+\lstinputlisting[caption=plotFloor.m]{../code/plotFloor.m}
+\lstinputlisting[caption=simulate.m]{../code/simulate.m}
 
-%TODO: Add all code-files
+\subsubsection{\textit{C} code}
+
+\lstinputlisting[language=C,caption=createRangeTree.c]{../code/createRangeTree.c}
+\lstinputlisting[language=C,caption=fastSweeping.c]{../code/fastSweeping.c}
+\lstinputlisting[language=C,caption=getNormalizedGradient.c]{../code/getNormalizedGradient.c}
+\lstinputlisting[language=C,caption=lerp2.c]{../code/lerp2.c}
+\lstinputlisting[language=C,caption=rangeQuery.c]{../code/rangeQuery.c}
+\lstinputlisting[language=C,caption=tree.h]{../code/tree.h}
+\lstinputlisting[language=C,caption=tree\_build.h]{../code/tree_build.h}
+\lstinputlisting[language=C,caption=tree\_build.c]{../code/tree_build.c}
+\lstinputlisting[language=C,caption=tree\_free.c]{../code/tree_free.c}
+\lstinputlisting[language=C,caption=tree\_query.h]{../code/tree_query.h}
+\lstinputlisting[language=C,caption=tree\_query.c]{../code/tree_query.c}
+\lstinputlisting[language=C,caption=tree\_types.h]{../code/tree_types.h}
+
+
 
 \end{document}  
 

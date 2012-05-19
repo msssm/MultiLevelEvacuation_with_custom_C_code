@@ -19,7 +19,7 @@ for fi = 1:data.floor_count
     
     % init range tree of current floor
     if agents_on_floor > 0
-        tree = tree_create(pos);
+        tree = createRangeTree(pos);
     end
     
     for ai = 1:agents_on_floor
@@ -28,7 +28,7 @@ for fi = 1:data.floor_count
         ri = data.floor(fi).agents(ai).r;
         
         % use range tree to get the indices of all agents near agent ai
-        idx = tree_rangequery(tree, pi(1) - r_max, pi(1) + r_max, ...
+        idx = rangeQuery(tree, pi(1) - r_max, pi(1) + r_max, ...
                                     pi(2) - r_max, pi(2) + r_max)';
         
         % loop over agents near agent ai
@@ -76,7 +76,7 @@ for fi = 1:data.floor_count
         if fi > 1
             % use range tree to get the indices of all agents near agent ai
             if ~isempty(data.floor(fi-1).agents)
-                idx = tree_rangequery(tree_lower, pi(1) - r_max, ...
+                idx = rangeQuery(tree_lower, pi(1) - r_max, ...
                         pi(1) + r_max, pi(2) - r_max, pi(2) + r_max)';
 
                 % if there are any agents...
