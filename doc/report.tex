@@ -10,6 +10,7 @@
 \usepackage[numbers]{natbib}
 \usepackage[squaren]{SIunits}
 \usepackage{amssymb, amsmath}
+
 \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
 
 \title{Modelling Situations of Evacuation in a Multi-level Building}
@@ -147,6 +148,7 @@ responsible for some parts of the documentation, verification of the MATLAB-code
 and calculating efficienty using different operating systems (i.e. Mac OS 10.6).
 
 %todo: andrin
+I did some drawings.
 
 
 Beat K\"ung did most of the plotting functionality and the definition \&
@@ -201,45 +203,48 @@ socio-phychological aspects of this problem, we also want to take a closer look
 to the technical part and \textit{find the similarities to a single level
 evacuation bottleneck problem}.
 
-
 \section{Description of the Model}
-
-For our Model, we will create a relatively general framework for behavioral
-simulation in evacuation scenarios. As a core investigation we are going to
-simulate an everyday situation in a crowded (public) environment ending in an
-evacuation scenario. Whereas at the beginning of each simulation the setting is
-a general everyday situation and at the end we should be able to make strong
-statements anwsering our fundamental questions. Relying on a fairly recent paper
-\cite{SDFEP} we tried to get our simulation as accurate to reality as possible.
-Based on the forces mentioned in the following paragraphs, we tried to figure
-out how agents overcome major obstacles like tiny passages and stairs. Here, the
-shape of rooms and building is a key factor contributing to the behaviour of
-agents. Therefore we defined a special setting concerning agents on stairs,
-which includes reduced velocity.
-
-% TODO: ausführlicher, Andrin
-
-
 \subsection{General Model}
 
-The behaviour of the agents will mainly be influenced by different model
-parameters and the building structure itself. To the repulsive forces belong
-\textbf{walls, up-stairs, evacuation sources and other agents} and to the point
-of attraction belog \textbf{doors, down-stairs and exits}. In
-addition, psychological reaction to the approach to a wall or another agent, the
-feeling of enclosure in a corner of the room and the accelation because of a
-free path are also properties of our model. For more precise mathematical
-explanations, see \cite{SFMPD}.
+For our model, we will create a relatively general framework for behavioral
+simulation in evacuation scenarios based on the social force model introduced by Dirk Helbling \cite{SDFEP}.
+A core investigation is a simulation, beginning in a general everyday situation,
+where people are spread randomly in their office or somewhere in the hallway and ending in an evacuation scenario.
+At the end we should be able to make strong
+statements anwsering our fundamental questions.
+Based on the forces explained in the following paragraphs, we tried to figure
+out how agents overcome major obstacles like tiny passages, stairs or pillars. Hence, the
+shape and complexity of rooms and building is a key factor, contributing to the behaviour of the
+agents as well. 
 
-\subsection*{Agents Repultion Force}
+\subsection {Forces}
+The reactions of the agents will mainly be influenced by different forces, model
+parameters and the building structure itself. 
+Describing this problem in mathematical terms, leads to an equation, where the mass, the desired direction $F_{D}$, the repulsive forces $F_{R}$ and the wall force $F_{W}$ of each individual agent contribute to the change of velocity in time.
 
+\begin{equation} \label{eq:eikonal}
+m\frac{\mathsf{d}\mathbf{v}}{\mathsf{d}t}=mF_{D}+\sum{F_{R}}+\sum{F_{W}}
+\end{equation}
+
+That means the change of position $\mathbf{r}$ is given by the velocity: $\mathbf{v}=\frac{\mathsf{d}\mathbf{r}}{\mathsf{d}t}$\\
+To understand the different party, they will be explained briefly.
+
+\subsubsection{Desired Direction}
+
+\begin{equation} \label{eq:eikonal}
+F_{D}=m\frac{v(t)\mathbf{e(t)}-\mathbf{v(t)}}{\tau}
+\end{equation}
+
+\subsubsection{Repulsive Interaction Force}
+As poeple don't like to get too close to each other, the main component of this formula is a rather psychological aspect and plays an important role to keep agents apart from each other. Altohough if it should happen that agents get too close, two additional forces, the 'body force' counteracting body compression and 'sliding friction force' contribute to the repulsive force to ensure a certain distance. (ACHTUNG ZITIERT!) \\
+ODER SO?! \\
 Within an evacuation scenario, the psychological tendency of two pedestrians i
 and j to stay away from each other, depends on the level of repulsion between
 this two specific agents (margin of unconscious privacy area conservation
 between them). In addition, we assume two other more physical forces: a `body
 force' that counteracts the body compression between the agents (important
 factor in a panic evacuation model) and a `sliding friction force' avoiding the
-unnatural regulation of the speed when the agent nears another. \cite{SFMPD} 
+unnatural regulation of the speed when the agent nears another. \cite{SFMPD}
 
 Quote from 'Helbling, Dirk - Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics' \cite{SFMPD} :
 \begin{center}
@@ -253,8 +258,7 @@ In our model, although the mass is not visible, it is important for
 the calculation of the force of each agent. It's well known that the inertia of
 each agent is directly dependent from his mass and velocity..
 
-
-\subsection*{Physical Objects}
+\subsubsection{Wall Force}
 
 Using the nearest point on a wall to an agent, the repulsive forces created by
 the whole wall is treaten analog as the created Agents-Repulsion-Forces (using a
@@ -264,6 +268,7 @@ also represent points in the graph that cannot be reached, creating a 'natural'
 gradient field all over the map showing the direction to the nearest exit. If in
 the current floor there exists no exit, then stairs down are interpretend as the
 local exits, hence the highest local point of attraction. \cite{SFMPD} 
+-> formula
 
 %%Evtl.  example of field force?? from /images Beat? Andrin? Felix?
 
