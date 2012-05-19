@@ -210,16 +210,24 @@ agents as well.
 \subsection {Forces}
 The reactions of the agents will mainly be influenced by different forces, model
 parameters and the building structure itself. 
-Describing this problem in mathematical terms, leads to an equation, where the mass, the desired direction, the repulsive forces and the wall force  of each individual agent contribute to the change of velocity in time.
--> formula
-That means the change of position is given by: -> formula
-The understand the different party, they will be explained briefly.
+Describing this problem in mathematical terms, leads to an equation, where the mass, the desired direction $F_{D}$, the repulsive forces $F_{R}$ and the wall force $F_{W}$ of each individual agent contribute to the change of velocity in time.
+
+\begin{equation} \label{eq:eikonal}
+m\frac{\mathsf{d}\mathbf{v}}{\mathsf{d}t}=mF_{D}+\sum{F_{R}}+\sum{F_{W}}
+\end{equation}
+
+That means the change of position $\mathbf{r}$ is given by the velocity: $\mathbf{v}=\frac{\mathsf{d}\mathbf{r}}{\mathsf{d}t}$\\
+To understand the different party, they will be explained briefly.
 
 \subsubsection{Desired Direction}
 
+\begin{equation} \label{eq:eikonal}
+F_{D}=m\frac{v(t)\mathbf{e(t)}-\mathbf{v(t)}}{\tau}
+\end{equation}
+
 \subsubsection{Repulsive Interaction Force}
-As poeple don't like to get too close to each other, the main component of this formula is a rather psychological aspect and plays an important role to keep agents apart from each other. Altohough if it should happen that agents get too close, two additional forces, the 'body force' counteracting body compression and 'sliding friction force' contribute to the repulsive force to ensure a certain distance. (ACHTUNG ZITIERT!)
-ODER SO?!
+As poeple don't like to get too close to each other, the main component of this formula is a rather psychological aspect and plays an important role to keep agents apart from each other. Altohough if it should happen that agents get too close, two additional forces, the 'body force' counteracting body compression and 'sliding friction force' contribute to the repulsive force to ensure a certain distance. (ACHTUNG ZITIERT!) \\
+ODER SO?! \\
 Within an evacuation scenario, the psychological tendency of two pedestrians i
 and j to stay away from each other, depends on the level of repulsion between
 this two specific agents (margin of unconscious privacy area conservation
