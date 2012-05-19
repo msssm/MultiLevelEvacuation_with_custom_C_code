@@ -123,17 +123,30 @@ would look like? How many people would be able to leave simultaneously? What is 
 best strategy for people to leave? How would the perfect evacuation plan for your
 school or enterprise building look like?
 
+% [comment (Felix): we mention a panic factor but don't even simulate one? is this a good idea? :P]
+
 In this work, we decided to elaborate a program that is flexible enough to
 calculate the fastest exit for every given building structure. Using the "Fast
 Sweeping Algorithm Method", introduced by James A. Sethian\cite{Zhao04afast} to
 solve this complex problem, the program is capable of computing the fastest way
 very efficiently.
 
+% [comment (Felix): does not seem to be true. fast sweeping does not really help much.
+% it is just used 2 times for initialization, the really time consuming simulation part is
+% not influenced at all...
+
 Different from all other similar projects, we also focused on an efficient and
 realistic implementation of the program. Using our own data structures to
 handle the numerous amount of agents and implementing the "Fast Sweeping
 Algorithm Method" enables us to simulate large buildings with many agents and
 with a realistic force model.
+
+% [comment (Felix): Same here as above! nearly everything in the simulation code itself
+% has a bigger influence on simulation time than fast sweeping! it's clearly nice to be able
+% to use a 10000x10000 pixel image and have only some seconds of initialization time instead
+% of some minutes with fast marching, but it does neither influence the total order of comlexity
+% with respect to the number of agents (which is the limiting factor), nor does it save any times
+% during the simulation phase, as it is not used there.]
 
 
 \section{Individual contributions}
@@ -155,8 +168,11 @@ Beat K\"ung did most of the plotting functionality and the definition \&
 implementation of the configuration and building image file. He also did several
 sections of the documentation.
 
-%todo: felix
-
+Felix Thaler implemented the algorithms written in \textit{C}, using \textit{MATLAB}'s \textit{MEX}-interface.
+These are efficient \textit{Fast Sweeping}, a 2D \textit{Range Tree} and fast bilinear interpolation.
+Further he developed the basic simulation framework and added the social force model as well as some
+custom algorithms, for instance one to minimize wall penetration of agents. Some sections of the documentation are
+written by him, too.
 
 
 \section{Introduction and Motivations}
@@ -189,6 +205,9 @@ that have a similar question, to find an answer. This two points gave us the
 ideas and motivation to create a flexible tool that simulates a real-world
 scenario for any given building or even structures (i.e. planes or boats).
 
+% [comment (Felix): special sentence: 'As ETH-Students...'. what the hell is a 'evacuation potential'
+% 'we want to help the people around the world'??? really? i don't. i just wanted to get my credit points and some fun with coding.] 
+
 \subsection{Fundamental Questions}
 
 In the first place, we want to learn about how the humans behave under pressure
@@ -202,6 +221,8 @@ literature} and find every single coherence and explain differences. Beside the
 socio-phychological aspects of this problem, we also want to take a closer look
 to the technical part and \textit{find the similarities to a single level
 evacuation bottleneck problem}.
+
+% [comment (Felix): we did not do most of the parts described here!!!]
 
 \section{Description of the Model}
 \subsection{General Model}
@@ -217,6 +238,8 @@ out how agents overcome major obstacles like tiny passages, stairs or pillars. H
 shape and complexity of rooms and building is a key factor, contributing to the behaviour of the
 agents as well. 
 
+% [comment (Felix): 'strong statements anwsering our fundamental questions'? we don't even tried to answer the 'fundamental questions' described above!!] 
+
 \subsection {Forces}
 The reactions of the agents will mainly be influenced by different forces, model
 parameters and the building structure itself. 
@@ -229,15 +252,18 @@ m\frac{\mathsf{d}\mathbf{v}}{\mathsf{d}t}=mF_{D}+\sum{F_{R}}+\sum{F_{W}}
 That means the change of position $\mathbf{r}$ is given by the velocity: $\mathbf{v}=\frac{\mathsf{d}\mathbf{r}}{\mathsf{d}t}$\\
 To understand the different party, they will be explained briefly.
 
+% [comment (Felix): we need to write MUCH more cleary that all these forces are exactly the same as the one proposed by Helbling!! This is my no means our work!]
+
 \subsubsection{Desired Direction}
 
+% [comment (Felix): ääääh somewhat short?? :-P]
 \begin{equation} \label{eq:eikonal}
 F_{D}=m\frac{v(t)\mathbf{e(t)}-\mathbf{v(t)}}{\tau}
 \end{equation}
 
 \subsubsection{Repulsive Interaction Force}
 As poeple don't like to get too close to each other, the main component of this formula is a rather psychological aspect and plays an important role to keep agents apart from each other. Altohough if it should happen that agents get too close, two additional forces, the 'body force' counteracting body compression and 'sliding friction force' contribute to the repulsive force to ensure a certain distance. (ACHTUNG ZITIERT!) \\
-ODER SO?! \\
+ODER SO?! \\ % [comment (Felix): as mentioned above: no plagiarism and better orthography, PLEASE!]
 Within an evacuation scenario, the psychological tendency of two pedestrians i
 and j to stay away from each other, depends on the level of repulsion between
 this two specific agents (margin of unconscious privacy area conservation
@@ -258,6 +284,9 @@ In our model, although the mass is not visible, it is important for
 the calculation of the force of each agent. It's well known that the inertia of
 each agent is directly dependent from his mass and velocity..
 
+% [comment (Felix): what does 'not visible' mean? you can clearly see the difference between a simulation
+% with higher or lower mass as long as all the other parameters stay the same...]
+
 \subsubsection{Wall Force}
 
 Using the nearest point on a wall to an agent, the repulsive forces created by
@@ -271,7 +300,9 @@ local exits, hence the highest local point of attraction. \cite{SFMPD}
 -> formula
 
 %%Evtl.  example of field force?? from /images Beat? Andrin? Felix?
-
+% [comment (Felix): wall force don't have anything to do with the exits, the forces are calculated separately.
+% the fast sweeping algorithm is used here with different boundary conditions, independent of anything other than the walls...
+% what graph is meant? there's not really a 'graph' used anywhere...  what's a 'natural' gradient field???]
 
 
 \section{Implementation}
@@ -279,19 +310,24 @@ Our goal was a fast implementation of the model. So we decided to use the Fast
 Sweeping algorithm instead of the Fast Marching alorithm to calculate the
 fastest way out of a building. We knew that \textit{MATLAB} code is not very fast and
 \textit{MATLAB} provides an interface for other programming languages. So we
-used \textit{C} to
-implement the Fast Sweeping method.
+used the \textit{C} programming language to implement the Fast Sweeping method.
 
 Later in the development process we discovered another bottleneck in our code:
-The social force between the agents which runs in $ O(N^2) $. Felix then
+The social force between the agents which runs in $ O(N^2) $. Felix Thaler then
 introduced a Range Tree for this problem, which he also implemented in
 \textit{C}.
 
+% [comment (Felix): I would not mention fast sweeping here, as it's not really important for
+% the overall performance and just described below...]
+
 \subsection{\textit{MATLAB} Code} \label{matlab code}
 We wanted to create a flexibel model which can be used to simulate every
-possible building structure. 
+possible building structure.
 
-Each scenario is described in a config file. This includes for example how many
+% [comment (Felix): it's not possible at all to simulate 'every possible' building.
+% what about some reformulation? ]
+
+Each scenario is described in a configuration file. This includes for example how many
 agents are placed on each floor or the timestep of the simulation (the exact
 definition can be found in the file data/config\_file\_structure). Each config
 file also references one or more building floor images.
@@ -338,7 +374,7 @@ Our benchmarks showed a high speed increase compared to other Eikonal solvers,
 e.g. the "Accurate Fast Marching" implementation as found at \textit{MATLAB CENTRAL}
 \cite{fastmarching}.
 
-
+% [comment (Felix): do we want to merge this subsection with the one about the 'desired force'?]
 
 
 \subsection{Profiling \& Optimization}
@@ -346,6 +382,7 @@ e.g. the "Accurate Fast Marching" implementation as found at \textit{MATLAB CENT
 %TODO: 
 % profiler resultat diskutieren
 %  addAgentRepulsiveForce langsam, da N^2
+% [comment (Felix): not anymore N^2, but N*log(N)^2, some info is already in section 'implementation' as well as in the subsection 'range tree']
 
 
 Using the \textit{Profiler}-function of \textit{MATLAB}, we were able to discuss
@@ -375,15 +412,21 @@ decreasing performance.
 This is why we decided not to use parfor or any other parallelization in our
 implementation.
 
+% [comment (Felix): perhaps it's not really clear what parfor actually is...]
+
 \subsubsection{Improving default commands}
 
 Through our first messures, we realised that the function \verb+interp2+
 consumed a lot of resources and time. We decided to create our own operator
 called \verb+lerp2+ (written in \textit{C}) that interpolates between data points. It finds values of a
-two-dimensional function  underlying the data at intermediate points linearly.
+two-dimensional function underlying the data at intermediate points bilinearly.
 Here the different given data points are the current values of the frame $i-1$
 for the frame $i$. 
-%TODO: More Details lerp2
+%TODO: More Details lerp2.
+% [comment (Felix): really more details? who cares about bilinear interpolation? :)
+% perhaps it's not fully clear that interp2 is a off-the-shelf MATLAB function?
+% and what's about a different title? something with 'replacement' isntead of
+% 'improvement' would probably be more accurate...]
 
 \begin{figure}[h]
 \centering
@@ -392,19 +435,21 @@ for the frame $i$.
 \label{lerp2 image}
 \end{figure}
 
+% [comment (Felix): we need the SOURCE of this image!! or is it somewhere stated?]
+
 \subsubsection{Range Tree}
 The most time consuming part in our program is the calculation of the interaction
 forces between the agents, at least if their count is high enough. To reduce the
-natural complexity of $O(n^{2})$ of this inter-agent interaction, we can clamp forces
+natural complexity of order $O(n^{2})$ of this inter-agent interaction, we can clamp forces
 with little effect, e.g. in our implementation all forces smaller than $ 10^{4}\newton$.
 As their exponentially decreasing, the distance in which the forces need to be adressed
 is only several meters, so a big part of them can just be ignored without introducing 
 a significant error.
 
-To get all agents influenced by another agent, we need to be able
+To get all agents influenced by another agent by a force bigger than a threshold, we need to be able
 to search neighbours of any agent within a given distance. To efficiently query 
-these agents, we implemented a 2D range tree in \textit{C}, which allows query times
-of $O(\log n+k)$, where $n$ is the total number of agents and $k$ is the number of
+these agents, we implemented a 2D \textit{Range Tree} in \textit{C}, which allows query times
+of order $O(\log^{2} n+k)$, where $n$ is the total number of agents and $k$ is the number of
 queried agents \cite{algdat}. In larger simulations this reduces simulation times by a significant factor.
 
 \section{Simulation Results and Discussion}
@@ -417,6 +462,9 @@ when most of the people have exited the building. Also we think that if the
 velocity of the people is higher (people are more in panic), jams at the
 exit will increase and people will mainly try to take the main exit instead of
 emergency exits.
+
+% [comment (Felix): don't know if that's relevant, but our agents always try to choose
+% the nearest exit, no matter how many agents already try to escpape there...]
 
 \subsection{Simulation Results}
 
@@ -506,6 +554,8 @@ gives a good prespective in matters of evacuation potential and security.
 }
 
 \subsubsection{\textit{MATLAB} code}
+
+% code is ordered alphabetically by file name...
 
 \lstinputlisting[caption=addAgentRepulsiveForce.m]{../code/addAgentRepulsiveForce.m}
 \lstinputlisting[caption=addDesiredForce.m]{../code/addDesiredForce.m}
