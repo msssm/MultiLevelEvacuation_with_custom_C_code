@@ -62,7 +62,7 @@ while (data.time < data.duration)
     
     
     telapsed = toc(tstart);
-    pause(max(data.dt - telapsed, 0.001));
+    pause(max(data.dt - telapsed, 0.01));
     fprintf('Frame %i done (took %.3fs; %.3fs out of %.3gs simulated).\n', frame, telapsed, data.time, data.duration);
     frame = frame + 1;
 end
