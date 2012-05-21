@@ -127,30 +127,17 @@ school or enterprise building look like?
 % todo: remove all references to 'panic' (beat)
 
 In this work, we decided to elaborate a program that is flexible enough to
-calculate the fastest exit for every given building structure. Using the "Fast
-Sweeping Algorithm Method", introduced by James A. Sethian\cite{Zhao04afast} to
-solve this complex problem, the program is capable of computing the fastest way
+calculate the fastest exit for every given building structure. Using a "2D Range Tree Datastructure" 
+to improve the access to the forces over each agent and solve this complex problem, the program is capable of computing the fastest way
 very efficiently.
 
-% [comment (Felix): does not seem to be true. fast sweeping does not really help much.
-% it is just used 2 times for initialization, the really time consuming simulation part is
-% not influenced at all...
-%  todo: hans
 
 Different from all other similar projects, we also focused on an efficient and
-realistic implementation of the program. Using our own data structures to
-handle the numerous amount of agents and implementing the "Fast Sweeping
-Algorithm Method" enables us to simulate large buildings with many agents and
+realistic implementation of the program. For the preprocessing, the "Fast Sweeping Algorithm Method" 
+enable us to have only some seconds of initialization time (instead of some minutes with "Fast Marching Algorithm". 
+See \ref{implementation}) and using our own "2D Range Tree" data structures, to
+handle the numerous amount of agents, enables us to simulate large buildings with many agents and
 with a realistic force model.
-
-% [comment (Felix): Same here as above! nearly everything in the simulation code itself
-% has a bigger influence on simulation time than fast sweeping! it's clearly nice to be able
-% to use a 10000x10000 pixel image and have only some seconds of initialization time instead
-% of some minutes with fast marching, but it does neither influence the total order of comlexity
-% with respect to the number of agents (which is the limiting factor), nor does it save any times
-% during the simulation phase, as it is not used there.]
-% todo: hans
-
 
 \section{Individual contributions}
 
@@ -158,8 +145,7 @@ We all worked together in this project and used the individual strengths of each
 of us to achieve the best possible result. Detailed information about the
 contribution of each of us can be obtained from the git history.
 
-%@hans: du chonsch an erschter stell
-On the other hand Carl Hans Peter Hardmeier Samame, alias Hans Hardmeier, was 
+Carl Hans Peter Hardmeier Samame, alias Hans Hardmeier, was 
 responsible for some parts of the documentation, verification of the MATLAB-code
 and calculating efficienty using different operating systems (i.e. Mac OS 10.6).
 
@@ -200,16 +186,18 @@ Figure \ref{building floor image} in the section \ref{matlab code}.
 \subsection{Motivation}
 
 Intuitive expectations and mathematical model results can stay sometimes in
-contradiction. %todo: hans: erklaerung
-But on the one hand, we are not sure, if the evacuation
-potential of the building is enough for the amount of students during a normal
+contradiction. Our intuition is full of little contepts that are hard to realize in a concient way.
+Using the language of mathematics, we want to describe formaly all the elements that contribute
+to the complex result of the human behavior. However, a common point of motivation within the group is 
+the connection between the 'real' World and the mathematical formalism.
+
+On ther other side, we, as ETH-Students, are not sure, if the evacuation
+potential (the property of a buiding of being evacuated efficiently) of our ETH-buildings are enough for the amount of students during a normal
 week day and on the other hand, we want to help the people around the world,
 that have a similar question, to find an answer. This two points gave us the
 ideas and motivation to create a flexible tool that simulates a real-world
 scenario for any given building or even structures (i.e. planes or boats).
 
-% [comment (Felix): special sentence: 'As ETH-Students...'. what the hell is a 'evacuation potential'
-% 'we want to help the people around the world'??? really? i don't. i just wanted to get my credit points and some fun with coding.] 
 
 \subsection{Fundamental Questions}
 
@@ -267,15 +255,9 @@ F_{D}=m\frac{v(t)\mathbf{e(t)}-\mathbf{v(t)}}{\tau}
 \end{equation}
 
 \subsubsection{Repulsive Interaction Force}
-As poeple don't like to get too close to each other, the main component of this formula is a rather psychological aspect and plays an important role to keep agents apart from each other. Altohough if it should happen that agents get too close, two additional forces, the 'body force' counteracting body compression and 'sliding friction force' contribute to the repulsive force to ensure a certain distance.
-\cite{SFMPD}
-%todo: hans:
-In our model, although the mass is not visible, it is important for
-the calculation of the force of each agent. It's well known that the inertia of
-each agent is directly dependent from his mass and velocity..
+As poeple don't like to get too close to each other, the main component of this formula is a rather psychological aspect and plays an important role to keep agents apart from each other. Altohough if it should happen that agents get too close, two additional forces. The 'body force' increases then more the pressure agains an agent rises, that means, it counteracts the body compression and the 'sliding friction force' ensures a certain distance between the agents.\cite{SFMPD} Otherwise, they would overlap and the simulation would not be realistic anymore.
 
-% [comment (Felix): what does 'not visible' mean? you can clearly see the difference between a simulation
-% with higher or lower mass as long as all the other parameters stay the same...]
+It's also well known that the inertia of each agent is directly dependent from his mass. Therefore important for the initialitation of these forces are paramentes like the weight of an agent. In our model, although the mass is not proportional to the size of the agents (radius), it is stated in the config file (see \ref{matlab code})
 
 \subsubsection{Wall Force}
 
@@ -294,7 +276,7 @@ local exits, hence the highest local point of attraction. \cite{SFMPD}
 % what graph is meant? there's not really a 'graph' used anywhere...  what's a 'natural' gradient field???]
 
 
-\section{Implementation}
+\section{Implementation}\label{implementation}
 Our goal was a fast implementation of the model. So we decided to use the Fast
 Sweeping algorithm instead of the Fast Marching alorithm to calculate the
 fastest way out of a building. We knew that \textit{MATLAB} code is not very fast and
@@ -365,7 +347,7 @@ Using the \textit{Profiler}-function of \textit{MATLAB}, we were able to discuss
 the efficiency of our implementation. The image \ref{cab profile} shows the time comsumption
 for the calculation of the evacuation of 2 floors (ETH CAB-Building Floors E and
 F) within 4087 seconds.
-%discuss: our optimized functions dont appear anymore... (beat)
+
 
 \begin{figure}[h]
 \centering
@@ -374,7 +356,8 @@ F) within 4087 seconds.
 \label{cab profile}
 \end{figure}
 
-
+%discuss: our optimized functions dont appear anymore... (beat)
+% plot wrong place! again...
 \subsubsection{Parallelization}
 
 We tried to optimize the code using the parallel for-loop parfor in \textit{MATLAB}. In
@@ -394,7 +377,7 @@ implementation.
 Through our first messures, we realised that the function \verb+interp2+
 consumed a lot of resources and time. We decided to create our own operator
 called \verb+lerp2+ (written in \textit{C}) that interpolates between data points. It finds values of a
-two-dimensional function underlying the data at intermediate points bilinearly.
+two-dimensional function interpolating the data at intermediate points bilinearly.
 Here the different given data points are the current values of the frame $i-1$
 for the frame $i$. 
 
@@ -479,7 +462,7 @@ This project helped us to understand that the human behavior is a difficult subj
 	
 	\bibitem{Zhao04afast} Zhao, Hongkai (2004): A Fast Sweeping Method for Eikonal Equations.
 	\bibitem{SFMPD} Helbling, Dirk - Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics.
-	\bibitem{AACIBF} Helbling, Dirk, Johansson, Anders (2006): Analytical Approach to Continuous and Intermittent Bottleneck Flows.
+	\bibitem{AACIBF} Helbling, Dirk, Johnson, Anders (2006): Analytical Approach to Continuous and Intermittent Bottleneck Flows.
 	\bibitem{ACPPD} Schadschneider, Andreas et al. (2002): CA Approach to Collective Phenomena in Pedestrian Dynamics.	
 	\bibitem{DCD} Helbling, Dirk, Johansson, Anders (2007): Dynamics of crowd disasters: An empirical Study.
 	\bibitem{SDFEP} Helbling, Dirk et al. (2000): Simulating dynamical features of escape panic.
