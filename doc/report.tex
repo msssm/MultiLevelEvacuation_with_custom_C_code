@@ -163,9 +163,7 @@ On the other hand Carl Hans Peter Hardmeier Samame, alias Hans Hardmeier, was
 responsible for some parts of the documentation, verification of the MATLAB-code
 and calculating efficienty using different operating systems (i.e. Mac OS 10.6).
 
-%todo: andrin
-I did some drawings.
-
+Contributing to some core functionalities of the social force model, especially repulsive effects, Andrin Jenal focused on the moddeling of the buildings layout used in the simulation. Additionally, he elaborated some sections of the documentation.
 
 Beat K\"ung did most of the plotting functionality and the definition \&
 implementation of the configuration and building image file. He also did several
@@ -213,20 +211,7 @@ scenario for any given building or even structures (i.e. planes or boats).
 
 \subsection{Fundamental Questions}
 
-In the first place, we want to learn about how the humans behave under pressure
-through already existing papers \cite{AACIBF} \cite{ACPPD}  \cite{SDFEP}
-\cite{DCD} and find \textit{ what are the most influential forces, which decide
-this kind of behavior.} Important is also the evaluation of the evacuation
-potential of the given building and \textit{find places in the building that do
-contribute on a crucial part to a panic behaviour}.  After the evaluation, we
-want to \textit{compare our results with the corresponding results in the
-literature} and find every single coherence and explain differences. Beside the
-socio-phychological aspects of this problem, we also want to take a closer look
-to the technical part and \textit{find the similarities to a single level
-evacuation bottleneck problem}.
-% [comment (Felix): we did not do most of the parts described here!!!]
-%todo: fragen aendern (von readme): andrin
-
+In the first place, we all are wondering \textit{how exaclty an implementation of a social force model looks like}, based on already published papers coping with this problem \cite{SFMPD} \cite{SDFEP}. Of special interest is also \textit{how this model can be implemented efficiently for a multilevel building and how it can be extended to add some dynamic features}. Moreover are we keen to understand \textit{how the simulation behaves applying the model to a real building like the ETH main building}. Generally speaking, \textit{how realistic is the behaviour of the agents used in our model?}.
 
 \section{Description of the Model}
 \subsection{General Model}
@@ -238,22 +223,21 @@ where people are spread randomly in their office or somewhere in the hallway and
 At the end we should be able to make strong
 statements anwsering our fundamental questions.
 Based on the forces explained in the following paragraphs, we tried to figure
-out how agents overcome major obstacles like tiny passages, stairs or pillars. Hence, the
+out how agents overcome major obstacles like tiny passages, stairs or pillars. Whereas, the
 shape and complexity of rooms and building is a key factor, contributing to the behaviour of the
-agents as well. 
-
-% [comment (Felix): 'strong statements anwsering our fundamental questions'? we don't even tried to answer the 'fundamental questions' described above!!] 
+agents as well. % Do we need this last sentence?
 
 \subsection {Forces}
 The reactions of the agents will mainly be influenced by different forces, model
 parameters and the building structure itself. 
-Describing this problem in mathematical terms, leads to an equation, where the mass, the desired direction $F_{D}$, the repulsive forces $F_{R}$ and the wall force $F_{W}$ of each individual agent contribute to the change of velocity in time.
+Describing this problem in mathematical terms, leads to an equation, where the mass, the desired direction $f_{D}$, the repulsive forces $f_{ij}$ and the wall force $f_{iW}$ of each individual agent contribute to the change of velocity in time.\\
+Helbling stated this problem as the following:"We assume a mixture of socio-psychological and physical forces influencing the behaviour in a crowd: each of $N$ pedestrians $i$ of mass $m_{i}$ likes to move with a certain desired speed $v_{i}^0$ in a certain direction $\mathbf{e}_{i}^0$, and therefore tends to correspondingly adapt his or her actual velocity $\mathbf{v}_i$ with a certain characteristic time $\tau_{i}$. Simulataneously, he or she tries to keep a velocity-dependent distance from other pedestrians $j$ and walls $W$."
 
 \begin{equation} \label{eq:eikonal}
-m\frac{\mathsf{d}\mathbf{v}}{\mathsf{d}t}=mF_{D}+\sum{F_{R}}+\sum{F_{W}}
+m_{i}\frac{\mathsf{d}\mathbf{v}_{i}}{\mathsf{d}t}=m_{i}f_{D}+\sum \limits_{j(\neq{i})}{f_{ij}}+\sum \limits_{W}{f_{iW}}, f_{D}=\frac{v_{i}^{0}(t)\mathbf{e}_{i}^{0}(t)-\mathbf{v}_{i}(t)}{\tau_{i}}
 \end{equation}
 
-That means the change of position $\mathbf{r}$ is given by the velocity: $\mathbf{v}=\frac{\mathsf{d}\mathbf{r}}{\mathsf{d}t}$\\
+That means the change of position $\mathbf{r}$ is given by the velocity: $\mathbf{v}_{i}=\frac{\mathsf{d}\mathbf{r}_{i}}{\mathsf{d}t}$\\
 To understand the different party, they will be explained briefly.
 
 % [comment (Felix): we need to write MUCH more cleary that all these forces are exactly the same as the one proposed by Helbling!! This is my no means our work!]
@@ -267,32 +251,25 @@ F_{D}=m\frac{v(t)\mathbf{e(t)}-\mathbf{v(t)}}{\tau}
 \end{equation}
 
 \subsubsection{Repulsive Interaction Force}
-As poeple don't like to get too close to each other, the main component of this formula is a rather psychological aspect and plays an important role to keep agents apart from each other. Altohough if it should happen that agents get too close, two additional forces, the 'body force' counteracting body compression and 'sliding friction force' contribute to the repulsive force to ensure a certain distance.
-\cite{SFMPD}
-%todo: hans:
-In our model, although the mass is not visible, it is important for
-the calculation of the force of each agent. It's well known that the inertia of
-each agent is directly dependent from his mass and velocity..
+As people don't like to get too close to each other, the main component of this formula is a rather psychological aspect and plays an important role to keep agents apart from each other. However if it should happen that agents get too close, two additional forces, the 'body force' counteracting body compression and 'sliding friction force' contribute to the repulsive force to ensure a certain distance. \cite{SFMPD} 
 
-% [comment (Felix): what does 'not visible' mean? you can clearly see the difference between a simulation
-% with higher or lower mass as long as all the other parameters stay the same...]
+\begin{equation} \label{eq:eikonal}
+f_{ij}=\left\{A_{i}exp[(r_{ij}-d_{ij})/B_{i}]+kg(r_{ij}-d_{ij})\right\}\mathbf{n}_{ij}+\kappa g(r_{ij}-d_{ij})\triangle v_{ji}^t\mathbf{t}_{ij}
+\end{equation}
+
+According to Helbling the repulsive interaction force $A_{i}exp[(r_{ij}-d_{ij})/B_{i}]\mathbf{n}_{ij}$ describes the psychological tendency of two pedestrians $i$ and $j$ to stay away from each other, where $A_i$ and $B_i$ are constants. 
+"$d_{ij}=\|r_i-r_j\|$ denotes the distance between the pedestrians' centres of mass, and $\mathbf{n}_{ij}=(n_{ij}^1, n_{ij}^2)=\mathbf{r_i}-\mathbf{r_j}/d_{ij}$ is the normalized vector pointing from pedestrian $j$ to $i$.
+The pedestrians touch each other if their distance $d_{ij}$ is smaller than the sum $r_{ij}=(r_i+r_j)$ of their radii $r_i$ and $r_j$."
+ If this is the case two addtional forces are considered: $k(r_{ij}-d_{ij})\mathbf{n}_{ij}$ and $\kappa(r_{ij}-d_{ij})\triangle v_{ij}^t\mathbf{t}_{ij}$. Whereas $\mathbf{t}_{ij}=(-n_{ij}^2,n_{ij}^1)$ means the tangential direction and $\triangle v_{ij}^t=(\mathbf{v}_j-\mathbf{v}_i)\cdot\mathbf{t}_{ij}$ and the function $g(x)$ is zero if the pedestrians do not touch each other $(d_{ij}>r_{ij})$, and otherwise equal to the argument $x$."\cite{SFMPD}
 
 \subsubsection{Wall Force}
 
-Using the nearest point on a wall to an agent, the repulsive forces created by
-the whole wall is treaten analog as the created Agents-Repulsion-Forces (using a
-fix force for each point in every wall, assuming that a wooden wall creates the
-same repulsion as a paper wall or concrete wall). In the preprocesing, the walls
-also represent points in the graph that cannot be reached, creating a 'natural'
-gradient field all over the map showing the direction to the nearest exit. If in
-the current floor there exists no exit, then stairs down are interpretend as the
-local exits, hence the highest local point of attraction. \cite{SFMPD} 
--> formula
-%todo: andrin
-% [comment (Felix): wall force don't have anything to do with the exits, the forces are calculated separately.
-% the fast sweeping algorithm is used here with different boundary conditions, independent of anything other than the walls...
-% what graph is meant? there's not really a 'graph' used anywhere...  what's a 'natural' gradient field???]
+To prevent agents walking into or even through walls, there exists a wall force normal to the wall such that the closer agents gets to walls the stronger gets the tangential force.
+Helbling states it the following:"$d_{iW}$ means the distance to wall $W$, $\mathbf{n}_{iW}$ denotes  the direction perpendicular to it, and $\mathbf{n}_{iW}$ the direction tangential to it, the corresponding interaction force with the wall is given by:" \cite{SFMPD}
 
+\begin{equation} \label{eq:eikonal}
+f_{iW}=\left\{A_{i}exp[(r_{i}-d_{iW})/B_{i}]+kg(r_{i}-d_{iW})\right\}\mathbf{n}_{iW}-\kappa g(r_{i}-d_{iW})(\mathbf{v}_{i}\cdot\mathbf{t}_{iW})\mathbf{t}_{iW}
+\end{equation}
 
 \section{Implementation}
 Our goal was a fast implementation of the model. So we decided to use the Fast
