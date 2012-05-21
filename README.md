@@ -21,9 +21,10 @@ As a core investigation we are going to simulate an everyday situation in a crow
 ## Fundamental Questions
 
 Research object: General (public) multi-level building
-Which places in a building do contribute the crucial part to panic behaviour?
-Do the results correspond to the literature? Why? - Why not?
-What are the similarities to single level evacuation bottleneck?
+How does an implementation of a social force model look like?
+How can this be implemented efficiently for a multilevel building?
+How does the simulation behave for a real building like the ETH CAB building?
+How realistic is the behaviour of the agents?
 
 ## Expected Results
 

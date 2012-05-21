@@ -124,6 +124,7 @@ best strategy for people to leave? How would the perfect evacuation plan for you
 school or enterprise building look like?
 
 % [comment (Felix): we mention a panic factor but don't even simulate one? is this a good idea? :P]
+% todo: remove all references to 'panic' (beat)
 
 In this work, we decided to elaborate a program that is flexible enough to
 calculate the fastest exit for every given building structure. Using the "Fast
@@ -134,6 +135,7 @@ very efficiently.
 % [comment (Felix): does not seem to be true. fast sweeping does not really help much.
 % it is just used 2 times for initialization, the really time consuming simulation part is
 % not influenced at all...
+%  todo: hans
 
 Different from all other similar projects, we also focused on an efficient and
 realistic implementation of the program. Using our own data structures to
@@ -147,6 +149,7 @@ with a realistic force model.
 % of some minutes with fast marching, but it does neither influence the total order of comlexity
 % with respect to the number of agents (which is the limiting factor), nor does it save any times
 % during the simulation phase, as it is not used there.]
+% todo: hans
 
 
 \section{Individual contributions}
@@ -197,8 +200,8 @@ Figure \ref{building floor image} in the section \ref{matlab code}.
 \subsection{Motivation}
 
 Intuitive expectations and mathematical model results can stay sometimes in
-contradiction. As ETH-Students the safety of the people inside the ETH building
-is very important. But on the one hand, we are not sure, if the evacuation
+contradiction. %todo: hans: erklaerung
+But on the one hand, we are not sure, if the evacuation
 potential of the building is enough for the amount of students during a normal
 week day and on the other hand, we want to help the people around the world,
 that have a similar question, to find an answer. This two points gave us the
@@ -221,8 +224,9 @@ literature} and find every single coherence and explain differences. Beside the
 socio-phychological aspects of this problem, we also want to take a closer look
 to the technical part and \textit{find the similarities to a single level
 evacuation bottleneck problem}.
-
 % [comment (Felix): we did not do most of the parts described here!!!]
+%todo: fragen aendern (von readme): andrin
+
 
 \section{Description of the Model}
 \subsection{General Model}
@@ -257,29 +261,15 @@ To understand the different party, they will be explained briefly.
 \subsubsection{Desired Direction}
 
 % [comment (Felix): ääääh somewhat short?? :-P]
+%todo: merge with path finding (felix)
 \begin{equation} \label{eq:eikonal}
 F_{D}=m\frac{v(t)\mathbf{e(t)}-\mathbf{v(t)}}{\tau}
 \end{equation}
 
 \subsubsection{Repulsive Interaction Force}
-As poeple don't like to get too close to each other, the main component of this formula is a rather psychological aspect and plays an important role to keep agents apart from each other. Altohough if it should happen that agents get too close, two additional forces, the 'body force' counteracting body compression and 'sliding friction force' contribute to the repulsive force to ensure a certain distance. (ACHTUNG ZITIERT!) \\
-ODER SO?! \\ % [comment (Felix): as mentioned above: no plagiarism and better orthography, PLEASE!]
-Within an evacuation scenario, the psychological tendency of two pedestrians i
-and j to stay away from each other, depends on the level of repulsion between
-this two specific agents (margin of unconscious privacy area conservation
-between them). In addition, we assume two other more physical forces: a `body
-force' that counteracts the body compression between the agents (important
-factor in a panic evacuation model) and a `sliding friction force' avoiding the
-unnatural regulation of the speed when the agent nears another. \cite{SFMPD}
-
-Quote from 'Helbling, Dirk - Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics' \cite{SFMPD} :
-\begin{center}
-\textit{"The desired velocity $v^0_i$ can reach more than $5 \meter\second^{-1}$
-(up to $10 \meter\second^{-1}$), but the observed free velocities for leaving a 
-room correspond to $v^0_i=6 \meter\second^{-1}$ under relaxed, $1\meter\second^{-1}$
-under normal, and $1.5\meter\second^{-1}$ under nervous conditions. A reasonable
-estimate for the acceleration time is $0.5\meter\second^{-1}$."}
-\end{center}
+As poeple don't like to get too close to each other, the main component of this formula is a rather psychological aspect and plays an important role to keep agents apart from each other. Altohough if it should happen that agents get too close, two additional forces, the 'body force' counteracting body compression and 'sliding friction force' contribute to the repulsive force to ensure a certain distance.
+\cite{SFMPD}
+%todo: hans:
 In our model, although the mass is not visible, it is important for
 the calculation of the force of each agent. It's well known that the inertia of
 each agent is directly dependent from his mass and velocity..
@@ -298,8 +288,7 @@ gradient field all over the map showing the direction to the nearest exit. If in
 the current floor there exists no exit, then stairs down are interpretend as the
 local exits, hence the highest local point of attraction. \cite{SFMPD} 
 -> formula
-
-%%Evtl.  example of field force?? from /images Beat? Andrin? Felix?
+%todo: andrin
 % [comment (Felix): wall force don't have anything to do with the exits, the forces are calculated separately.
 % the fast sweeping algorithm is used here with different boundary conditions, independent of anything other than the walls...
 % what graph is meant? there's not really a 'graph' used anywhere...  what's a 'natural' gradient field???]
@@ -317,16 +306,10 @@ The social force between the agents which runs in $ O(N^2) $. Felix Thaler then
 introduced a Range Tree for this problem, which he also implemented in
 \textit{C}.
 
-% [comment (Felix): I would not mention fast sweeping here, as it's not really important for
-% the overall performance and just described below...]
 
 \subsection{\textit{MATLAB} Code} \label{matlab code}
-We wanted to create a flexibel model which can be used to simulate every
-possible building structure.
-
-% [comment (Felix): it's not possible at all to simulate 'every possible' building.
-% what about some reformulation? ]
-
+We wanted to create a flexibel model which can be used to simulate many
+possible building structures.
 Each scenario is described in a configuration file. This includes for example how many
 agents are placed on each floor or the timestep of the simulation (the exact
 definition can be found in the file data/config\_file\_structure). Each config
@@ -374,21 +357,15 @@ Our benchmarks showed a high speed increase compared to other Eikonal solvers,
 e.g. the "Accurate Fast Marching" implementation as found at \textit{MATLAB CENTRAL}
 \cite{fastmarching}.
 
-% [comment (Felix): do we want to merge this subsection with the one about the 'desired force'?]
-
 
 \subsection{Profiling \& Optimization}
 
-%TODO: 
-% profiler resultat diskutieren
-%  addAgentRepulsiveForce langsam, da N^2
-% [comment (Felix): not anymore N^2, but N*log(N)^2, some info is already in section 'implementation' as well as in the subsection 'range tree']
-
 
 Using the \textit{Profiler}-function of \textit{MATLAB}, we were able to discuss
-the efficiency of our implementation. The following image show the time comsumption
-for the calculation of the evacuation of 2 floors (ETH CAB-Building Floors E and F) within x seconds:
-%Running write seconds...
+the efficiency of our implementation. The image \ref{cab profile} shows the time comsumption
+for the calculation of the evacuation of 2 floors (ETH CAB-Building Floors E and
+F) within 4087 seconds.
+%discuss: our optimized functions dont appear anymore... (beat)
 
 \begin{figure}[h]
 \centering
@@ -412,9 +389,7 @@ decreasing performance.
 This is why we decided not to use parfor or any other parallelization in our
 implementation.
 
-% [comment (Felix): perhaps it's not really clear what parfor actually is...]
-
-\subsubsection{Improving default commands}
+\subsubsection{Replacing \textit{MATLAB} standard functions}
 
 Through our first messures, we realised that the function \verb+interp2+
 consumed a lot of resources and time. We decided to create our own operator
@@ -422,20 +397,6 @@ called \verb+lerp2+ (written in \textit{C}) that interpolates between data point
 two-dimensional function underlying the data at intermediate points bilinearly.
 Here the different given data points are the current values of the frame $i-1$
 for the frame $i$. 
-%TODO: More Details lerp2.
-% [comment (Felix): really more details? who cares about bilinear interpolation? :)
-% perhaps it's not fully clear that interp2 is a off-the-shelf MATLAB function?
-% and what's about a different title? something with 'replacement' isntead of
-% 'improvement' would probably be more accurate...]
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.5\textwidth]{./images/lerp2.png}
-\caption{Visualisation of lerp2.c} 
-\label{lerp2 image}
-\end{figure}
-
-% [comment (Felix): we need the SOURCE of this image!! or is it somewhere stated?]
 
 \subsubsection{Range Tree}
 The most time consuming part in our program is the calculation of the interaction
@@ -463,13 +424,22 @@ velocity of the people is higher (people are more in panic), jams at the
 exit will increase and people will mainly try to take the main exit instead of
 emergency exits.
 
-% [comment (Felix): don't know if that's relevant, but our agents always try to choose
-% the nearest exit, no matter how many agents already try to escpape there...]
 
 \subsection{Simulation Results}
 
-As expected the main exit becomes a bottleneck...
+% felix
+%aehnlichkeit zu helbling paper 
+%manche agents bleiben in tuere stecken -> anpassen der parameter noetig
+% generell: sieht realistisch aus
+%As expected the main exit & stairs becomes a bottleneck...
 %TODO: Discussion
+% vergleich 2/3 floors cab: bottleneck treppe
+
+
+% felix
+\subsubsection{Comparison to previous projects}
+% vergleich mit anderem msssm project (simulation mit gleichem input)
+
 
 \begin{figure}[h]
 \centering
@@ -479,11 +449,19 @@ As expected the main exit becomes a bottleneck...
 \end{figure}
 
 
+\subsection{Improvements}
+%beat
+%ausgaenge manchmal zu eng fuer manche agents
+% agents nehmen nebenausgang obwohl hauptausgang frei ist
+% panic factor nicht implementiert
+% zu grosser timestep fuert zu instabilitaet (billiard spiel)
+% alle agents sind gleich schnell
+% simulation wird mit der zeit immer langsamer (plotten)
 
-%TODO: add some plots, ...
-
-\subsection{Discussion}
-
+Non expected reactions (i.e. paranoia, desesperation or creativity) have not been consider by
+making this model and we are sure that in the reality this factors have also a big importance.
+This is a point where this work could be improved. Nevertheless, we believe that this project
+gives a good prespective in matters of evacuation potential and security.
 
 \section{Summary and Outlook}
 
@@ -491,10 +469,6 @@ In this section we would like to thank the MSSSM-Group from the ETH in Zurich, S
 directed by Karsten Donnay and Stefano Balietti for their engagement in the lecture
 "Modeling and Simulating Social Systems with \textit{MATLAB}" during the Spring Semester 2012.
 This project helped us to understand that the human behavior is a difficult subject to formalize.
-Non expected reactions (i.e. paranoia, desesperation or creativity) have not been consider by
-making this model and we are sure that in the reality this factors have also a big importance.
-This is a point where this work could be improved. Nevertheless, we believe that this project
-gives a good prespective in matters of evacuation potential and security.
 
 
 %TODO: Rückblick aufs projekt & Danksagung
