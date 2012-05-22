@@ -117,14 +117,11 @@
 If you are an ETH-Student, you know that at lunch time it is almost impossible 
 to go out of the building through the main entrance to the polyterasse, because
 of the number of students trying to leave at the same time. What would happen,
-if in addition to that, a panic factor was involved? Have you ever imagined, how
+if in addition to that, an evacuation was involved? Have you ever imagined, how
 an evacuation at the ETH Main building, ETH CAB-Building or even at your own home
 would look like? How many people would be able to leave simultaneously? What is the
 best strategy for people to leave? How would the perfect evacuation plan for your
 school or enterprise building look like?
-
-% [comment (Felix): we mention a panic factor but don't even simulate one? is this a good idea? :P]
-% todo: remove all references to 'panic' (beat)
 
 In this work, we decided to elaborate a program that is flexible enough to
 calculate the fastest exit for every given building structure. Using a "2D Range Tree Datastructure" 
@@ -170,7 +167,7 @@ Simulating the evacuation scenario of a single-level building is well known but
 is not general enough. Though we want to introduce a more sophisticated
 simulation within a multi-level building. E.g.: What would happen, if a
 multi-level building has to be evacuated? Which escape routes would be mostly
-used? Which effects would have the pressure/panic of other persons to the
+used? Which effects would have the pressure of other persons to the
 situation? Since tower buildings are getting more common in large cities,
 engineers have to care more about the behaviour in situations of emergency,
 namely evacuations. Apart of the mathematical model and implementation for
@@ -239,8 +236,13 @@ F_{D}=m\frac{v(t)\mathbf{e(t)}-\mathbf{v(t)}}{\tau}
 \end{equation}
 
 \subsubsection{Repulsive Interaction Force}
-<<<<<<< HEAD
-As people don't like to get too close to each other, the main component of this formula is a rather psychological aspect and plays an important role to keep agents apart from each other. However if it should happen that agents get too close, two additional forces, the 'body force' counteracting body compression and 'sliding friction force' contribute to the repulsive force to ensure a certain distance. \cite{SFMPD} 
+
+As people don't like to get too close to each other, the main component of this
+formula is a rather psychological aspect and plays an important role to keep
+agents apart from each other. However if it should happen that agents get too
+close, two additional forces, the 'body force' counteracting body compression
+and 'sliding friction force' contribute to the repulsive force to ensure a
+certain distance. \cite{SDFEP} 
 
 \begin{equation} \label{eq:eikonal}
 f_{ij}=\left\{A_{i}exp[(r_{ij}-d_{ij})/B_{i}]+kg(r_{ij}-d_{ij})\right\}\mathbf{n}_{ij}+\kappa g(r_{ij}-d_{ij})\triangle v_{ji}^t\mathbf{t}_{ij}
@@ -248,13 +250,14 @@ f_{ij}=\left\{A_{i}exp[(r_{ij}-d_{ij})/B_{i}]+kg(r_{ij}-d_{ij})\right\}\mathbf{n
 
 According to Helbling the repulsive interaction force $A_{i}exp[(r_{ij}-d_{ij})/B_{i}]\mathbf{n}_{ij}$ describes the psychological tendency of two pedestrians $i$ and $j$ to stay away from each other, where $A_i$ and $B_i$ are constants. 
 "$d_{ij}=\|r_i-r_j\|$ denotes the distance between the pedestrians' centres of mass, and $\mathbf{n}_{ij}=(n_{ij}^1, n_{ij}^2)=\mathbf{r_i}-\mathbf{r_j}/d_{ij}$ is the normalized vector pointing from pedestrian $j$ to $i$.
-The pedestrians touch each other if their distance $d_{ij}$ is smaller than the sum $r_{ij}=(r_i+r_j)$ of their radii $r_i$ and $r_j$."
- If this is the case two addtional forces are considered: $k(r_{ij}-d_{ij})\mathbf{n}_{ij}$ and $\kappa(r_{ij}-d_{ij})\triangle v_{ij}^t\mathbf{t}_{ij}$. Whereas $\mathbf{t}_{ij}=(-n_{ij}^2,n_{ij}^1)$ means the tangential direction and $\triangle v_{ij}^t=(\mathbf{v}_j-\mathbf{v}_i)\cdot\mathbf{t}_{ij}$ and the function $g(x)$ is zero if the pedestrians do not touch each other $(d_{ij}>r_{ij})$, and otherwise equal to the argument $x$."\cite{SFMPD}
-=======
-As poeple don't like to get too close to each other, the main component of this formula is a rather psychological aspect and plays an important role to keep agents apart from each other. Altohough if it should happen that agents get too close, two additional forces. The 'body force' increases then more the pressure agains an agent rises, that means, it counteracts the body compression and the 'sliding friction force' ensures a certain distance between the agents.\cite{SFMPD} Otherwise, they would overlap and the simulation would not be realistic anymore.
-
-It's also well known that the inertia of each agent is directly dependent from his mass. Therefore important for the initialitation of these forces are paramentes like the weight of an agent. In our model, although the mass is not proportional to the size of the agents (radius), it is stated in the config file (see \ref{matlab code})
->>>>>>> 313b51bad80608bae1e05f6c34bb11a8979a05de
+The pedestrians touch each other if their distance $d_{ij}$ is smaller than the sum $r_{ij}=(r_i+r_j)$ of their radii $r_i$ and $r_j$."\cite{SDFEP}
+If this is the case two addtional forces are considered:
+$k(r_{ij}-d_{ij})\mathbf{n}_{ij}$ and $\kappa(r_{ij}-d_{ij})\triangle
+v_{ij}^t\mathbf{t}_{ij}$. "Here $\mathbf{t}_{ij}=(-n_{ij}^2,n_{ij}^1)$ means
+the tangential direction and $\triangle
+v_{ij}^t=(\mathbf{v}_j-\mathbf{v}_i)\cdot\mathbf{t}_{ij}$ and the function
+$g(x)$ is zero if the pedestrians do not touch each other $(d_{ij}>r_{ij})$,
+and otherwise equal to the argument $x$."\cite{SDFEP}
 
 \subsubsection{Wall Force}
 
@@ -333,10 +336,15 @@ e.g. the "Accurate Fast Marching" implementation as found at \textit{MATLAB CENT
 
 
 Using the \textit{Profiler}-function of \textit{MATLAB}, we were able to discuss
-the efficiency of our implementation. The image \ref{cab profile} shows the time comsumption
-for the calculation of the evacuation of 2 floors (ETH CAB-Building Floors E and
-F) within 4087 seconds.
+the efficiency of our implementation. The image \vref{cab profile} shows the
+time consumption for the calculation of the evacuation of 2 floors (ETH
+CAB-Building Floors E and F) within 4087 seconds.
 
+The first version of our simulation showed a different profiling behaviour: The
+functions \verb+interp2+ and \verb+addAgentRepulsiveForce+ were at the top and
+thus needed most of the calculation time. Now, after our improvements, they are
+further down in the profiling ranking, meaning they are more efficient. These
+improvements decreased the time for simulation significantly.
 
 \begin{figure}[h]
 \centering
@@ -345,8 +353,6 @@ F) within 4087 seconds.
 \label{cab profile}
 \end{figure}
 
-%discuss: our optimized functions dont appear anymore... (beat)
-% plot wrong place! again...
 \subsubsection{Parallelization}
 
 We tried to optimize the code using the parallel for-loop parfor in \textit{MATLAB}. In
@@ -392,9 +398,7 @@ queried agents \cite{algdat}. In larger simulations this reduces simulation time
 We expect the stairs and the main building exit to be the bottlenecks. The
 amount of people in lower levels is increasing with time until a certain point,
 when most of the people have exited the building. Also we think that if the 
-velocity of the people is higher (people are more in panic), jams at the
-exit will increase and people will mainly try to take the main exit instead of
-emergency exits.
+velocity of the people is higher, jams at the exit will increase.
 
 
 \subsection{Simulation Results}
