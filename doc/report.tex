@@ -146,7 +146,9 @@ Carl Hans Peter Hardmeier Samame, alias Hans Hardmeier, was
 responsible for some parts of the documentation, verification of the MATLAB-code
 and calculating efficienty using different operating systems (i.e. Mac OS 10.6).
 
-Contributing to some core functionalities of the social force model, especially repulsive effects, Andrin Jenal focused on the moddeling of the buildings layout used in the simulation. Additionally, he elaborated some sections of the documentation.
+Contributing to some core functionalities of the social force model, especially repulsive effects,
+Andrin Jenal focused on the moddeling of the buildings layout used in the simulation.
+Additionally, he elaborated some sections of the documentation.
 
 Beat K\"ung did most of the plotting functionality and the definition \&
 implementation of the configuration and building image file. He also did several
@@ -169,7 +171,7 @@ simulation within a multi-level building. E.g.: What would happen, if a
 multi-level building has to be evacuated? Which escape routes would be mostly
 used? Which effects would have the pressure of other persons to the
 situation? Since tower buildings are getting more common in large cities,
-engineers have to care more about the behaviour in situations of emergency,
+engineers have to care more about the behavior in situations of emergency,
 namely evacuations. Apart of the mathematical model and implementation for
 solving this problem, we also wanted to increase the utility of this program for
 all readers by giving the possibility of calculate different scenarios in
@@ -209,30 +211,31 @@ At the end we should be able to make strong
 statements anwsering our fundamental questions.
 Based on the forces explained in the following paragraphs, we tried to figure
 out how agents overcome major obstacles like tiny passages, stairs or pillars. Whereas, the
-shape and complexity of rooms and building is a key factor, contributing to the behaviour of the
+shape and complexity of rooms and building is a key factor, contributing to the behavior of the
 agents as well. % Do we need this last sentence?
 
 \subsection {Forces}
-The reactions of the agents will mainly be influenced by different forces, model
-parameters and the building structure itself. 
-Describing this problem in mathematical terms, leads to an equation, where the mass, the desired direction $f_{D}$, the repulsive forces $f_{ij}$ and the wall force $f_{iW}$ of each individual agent contribute to the change of velocity in time.\\
-Helbling stated this problem as the following:"We assume a mixture of socio-psychological and physical forces influencing the behaviour in a crowd: each of $N$ pedestrians $i$ of mass $m_{i}$ likes to move with a certain desired speed $v_{i}^0$ in a certain direction $\mathbf{e}_{i}^0$, and therefore tends to correspondingly adapt his or her actual velocity $\mathbf{v}_i$ with a certain characteristic time $\tau_{i}$. Simulataneously, he or she tries to keep a velocity-dependent distance from other pedestrians $j$ and walls $W$."
 
-\begin{equation} \label{eq:eikonal}
-m_{i}\frac{\mathsf{d}\mathbf{v}_{i}}{\mathsf{d}t}=m_{i}f_{D}+\sum \limits_{j(\neq{i})}{f_{ij}}+\sum \limits_{W}{f_{iW}}, f_{D}=\frac{v_{i}^{0}(t)\mathbf{e}_{i}^{0}(t)-\mathbf{v}_{i}(t)}{\tau_{i}}
+We implemented the model's forces as described in \cite{SDFEP}, a brief overview is given here.
+
+The reactions of the agents will mainly be influenced by different forces, modelparameters and the building structure itself.
+Describing this problem in mathematical terms, leads to an equation, where the mass, the desired direction $f_{D}$, the repulsive forces $f_{ij}$ and the wall force $f_{iW}$ of each individual agent contribute to the change of velocity in time.\\
+Helbling stated this problem as the following:"We assume a mixture of socio-psychological and physical forces influencing the behavior in a crowd: each of $N$ pedestrians $i$ of mass $m_{i}$ likes to move with a certain desired speed $v_{i}^0$ in a certain direction $\mathbf{e}_{i}^0$, and therefore tends to correspondingly adapt his or her actual velocity $\mathbf{v}_i$ with a certain characteristic time $\tau_{i}$. Simulataneously, he or she tries to keep a velocity-dependent distance from other pedestrians $j$ and walls $W$."
+
+\begin{equation}
+m_{i}\frac{\mathsf{d}\mathbf{v}_{i}}{\mathsf{d}t}=m_{i}f_{D}+\sum \limits_{j(\neq{i})}{f_{ij}}+\sum \limits_{W}{f_{iW}}
 \end{equation}
 
 That means the change of position $\mathbf{r}$ is given by the velocity: $\mathbf{v}_{i}=\frac{\mathsf{d}\mathbf{r}_{i}}{\mathsf{d}t}$\\
-To understand the different party, they will be explained briefly.
+To understand the different parties, they will be explained briefly.
 
-% [comment (Felix): we need to write MUCH more cleary that all these forces are exactly the same as the one proposed by Helbling!! This is my no means our work!]
+\subsubsection{Desired Direction Force}
 
-\subsubsection{Desired Direction}
+An agent always has a desired direction $e(t)$ in which he wants to walk currently with a desired speed of $v(t)$. 
+The reaction time $\tau$ affect the speed of the directional change.
 
-% [comment (Felix): ääääh somewhat short?? :-P]
-%todo: merge with path finding (felix)
-\begin{equation} \label{eq:eikonal}
-F_{D}=m\frac{v(t)\mathbf{e(t)}-\mathbf{v(t)}}{\tau}
+\begin{equation}
+f_{D}=\frac{v_{i}^{0}(t)\mathbf{e}_{i}^{0}(t)-\mathbf{v}_{i}(t)}{\tau_{i}}
 \end{equation}
 
 \subsubsection{Repulsive Interaction Force}
@@ -244,7 +247,7 @@ close, two additional forces, the 'body force' counteracting body compression
 and 'sliding friction force' contribute to the repulsive force to ensure a
 certain distance. \cite{SDFEP} 
 
-\begin{equation} \label{eq:eikonal}
+\begin{equation}
 f_{ij}=\left\{A_{i}exp[(r_{ij}-d_{ij})/B_{i}]+kg(r_{ij}-d_{ij})\right\}\mathbf{n}_{ij}+\kappa g(r_{ij}-d_{ij})\triangle v_{ji}^t\mathbf{t}_{ij}
 \end{equation}
 
@@ -261,10 +264,11 @@ and otherwise equal to the argument $x$."\cite{SDFEP}
 
 \subsubsection{Wall Force}
 
+%TODO: WHATTHEFUCK is the point of this sentence?? there exists a wall force NORMAL to the wall SUCH THAT the closer agents gets to walls the stronger gets the TANGENTIAL force. please guys, could you at least read ONCE what you write?!?
 To prevent agents walking into or even through walls, there exists a wall force normal to the wall such that the closer agents gets to walls the stronger gets the tangential force.
 Helbling states it the following:"$d_{iW}$ means the distance to wall $W$, $\mathbf{n}_{iW}$ denotes  the direction perpendicular to it, and $\mathbf{n}_{iW}$ the direction tangential to it, the corresponding interaction force with the wall is given by:" \cite{SFMPD}
 
-\begin{equation} \label{eq:eikonal}
+\begin{equation}
 f_{iW}=\left\{A_{i}exp[(r_{i}-d_{iW})/B_{i}]+kg(r_{i}-d_{iW})\right\}\mathbf{n}_{iW}-\kappa g(r_{i}-d_{iW})(\mathbf{v}_{i}\cdot\mathbf{t}_{iW})\mathbf{t}_{iW}
 \end{equation}
 
@@ -340,7 +344,7 @@ the efficiency of our implementation. The image \vref{cab profile} shows the
 time consumption for the calculation of the evacuation of 2 floors (ETH
 CAB-Building Floors E and F) within 4087 seconds.
 
-The first version of our simulation showed a different profiling behaviour: The
+The first version of our simulation showed a different profiling behavior: The
 functions \verb+interp2+ and \verb+addAgentRepulsiveForce+ were at the top and
 thus needed most of the calculation time. Now, after our improvements, they are
 further down in the profiling ranking, meaning they are more efficient. These
@@ -403,19 +407,17 @@ velocity of the people is higher, jams at the exit will increase.
 
 \subsection{Simulation Results}
 
-% felix
-%aehnlichkeit zu helbling paper 
-%manche agents bleiben in tuere stecken -> anpassen der parameter noetig
-% generell: sieht realistisch aus
-%As expected the main exit & stairs becomes a bottleneck...
-%TODO: Discussion
-% vergleich 2/3 floors cab: bottleneck treppe
-
-
-% felix
-\subsubsection{Comparison to previous projects}
-% vergleich mit anderem msssm project (simulation mit gleichem input)
-
+We tested our algorithm mainly by simulating an evacuation of ETH's CAB building.
+The floor plans were downloaded from \cite{ethfloors} and converted to our coded bitmap representation.
+The results of the simulation are, as expected, comparable to those of Helbling as described in \cite{SFMPD} and \cite{SDFEP}.
+Our implementation realisticly shows some bottlenecks which get heavily crowded soon, especially the regions before stairs and exits.
+The speed of the agents decreases heavily due to the crowd and the time they need to reach the exits therefor increases rapidly.
+As we used real world units in our model, it was relatively simple to get the right scale for the simulation,
+nonetheless we found that some agents got stuck at the doors, as they block each other.
+This is off course not a very realistic behavior but due to the simplicity of our agents demand to reach the
+exit with shortest Euklidean distance. It would be interesting to use a more intelligent and natural search 
+algorithm to determine the best path to escape, but this is out of the scope of this project, 
+see also section \ref{subsection:Improvements} about other possible improvements.
 
 \begin{figure}[h]
 \centering
@@ -424,8 +426,38 @@ velocity of the people is higher, jams at the exit will increase.
 \label{cab1}
 \end{figure}
 
+\subsubsection{Comparison to previous projects}
 
-\subsection{Improvements}
+As there were already other project in this course which studied agent based evacuation simulations, 
+we decided to compare our results to those of an older project, namely the project 
+"Evacuation Bottleneck: Simulation and analysis of an evacuation of a high-school building with \textit{MATLAB}"by
+Alexander Jöhl and Tom\'{a}\v{s} Nyitray \cite{oldproj}.
+
+They use a very simplicistic model, incorporating just two forces: 
+one pointing towards the nearest exit and one inter-agent force. The former is comparable to the one used in our model, but missing some
+sophisticated interpolation on the discretized grid, while the latter is following a much simpler approach 
+and is just a force centered around the agents with inverse linear fall-off.
+As their inter-agent forces are so weak, the stability timestep restriction is not that tight and therefor the simulation times are very low.
+In our implementation using the forces as defined in \cite{SDFEP} one the other hand, 
+there is a much stricter timestep restriction, leading to higher simulation times to guarantee stability, but in this case still lower than 5 minutes.
+But a linear force can't simulate realistic interaction between the agents and they can
+easily penetrate each other. Therefor it is impossible to simulate crowding and evacuation bottlenecks.
+
+Further, their floorplan is significantly less detailed than our implementation allows and no proper scaling seems
+to be mentioned or implemented, this made it difficult to get similar parameters, especially because in our 
+model the collision detection works accurately using the agents radii, which means they get stuck at narrow doors.
+
+To recreate the speed of their agents, a time lapse simulation seemed to be most appropriate and indeed, we could get some similar 
+results. Nonetheless our model does not show the weaknesses described above, there are no overlapping agents and they walk along straight lines.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{./images/swsl.png}
+\caption{One frame of our simulation of the building given in \cite{oldproj}.} 
+\label{swsl}
+\end{figure}
+
+\subsection{Improvements} \label{subsection:Improvements}
 There are several things that could be done to further improve our social force
 model and to reduce the calculation time used to simulate.
 
@@ -442,13 +474,13 @@ model and to reduce the calculation time used to simulate.
 	\item[timestep] If the timestep in the config file is too big, the
 		simulation becomes unstable and behaves like a billiards game. This
 		sometimes also happens when a lot of agents are crowded and push in one
-		direction. A dynamic timestepping could be introduced to solve this
-		issue.
+		direction. Adaptive timestepping or an implicit integration scheme
+		could be introduced to solve this issue.
 	\item[agent velocity] All agents are currently equally fast, which is of
 		course different from reality.
 	\item[doors] In our simulations, the doors of the CAB building were
 		sometimes too narrow for the agents to exit. But this issue can easily
-		be resolved by changing the building map or the agent radiuses in the
+		be resolved by changing the building map or the agent radii in the
 		config file.
 	\item[calculation time] For no obvious reason, the time used to calculate
 		one simulation-step (one frame) increases linearly over time. We
@@ -473,15 +505,17 @@ This project helped us to understand that the human behavior is a difficult subj
 \begin{thebibliography} {9}
 	
 	\bibitem{Zhao04afast} Zhao, Hongkai (2004): A Fast Sweeping Method for Eikonal Equations.
-	\bibitem{SFMPD} Helbling, Dirk - Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics.
-	\bibitem{AACIBF} Helbling, Dirk, Johnson, Anders (2006): Analytical Approach to Continuous and Intermittent Bottleneck Flows.
+	\bibitem{SFMPD} Helbling, Dirk; Molnar, Peter (1995): Social Force Model for Pedestrians Dynamics.
+	\bibitem{AACIBF} Helbling, Dirk; Johnson, Anders (2006): Analytical Approach to Continuous and Intermittent Bottleneck Flows.
 	\bibitem{ACPPD} Schadschneider, Andreas et al. (2002): CA Approach to Collective Phenomena in Pedestrian Dynamics.	
-	\bibitem{DCD} Helbling, Dirk, Johansson, Anders (2007): Dynamics of crowd disasters: An empirical Study.
+	\bibitem{DCD} Helbling, Dirk; Johansson, Anders (2007): Dynamics of crowd disasters: An empirical Study.
 	\bibitem{SDFEP} Helbling, Dirk et al. (2000): Simulating dynamical features of escape panic.
 	\bibitem{SPCD} Helbling, Dirk et al. (2005): Self-Organized Pedestrian Crowd Dynamics: Experiments, Simulations, and Design Solutions.
 	\bibitem{dijkstra59a} Dijkstra, Edsger W. (1959): A Note on Two Problems in Connexion with Graphs.
 	\bibitem{fastmarching} Kroon, Dirk-Jan (2011): http://www.mathworks.com/matlabcentral/fileexchange/24531-accurate-fast-marching
-	\bibitem{algdat} Ottmann, Thomas, Widmayer, Peter (2002): Algorithmen und Datenstrukturen, 4. Auflage.
+	\bibitem{algdat} Ottmann, Thomas; Widmayer, Peter (2002): Algorithmen und Datenstrukturen, 4. Auflage.
+	\bibitem{ethfloors} ETH Zürich, Version 2011.1 prod (prod red2): http://www.rauminfo.ethz.ch
+	\bibitem{oldproj} Jöhl, Alexander; Nyitray Tom\'{a}\v{s}: Evacuation Bottleneck: Simulation and analysis of an evacuation of a high-school building with \textit{MATLAB}, https://github.com/jjoolloo/Swiss-Slovak-misunderstanding
 
 \end{thebibliography}
 
