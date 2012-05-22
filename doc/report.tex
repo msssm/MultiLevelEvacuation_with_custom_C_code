@@ -426,18 +426,37 @@ velocity of the people is higher, jams at the exit will increase.
 
 
 \subsection{Improvements}
-%beat
-%ausgaenge manchmal zu eng fuer manche agents
-% agents nehmen nebenausgang obwohl hauptausgang frei ist
-% panic factor nicht implementiert
-% zu grosser timestep fuert zu instabilitaet (billiard spiel)
-% alle agents sind gleich schnell
-% simulation wird mit der zeit immer langsamer (plotten)
+There are several things that could be done to further improve our social force
+model and to reduce the calculation time used to simulate.
 
-Non expected reactions (i.e. paranoia, desesperation or creativity) have not been consider by
-making this model and we are sure that in the reality this factors have also a big importance.
-This is a point where this work could be improved. Nevertheless, we believe that this project
-gives a good prespective in matters of evacuation potential and security.
+\begin{description}
+	\item[choice of exit] Our simulation of the CAB building shows that most of
+		the agents take the side exit on the lowest floor, and only a few exit
+		through the main door, which is right beside the side exit. This is not
+		very realistic and could be improved by adding intelligence to the
+		agents. For example each agent could decide which exit he/she wants to
+		take, and also consider jams at the visible exits.
+	\item[panic factor] We did not implement the panic factor mentioned in
+		\cite{SDFEP}. In reality, people in panic behave less organized, they
+		probably don't always run towards the nearest exit.
+	\item[timestep] If the timestep in the config file is too big, the
+		simulation becomes unstable and behaves like a billiards game. This
+		sometimes also happens when a lot of agents are crowded and push in one
+		direction. A dynamic timestepping could be introduced to solve this
+		issue.
+	\item[agent velocity] All agents are currently equally fast, which is of
+		course different from reality.
+	\item[doors] In our simulations, the doors of the CAB building were
+		sometimes too narrow for the agents to exit. But this issue can easily
+		be resolved by changing the building map or the agent radiuses in the
+		config file.
+	\item[calculation time] For no obvious reason, the time used to calculate
+		one simulation-step (one frame) increases linearly over time. We
+		identified the plotting routine as the culprit, but we were not able
+		to figure out whether this is a \textit{MATLAB} problem or our plotting
+		calls are to blame for this. Certainly, a big performace advantage would
+		be to write the whole simulation in \textit{C/C++}. 
+\end{description}
 
 \section{Summary and Outlook}
 
