@@ -130,8 +130,10 @@ very efficiently.
 
 
 Different from all other similar projects, we also focused on an efficient and
-realistic implementation of the program. For the preprocessing, the "Fast Sweeping Algorithm Method" 
-enable us to have only some seconds of initialization time (instead of some minutes with "Fast Marching Algorithm". 
+realistic implementation of the program. For the preprocessing, the "\textit{Fast
+Sweeping} Algorithm Method" 
+enabled us to have only some seconds of initialization time (instead of some
+minutes with "\textit{Fast Marching} Algorithm". 
 See \ref{implementation}) and using our own "2D Range Tree" data structures, to
 handle the numerous amount of agents, enables us to simulate large buildings with many agents and
 with a realistic force model.
@@ -143,8 +145,9 @@ of us to achieve the best possible result. Detailed information about the
 contribution of each of us can be obtained from the git history.
 
 Carl Hans Peter Hardmeier Samame, alias Hans Hardmeier, was 
-responsible for some parts of the documentation, verification of the MATLAB-code
-and calculating efficienty using different operating systems (i.e. Mac OS 10.6).
+responsible for some parts of the documentation, verification of the
+\textit{MATLAB}-code and calculating efficienty using different operating
+systems (i.e. Mac OS 10.6).
 
 Contributing to some core functionalities of the social force model, especially repulsive effects,
 Andrin Jenal focused on the moddeling of the buildings layout used in the simulation.
@@ -198,7 +201,7 @@ scenario for any given building or even structures (i.e. planes or boats).
 
 \subsection{Fundamental Questions}
 
-In the first place, we all are wondering \textit{how exaclty an implementation of a social force model looks like}, based on already published papers coping with this problem \cite{SFMPD} \cite{SDFEP}. Of special interest is also \textit{how this model can be implemented efficiently for a multilevel building and how it can be extended to add some dynamic features}. Moreover are we keen to understand \textit{how the simulation behaves applying the model to a real building like the ETH main building}. Generally speaking, \textit{how realistic is the behaviour of the agents used in our model?}.
+In the first place, we all are wondering \textit{how exaclty an implementation of a social force model looks like}, based on already published papers coping with this problem \cite{SFMPD} \cite{SDFEP}. Of special interest is also \textit{how this model can be implemented efficiently for a multilevel building and how it can be extended to add some dynamic features}. Moreover are we keen to understand \textit{how the simulation behaves applying the model to a real building like the ETH main building}. Generally speaking, \textit{how realistic is the behavior of the agents used in our model?}.
 
 \section{Description of the Model}
 \subsection{General Model}
@@ -273,15 +276,16 @@ f_{iW}=\left\{A_{i}exp[(r_{i}-d_{iW})/B_{i}]+kg(r_{i}-d_{iW})\right\}\mathbf{n}_
 \end{equation}
 
 \section{Implementation}\label{implementation}
-Our goal was a fast implementation of the model. So we decided to use the Fast
-Sweeping algorithm instead of the Fast Marching alorithm to calculate the
-fastest way out of a building. We knew that \textit{MATLAB} code is not very fast and
-\textit{MATLAB} provides an interface for other programming languages. So we
-used the \textit{C} programming language to implement the Fast Sweeping method.
+Our goal was a fast implementation of the model. So we decided to use the
+\textit{Fast Sweeping} algorithm instead of the \textit{Fast Marching} alorithm
+to calculate the fastest way out of a building. We knew that \textit{MATLAB}
+code is not very fast and \textit{MATLAB} provides an interface for other
+programming languages. So we used the \textit{C} programming language to
+implement the \textit{Fast Sweeping} method.
 
 Later in the development process we discovered another bottleneck in our code:
-The social force between the agents which runs in $ O(N^2) $. Felix Thaler then
-introduced a Range Tree for this problem, which he also implemented in
+The social force between the agents which runs in $ O(n^2) $. Felix Thaler then
+introduced a \textit{Range Tree} for this problem, which he also implemented in
 \textit{C}.
 
 
@@ -414,7 +418,7 @@ Our implementation realisticly shows some bottlenecks which get heavily crowded 
 The speed of the agents decreases heavily due to the crowd and the time they need to reach the exits therefor increases rapidly.
 As we used real world units in our model, it was relatively simple to get the right scale for the simulation,
 nonetheless we found that some agents got stuck at the doors, as they block each other.
-This is off course not a very realistic behavior but due to the simplicity of our agents demand to reach the
+This is of course not a very realistic behavior but due to the simplicity of our agents demand to reach the
 exit with shortest Euklidean distance. It would be interesting to use a more intelligent and natural search 
 algorithm to determine the best path to escape, but this is out of the scope of this project, 
 see also section \ref{subsection:Improvements} about other possible improvements.
@@ -428,10 +432,10 @@ see also section \ref{subsection:Improvements} about other possible improvements
 
 \subsubsection{Comparison to previous projects}
 
-As there were already other project in this course which studied agent based evacuation simulations, 
+As there were already other projects in this course which studied agent based evacuation simulations, 
 we decided to compare our results to those of an older project, namely the project 
 "Evacuation Bottleneck: Simulation and analysis of an evacuation of a high-school building with \textit{MATLAB}"by
-Alexander Jöhl and Tom\'{a}\v{s} Nyitray \cite{oldproj}.
+Alexander J\"ohl and Tom\'{a}\v{s} Nyitray \cite{oldproj}.
 
 They use a very simplicistic model, incorporating just two forces: 
 one pointing towards the nearest exit and one inter-agent force. The former is comparable to the one used in our model, but missing some
