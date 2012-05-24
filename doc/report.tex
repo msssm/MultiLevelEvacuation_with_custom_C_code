@@ -125,33 +125,33 @@ best strategy for people to leave? How would the perfect evacuation plan for you
 school or enterprise building look like?
 
 In this work, we decided to elaborate a program that is flexible enough to
-calculate the fastest exit for every given building structure. Using a "2D Range Tree Datastructure" 
-to improve the access to the forces over each agent and solve this complex problem, the program is capable of computing the fastest way
-very efficiently.
-
+calculate the fastest exit for every given building structure. Using a "2D Range
+Tree Datastructure" to solve this complex problem and to improve the access to
+the forces over each agent, the program is capable of simulating the
+evacuation efficiently.
 
 Different from all other similar projects, we also focused on an efficient and
 realistic implementation of the program. For the preprocessing, the "\textit{Fast
 Sweeping} Algorithm Method" 
 enabled us to have only some seconds of initialization time (instead of some
-minutes with "\textit{Fast Marching} Algorithm". 
-See \ref{implementation}) and using our own "2D Range Tree" data structures, to
-handle the numerous amount of agents, enables us to simulate large buildings with many agents and
-with a realistic force model.
+minutes with "\textit{Fast Marching} Algorithm" (See \ref{implementation}).
+Using our own "2D Range Tree" data structure to handle the numerous amount of
+agents enables us to simulate large buildings with many agents and with a
+realistic force model.
 
 \section{Individual contributions}
 
 We all worked together in this project and used the individual strengths of each
 of us to achieve the best possible result. Detailed information about the
-contribution of each of us can be obtained from the git history.
+individual contribution can be obtained from the git history.
 
 Carl Hans Peter Hardmeier Samame, alias Hans Hardmeier, was 
 responsible for some parts of the documentation, verification of the
-\textit{MATLAB}-code and calculating efficienty using different operating
+\textit{MATLAB}-code and calculating efficiency using different operating
 systems (i.e. Mac OS 10.6).
 
 Contributing to some core functionalities of the social force model, especially repulsive effects,
-Andrin Jenal focused on the moddeling of the buildings layout used in the simulation.
+Andrin Jenal focused on the modeling of the buildings layout used in the simulation.
 Additionally, he elaborated some sections of the documentation.
 
 Beat K\"ung did most of the plotting functionality and the definition \&
@@ -173,7 +173,7 @@ Simulating the evacuation scenario of a single-level building is well known but
 is not general enough. Though we want to introduce a more sophisticated
 simulation within a multi-level building. E.g.: What would happen, if a
 multi-level building has to be evacuated? Which escape routes would be mostly
-used? Which effects would have the pressure of other persons to the
+used? Which effects would the pressure of other persons have to the
 situation? Since tower buildings are getting more common in large cities,
 engineers have to care more about the behavior in situations of emergency,
 namely evacuations. Apart of the mathematical model and implementation for
@@ -182,27 +182,36 @@ all readers by giving the possibility of calculate different scenarios in
 different buildings given by the user. In this work, we will mostly work with
 the map of the ETH building, however, there are more configurations in the data
 folder and one can replace any map with others that meet the properties of the
-Figure \ref{building floor image} in the section \ref{matlab code}.
+Figure \ref{building floor image} in section \ref{matlab code}.
 
 \subsection{Motivation}
 
 Intuitive expectations and mathematical model results can stay sometimes in
-contradiction. Our intuition is full of little contepts that are hard to realize in a concient way.
-Using the language of mathematics, we want to describe formaly all the elements that contribute
-to the complex result of the human behavior. However, a common point of motivation within the group is 
-the connection between the 'real' World and the mathematical formalism.
+contradiction. Our intuition is full of little concepts that are hard to realize
+in a conscient way.  Using the language of mathematics, we want to describe
+formaly all the elements that contribute to the complex result of the human
+behavior. However, a common point of motivation within the group is the
+connection between the 'real' World and the mathematical formalism.
 
-On ther other side, we, as ETH-Students, are not sure, if the evacuation
-potential (the property of a buiding of being evacuated efficiently) of our ETH-buildings are enough for the amount of students during a normal
-week day and on the other hand, we want to help the people around the world,
-that have a similar question, to find an answer. This two points gave us the
-ideas and motivation to create a flexible tool that simulates a real-world
-scenario for any given building or even structures (i.e. planes or boats).
+On the other side, we, as ETH-Students, are not sure if the evacuation potential
+(the property of a buiding of being evacuated efficiently) of our ETH-buildings
+are enough for the amount of students during a normal week day. We also want to
+help the people around the world that have a similar question to find an answer.
+This two points gave us the ideas and motivation to create a flexible tool that
+simulates a real-world scenario for any given building or even structure (i.e.
+planes or boats).
 
 
 \subsection{Fundamental Questions}
 
-In the first place, we all are wondering \textit{how exaclty an implementation of a social force model looks like}, based on already published papers coping with this problem \cite{SFMPD} \cite{SDFEP}. Of special interest is also \textit{how this model can be implemented efficiently for a multilevel building and how it can be extended to add some dynamic features}. Moreover are we keen to understand \textit{how the simulation behaves applying the model to a real building like the ETH main building}. Generally speaking, \textit{how realistic is the behavior of the agents used in our model?}.
+In the first place, we all are wondering \textit{how exaclty an implementation
+of a social force model looks like}, based on already published papers coping
+with this problem \cite{SFMPD} \cite{SDFEP}. Of special interest is also
+\textit{how this model can be implemented efficiently for a multilevel building
+and how it can be extended to add some dynamic features}. Moreover we are keen
+to understand \textit{how the simulation behaves applying the model to a real
+building like the ETH main building}. Generally speaking, \textit{how realistic
+is the behavior of the agents used in our model?}.
 
 \section{Description of the Model}
 \subsection{General Model}
@@ -295,13 +304,13 @@ We wanted to create a flexibel model which can be used to simulate many
 possible building structures.
 Each scenario is described in a configuration file. This includes for example how many
 agents are placed on each floor or the timestep of the simulation (the exact
-definition can be found in the file data/config\_file\_structure). Each config
+definition can be found in the file \verb+data/config_file_structure+). Each config
 file also references one or more building floor images.
 Figure \vref{building floor image} describes how a building floor
 image must look like. The agents are placed randomly within the agents spawning
 area(s).
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{./images/config_floor_description.png}
 \caption{Left the building floor image and right how it looks when the
@@ -309,9 +318,10 @@ simulation is running}
 \label{building floor image}
 \end{figure}
 
-Since \textit{MATLAB} is not really object-oriented, we used a big data structure (called
-data) that includes all internal data that we use (eg. the floors and agents).
-It is passed as an argument for every function that needs it.
+Since \textit{MATLAB} is not really object-oriented, we used a big data
+structure (called \verb+data+) that includes all internal data that we use (eg.
+the floors and agents).  It is passed as an argument for every function that
+needs it.
 
 \subsection{Pathfinding}
 As described in \cite{SFMPD}, the agents always try to reach their desired destination
@@ -355,7 +365,7 @@ thus needed most of the calculation time. Now, after our improvements, they are
 further down in the profiling ranking, meaning they are more efficient. These
 improvements decreased the time for simulation significantly.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\textwidth]{./images/profiler.png}
 \caption{Profile of the calculation for the CAB-Building with 300 agents over 3 different floors} 
@@ -364,17 +374,17 @@ improvements decreased the time for simulation significantly.
 
 \subsubsection{Parallelization}
 
-We tried to optimize the code using the parallel for-loop parfor in \textit{MATLAB}. In
-the function applyForcesAndMove we replaced the for-loop over the agents with
-parfor. We measured the time using an input with 200 agents on a 4 core machine
-using 5 \textit{MATLAB} workers. The result was that the parfor version was even slightly
-slower than the serial version. The reason for this is how \textit{MATLAB} implements
-parfor: all the memory that is used by a worker must be sent to this worker.
-Each agent must access the building floor image randomly and this creates a
-large amount of memory that must be transferred to each worker, which leads to a
-decreasing performance.
-This is why we decided not to use parfor or any other parallelization in our
-implementation.
+We tried to optimize the code using the parallel for-loop \verb+parfor+ in
+\textit{MATLAB}. In the function \verb+applyForcesAndMove+ we replaced the
+for-loop over the agents with \verb+parfor+. We measured the time using an input
+with 200 agents on a 4 core machine using 5 \textit{MATLAB} workers. The result
+was that the parfor version was even slightly slower than the serial version.
+The reason for this is how \textit{MATLAB} implements \verb+parfor+: all the
+memory that is used by a worker must be sent to this worker.  Each agent must
+access the building floor image randomly and this creates a large amount of
+memory that must be transferred to each worker, which leads to a decreasing
+performance.  This is why we decided not to use \verb+parfor+ or any other
+parallelization in our implementation.
 
 \subsubsection{Replacing \textit{MATLAB} standard functions}
 
@@ -389,8 +399,8 @@ for the frame $i$.
 The most time consuming part in our program is the calculation of the interaction
 forces between the agents, at least if their count is high enough. To reduce the
 natural complexity of order $O(n^{2})$ of this inter-agent interaction, we can clamp forces
-with little effect, e.g. in our implementation all forces smaller than $ 10^{4}\newton$.
-As their exponentially decreasing, the distance in which the forces need to be adressed
+with little effect, e.g. in our implementation all forces smaller than $ 10^{-4}\newton$.
+As they are exponentially decreasing, the distance in which the forces need to be adressed
 is only several meters, so a big part of them can just be ignored without introducing 
 a significant error.
 
@@ -424,7 +434,7 @@ exit with shortest Euklidean distance. It would be interesting to use a more int
 algorithm to determine the best path to escape, but this is out of the scope of this project, 
 see also section \ref{subsection:Improvements} about other possible improvements.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\textwidth]{./images/cab1.png}
 \caption{Visualisation of evacuation in the CAB Building E Floor} 
@@ -455,7 +465,7 @@ model the collision detection works accurately using the agents radii, which mea
 To recreate the speed of their agents, a time lapse simulation seemed to be most appropriate and indeed, we could get some similar 
 results. Nonetheless our model does not show the weaknesses described above, there are no overlapping agents and they walk along straight lines.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\textwidth]{./images/swsl.png}
 \caption{One frame of our simulation of the building given in \cite{oldproj}.} 
@@ -497,18 +507,19 @@ model and to reduce the calculation time used to simulate.
 
 \section{Summary}
 
-Summaring the results of the simulation for the purpose of answering the fundamental questions 
+Summarizing the results of the simulation for the purpose of answering the fundamental questions 
 of this project, we can claim that the implementation of different force models
 has not  been a major problem. Nonetheless the implementation
-of an \textit{realistic} evacuation model is far more complicated then expected.
+of an \textit{realistic} evacuation model is far more complicated than expected.
 Details like individual-reactions or non-expected events have been 
-ignored for the sake of simplicity, although they enjoy of a specially importance
+ignored for the sake of simplicity, although they enjoy of a special importance
 for this kind of social force models.
 
 \textit{MATLAB} was powerful enough to simulate and it also provides a wide spectrum of useful features and functions.
-Unfortunately, the efficience of them cannot be compare to their functional equal features in 
+Unfortunately, the efficience of them cannot be compared to their functional equal features in 
 other programming languages like \textit{C or C++}. Nevertheless, \textit{MATLAB} is a good tool
-for projects, which have not the intention of improving the efficiency for implementations of social force models.
+for projects, which have not the intention of simulating a social force model in
+real time.
 
 \subsection{Thanks}
 
